@@ -1,0 +1,535 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>accoTOOL Employee Planning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Carlito:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --at-blue:#1C4E80; --at-bright:#2E8BC0; --at-teal:#2098A9; --at-orange:#F7941D;
+  --bg:#EEF2F6; --canvas:#FFFFFF; --panel:#F6F8FB; --ink:#1A2230; --muted:#5B6B7F;
+  --line:#DCE4EC; --line-strong:#C3CFDB; --head:#1C4E80; --chip:#E6EEF6;
+  --input:#FFF8EC; --input-line:#F7C27A; --override:#FDE7C4;
+  --good:#1F8A5B; --warn:#B7791F; --bad:#C0392B;
+  --bar:#2E8BC0; --bar2:#9FC3DD; --grid:#E7EDF3;
+  --note-bg:#FFF6E8; --note-ink:#7A4B0B;
+  --head-font:"Poppins","Segoe UI",system-ui,sans-serif;
+  --body-font:"Carlito","Calibri","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1622; --canvas:#152131; --panel:#1B293B; --ink:#E6EDF5; --muted:#93A4B8;
+    --line:#2A3B50; --line-strong:#3A4E66; --head:#8CC4EA; --chip:#1F3149;
+    --input:#2A2416; --input-line:#8A6326; --override:#4A3616;
+    --good:#4CC38A; --warn:#E0A94A; --bad:#EF6B5B;
+    --bar:#4EA6DA; --bar2:#2F5572; --grid:#22324A;
+    --note-bg:#2A2214; --note-ink:#F2C98A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1622; --canvas:#152131; --panel:#1B293B; --ink:#E6EDF5; --muted:#93A4B8;
+  --line:#2A3B50; --line-strong:#3A4E66; --head:#8CC4EA; --chip:#1F3149;
+  --input:#2A2416; --input-line:#8A6326; --override:#4A3616;
+  --good:#4CC38A; --warn:#E0A94A; --bad:#EF6B5B;
+  --bar:#4EA6DA; --bar2:#2F5572; --grid:#22324A;
+  --note-bg:#2A2214; --note-ink:#F2C98A;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body-font);font-size:15px;line-height:1.45}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:16px;padding-block:18px 40px}
+h1,h2,h3{font-family:var(--head-font);color:var(--head);margin:0;text-wrap:balance}
+h1{font-size:22px;font-weight:600;letter-spacing:-.3px}
+h2{font-size:17px;font-weight:600}
+h3{font-size:13px;font-weight:600;letter-spacing:.2px}
+.num{font-variant-numeric:tabular-nums}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.wm{font-family:var(--head-font);font-weight:700;font-size:20px;letter-spacing:-.5px}
+.wm .a{color:var(--head)} .wm .t{color:var(--at-orange)} .wm sup{font-size:9px;color:var(--muted)}
+.sub{color:var(--muted);font-size:14px}
+.toggles{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:600 13px var(--head-font);border:1px solid var(--line-strong);background:var(--canvas);color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer}
+.btn[aria-pressed="true"]{background:var(--at-blue);color:#fff;border-color:var(--at-blue)}
+.btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--at-orange);outline-offset:2px}
+.tabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line-strong);margin-bottom:0}
+.tab{font:600 13px var(--head-font);padding:9px 14px;border:1px solid transparent;border-bottom:none;background:transparent;color:var(--muted);cursor:pointer;border-radius:8px 8px 0 0;white-space:nowrap}
+.tab .k{font:600 10px var(--mono);margin-left:6px;padding:1px 5px;border-radius:4px;background:var(--chip);color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--canvas);color:var(--head);border-color:var(--line-strong)}
+.tab[aria-selected="true"]::after{content:"";display:block;height:3px;background:var(--at-orange);border-radius:2px;margin-top:6px}
+.page{background:var(--canvas);border:1px solid var(--line-strong);border-top:none;border-radius:0 0 12px 12px;padding:18px}
+.pagehead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.question{color:var(--muted);font-size:14px;margin-top:4px;max-width:70ch}
+.slicers{display:flex;flex-wrap:wrap;gap:10px}
+.slicer{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
+.slicer select{font:14px var(--body-font);padding:5px 8px;border-radius:6px;border:1px solid var(--line-strong);background:var(--canvas);color:var(--ink);min-width:150px}
+.slicer .lbl{display:flex;gap:6px;align-items:center}
+.pill{font:600 10px var(--mono);padding:1px 6px;border-radius:999px;letter-spacing:.3px;text-transform:uppercase}
+.pill.w{background:var(--at-orange);color:#1A2230}
+.pill.v{background:var(--chip);color:var(--muted)}
+.grid{display:grid;gap:14px}
+.g-kpi{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
+.g-main{grid-template-columns:minmax(0,2.2fr) minmax(0,1fr)}
+@media (max-width:980px){.g-main{grid-template-columns:1fr}}
+.vis{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--canvas);display:flex;flex-direction:column;gap:10px;min-width:0}
+.vis.input{border-color:var(--input-line);box-shadow:0 0 0 3px color-mix(in srgb,var(--at-orange) 12%,transparent)}
+.vhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.role{font:600 10px var(--mono);letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.role.answer{background:color-mix(in srgb,var(--at-bright) 18%,transparent);color:var(--head)}
+.role.act{background:var(--at-orange);color:#1A2230}
+.role.confirm{background:color-mix(in srgb,var(--at-teal) 22%,transparent);color:var(--at-teal)}
+.kpi{border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.kpi .v{font:600 24px var(--head-font);color:var(--ink);margin-top:2px}
+.kpi .d{font-size:13px;margin-top:2px}
+.up{color:var(--bad)} .down{color:var(--good)} .flat{color:var(--muted)}
+.note{display:none;background:var(--note-bg);color:var(--note-ink);border-radius:8px;padding:8px 10px;font-size:13px}
+.note code{font-family:var(--mono);font-size:12px}
+body.notes .note{display:block}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{background:var(--panel);color:var(--muted);font-weight:700;font-size:12px;position:sticky;top:0}
+th:first-child,td:first-child,th.l,td.l{text-align:left}
+tr.grp td{background:var(--panel);font-weight:700;color:var(--head)}
+tr.tot td{font-weight:700;border-top:2px solid var(--line-strong);border-bottom:none}
+td.ro{color:var(--muted)}
+.cell{width:52px;font:13px var(--body-font);text-align:right;padding:3px 5px;border:1px solid var(--input-line);background:var(--input);color:var(--ink);border-radius:4px;font-variant-numeric:tabular-nums}
+.cell.ovr{background:var(--override);font-weight:700}
+.cell.txt{width:auto;min-width:120px;text-align:left}
+.cell.w80{width:80px}
+select.cell{width:auto}
+.tag{display:inline-block;font:600 10px var(--mono);padding:1px 6px;border-radius:4px;background:var(--chip);color:var(--muted);margin-left:6px}
+.tag.tbh{background:color-mix(in srgb,var(--at-orange) 25%,transparent);color:var(--note-ink)}
+.status{font:600 11px var(--body-font);padding:2px 8px;border-radius:999px}
+.st-Approved{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.st-Open{background:color-mix(in srgb,var(--at-bright) 18%,transparent);color:var(--head)}
+.st-Draft{background:var(--chip);color:var(--muted)}
+.st-Filled{background:color-mix(in srgb,var(--at-teal) 20%,transparent);color:var(--at-teal)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+svg text{fill:var(--muted);font-family:var(--body-font);font-size:11px}
+svg .val{fill:var(--ink);font-weight:700}
+.toast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--at-blue);color:#fff;padding:9px 14px;border-radius:8px;font:600 13px var(--head-font);opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
+.toast.show{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+/* design tab */
+.doc{max-width:1100px}
+.doc p,.doc li{max-width:78ch}
+.doc h2{margin-top:26px;margin-bottom:8px}
+.doc h2:first-child{margin-top:0}
+.loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:10px 0}
+.loop .s{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel)}
+.loop .s b{font-family:var(--head-font);color:var(--head);font-size:13px;display:block}
+.loop .s span{font-size:13px;color:var(--muted)}
+.mono{font-family:var(--mono);font-size:12.5px}
+.conf{font-size:12px;white-space:nowrap}
+pre.f{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;font:12.5px/1.55 var(--mono);color:var(--ink)}
+.cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <span class="wm"><span class="a">acco</span><span class="t">TOOL</span><sup>™</sup></span>
+      <h1>Employee Planning</h1>
+      <span class="sub">Reference design · hybrid employee + position planning · feeds Account Planning</span>
+    </div>
+    <div class="toggles">
+      <button class="btn" id="btnNotes" aria-pressed="true">Design notes</button>
+      <button class="btn" id="btnReset">Reset sample data</button>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="page" id="page"></div>
+</div>
+<div class="toast" id="toast">Saved to database</div>
+
+<script>
+/* ---------- sample data (example figures, DKK) ---------- */
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DEPTS=['Sales','Customer Success','R&D','Finance & Admin'];
+const SEED={
+  version:'Budget 2027',
+  grades:[
+    {g:'G3',title:'Associate',std:42000},
+    {g:'G4',title:'Specialist',std:50000},
+    {g:'G5',title:'Senior',std:60000},
+    {g:'G6',title:'Lead',std:72000},
+    {g:'G7',title:'Manager',std:88000}
+  ],
+  emps:[
+    {id:'E1001',name:'Anna Holm',dept:'Sales',grade:'G7',sal:91000,fte:1,end:null},
+    {id:'E1002',name:'Jonas Berg',dept:'Sales',grade:'G5',sal:61000,fte:1,end:null},
+    {id:'E1003',name:'Sofie Lund',dept:'Sales',grade:'G4',sal:51500,fte:1,end:6},
+    {id:'E1004',name:'Mikkel Dahl',dept:'Customer Success',grade:'G5',sal:58000,fte:1,end:null},
+    {id:'E1005',name:'Ida Kjær',dept:'Customer Success',grade:'G3',sal:43000,fte:0.8,end:null},
+    {id:'E1006',name:'Lars Winther',dept:'R&D',grade:'G7',sal:95000,fte:1,end:null},
+    {id:'E1007',name:'Emma Friis',dept:'R&D',grade:'G6',sal:74000,fte:1,end:null},
+    {id:'E1008',name:'Noah Skov',dept:'R&D',grade:'G5',sal:62500,fte:1,end:null},
+    {id:'E1009',name:'Freja Bach',dept:'R&D',grade:'G4',sal:50500,fte:1,end:null},
+    {id:'E1010',name:'Oliver Krogh',dept:'Finance & Admin',grade:'G6',sal:70000,fte:1,end:null},
+    {id:'E1011',name:'Clara Juhl',dept:'Finance & Admin',grade:'G3',sal:41500,fte:0.6,end:null}
+  ],
+  tbh:[
+    {id:'P-27-01',title:'Account Executive',dept:'Sales',grade:'G4',fte:1,start:3,status:'Approved',replaces:''},
+    {id:'P-27-02',title:'Senior Developer',dept:'R&D',grade:'G6',fte:1,start:2,status:'Approved',replaces:''},
+    {id:'P-27-03',title:'Developer',dept:'R&D',grade:'G5',fte:1,start:6,status:'Open',replaces:''},
+    {id:'P-27-04',title:'Account Executive',dept:'Sales',grade:'G4',fte:1,start:8,status:'Open',replaces:'E1003'},
+    {id:'P-27-05',title:'CS Manager',dept:'Customer Success',grade:'G6',fte:1,start:9,status:'Draft',replaces:''}
+  ],
+  rates:[
+    {el:'Salary increase',basis:'% from month',val:3.0,from:4,scope:'All',acct:'—'},
+    {el:'Pension (employer)',basis:'% of salary',val:10.0,from:1,scope:'All',acct:'2220'},
+    {el:'Holiday allowance',basis:'% of salary',val:1.0,from:1,scope:'All',acct:'2230'},
+    {el:'Bonus',basis:'% of salary',val:10.0,from:1,scope:'Sales',acct:'2250'},
+    {el:'Bonus',basis:'% of salary',val:5.0,from:1,scope:'Other',acct:'2250'},
+    {el:'Social charges',basis:'DKK per FTE / month',val:850,from:1,scope:'All',acct:'2240'},
+    {el:'Benefits',basis:'DKK per FTE / month',val:1500,from:1,scope:'All',acct:'2260'},
+    {el:'Recruitment',basis:'DKK per hire (start month)',val:40000,from:1,scope:'All',acct:'2270'}
+  ]
+};
+const ACCTS=[
+  {a:'2210',n:'Salaries',el:'Salary'},
+  {a:'2220',n:'Pension',el:'Pension (employer)'},
+  {a:'2230',n:'Holiday allowance',el:'Holiday allowance'},
+  {a:'2240',n:'Social charges',el:'Social charges'},
+  {a:'2250',n:'Bonus',el:'Bonus'},
+  {a:'2260',n:'Staff benefits',el:'Benefits'},
+  {a:'2270',n:'Recruitment',el:'Recruitment'}
+];
+let S, OVR; // state, FTE overrides {rowId:{m:val}}
+function reset(){S=JSON.parse(JSON.stringify(SEED));OVR={};}
+reset();
+
+/* ---------- calculation engine (mirrors vw_Calc_PersonnelCost) ---------- */
+const gradeStd=g=>S.grades.find(x=>x.g===g)?.std||0;
+const rate=(el,dept)=>{
+  const r=S.rates.filter(x=>x.el===el);
+  if(el==='Bonus'){return (r.find(x=>x.scope===dept)||r.find(x=>x.scope==='Other')||{val:0}).val;}
+  return r[0]||{val:0,from:1};
+};
+function rows(){
+  const out=[];
+  S.emps.forEach(e=>out.push({id:e.id,name:e.name,dept:e.dept,grade:e.grade,type:'EMP',sal:e.sal,
+    base:MONTHS.map((_,i)=>(e.end&&i+1>e.end)?0:e.fte),start:null}));
+  S.tbh.forEach(p=>{if(p.status==='Filled')return;out.push({id:p.id,name:p.title,dept:p.dept,grade:p.grade,type:'TBH',sal:gradeStd(p.grade),
+    base:MONTHS.map((_,i)=>i+1>=p.start?p.fte:0),start:p.start,status:p.status});});
+  out.forEach(r=>{r.fte=r.base.map((v,i)=>OVR[r.id]&&OVR[r.id][i]!=null?OVR[r.id][i]:v);});
+  return out;
+}
+function cost(r,opt={}){
+  const inc=rate('Salary increase'), pen=rate('Pension (employer)').val/100, hol=rate('Holiday allowance').val/100;
+  const bon=rate('Bonus',r.dept)/100, soc=rate('Social charges').val, ben=rate('Benefits').val, rec=rate('Recruitment').val;
+  const el={'Salary':[],'Pension (employer)':[],'Holiday allowance':[],'Social charges':[],'Bonus':[],'Benefits':[],'Recruitment':[]};
+  for(let i=0;i<12;i++){
+    const f=opt.runrate?(r.type==='EMP'?r.base[0]:0):r.fte[i];
+    const s=r.sal*((!opt.runrate&&i+1>=inc.from)?1+inc.val/100:1)*f;
+    el['Salary'][i]=s; el['Pension (employer)'][i]=s*pen; el['Holiday allowance'][i]=s*hol; el['Bonus'][i]=s*bon;
+    el['Social charges'][i]=soc*f; el['Benefits'][i]=ben*f;
+    el['Recruitment'][i]=(!opt.runrate&&r.type==='TBH'&&r.status!=='Draft'&&i+1===r.start)?rec:0;
+    if(r.type==='TBH'&&r.status==='Draft'){Object.keys(el).forEach(k=>el[k][i]=0);}
+  }
+  const tot=MONTHS.map((_,i)=>Object.values(el).reduce((a,v)=>a+v[i],0));
+  return {el,tot};
+}
+function isCounted(r){return !(r.type==='TBH'&&r.status==='Draft');}
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const k=v=>Math.round(v/1000).toLocaleString('en-US');
+const f1=v=>(Math.round(v*10)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+function totals(filterDept){
+  const R=rows().filter(r=>!filterDept||filterDept==='All'||r.dept===filterDept);
+  const m=MONTHS.map(()=>0), rr=MONTHS.map(()=>0), fte=MONTHS.map(()=>0);
+  const byEl={};
+  R.forEach(r=>{const c=cost(r),c0=cost(r,{runrate:true});
+    c.tot.forEach((v,i)=>m[i]+=v); c0.tot.forEach((v,i)=>rr[i]+=v);
+    if(isCounted(r)) r.fte.forEach((v,i)=>fte[i]+=v);
+    Object.entries(c.el).forEach(([e,a])=>{byEl[e]=byEl[e]||MONTHS.map(()=>0);a.forEach((v,i)=>byEl[e][i]+=v);});
+  });
+  return {R,m,rr,fte,byEl};
+}
+
+/* ---------- small SVG chart helpers ---------- */
+function barChart(vals,line,{h=190,fmt=k,lineLabel=''}={}){
+  const W=640,P={l:44,r:10,t:14,b:24},iw=W-P.l-P.r,ih=h-P.t-P.b;
+  const max=Math.max(...vals,...(line||[0]))*1.12||1; const bw=iw/vals.length;
+  const y=v=>P.t+ih-(v/max)*ih;
+  const ticks=[0,.25,.5,.75,1].map(t=>max*t);
+  let s=`<svg viewBox="0 0 ${W} ${h}" width="100%" role="img" aria-label="Monthly chart">`;
+  ticks.forEach(t=>s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${P.l-6}" y="${y(t)+4}" text-anchor="end">${fmt(t)}</text>`);
+  vals.forEach((v,i)=>{const x=P.l+i*bw+bw*.18;s+=`<rect x="${x}" y="${y(v)}" width="${bw*.64}" height="${Math.max(0,P.t+ih-y(v))}" rx="2" fill="var(--bar)"><title>${MONTHS[i]}: ${fmt(v)}</title></rect><text x="${x+bw*.32}" y="${h-7}" text-anchor="middle">${MONTHS[i]}</text>`;});
+  if(line){const pts=line.map((v,i)=>`${P.l+i*bw+bw/2},${y(v)}`).join(' ');
+    s+=`<polyline points="${pts}" fill="none" stroke="var(--at-orange)" stroke-width="2" stroke-dasharray="5 4"/>`;
+    line.forEach((v,i)=>s+=`<circle cx="${P.l+i*bw+bw/2}" cy="${y(v)}" r="2.5" fill="var(--at-orange)"/>`);}
+  return s+'</svg>';
+}
+function waterfall(steps){
+  const W=640,h=230,P={l:48,r:10,t:18,b:40},iw=W-P.l-P.r,ih=h-P.t-P.b;
+  let run=0; const bars=steps.map(s=>{if(s.total){const b={...s,y0:0,y1:s.v};run=s.v;return b;}const b={...s,y0:run,y1:run+s.v};run+=s.v;return b;});
+  const lo=Math.min(...bars.map(b=>Math.min(b.y0,b.y1)))*0.9, hi=Math.max(...bars.map(b=>Math.max(b.y0,b.y1)))*1.04;
+  const y=v=>P.t+ih-((v-lo)/(hi-lo))*ih; const bw=iw/bars.length;
+  let s=`<svg viewBox="0 0 ${W} ${h}" width="100%" role="img" aria-label="Cost bridge">`;
+  [0,.5,1].forEach(t=>{const v=lo+(hi-lo)*t;s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${P.l-6}" y="${y(v)+4}" text-anchor="end">${(v/1e6).toFixed(1)}m</text>`;});
+  bars.forEach((b,i)=>{const x=P.l+i*bw+bw*.15,top=y(Math.max(b.y0,b.y1)),hh=Math.max(1,Math.abs(y(b.y0)-y(b.y1)));
+    const col=b.total?'var(--at-blue)':(b.v>=0?'var(--bad)':'var(--good)');
+    const top0=b.total?y(b.y1):top, h0=b.total?(P.t+ih-y(b.y1)):hh;
+    s+=`<rect x="${x}" y="${top0}" width="${bw*.7}" height="${h0}" rx="2" fill="${col}" opacity="${b.total?1:.85}"/>`;
+    s+=`<text class="val" x="${x+bw*.35}" y="${top0-5}" text-anchor="middle">${b.total?(b.v/1e6).toFixed(2)+'m':(b.v>=0?'+':'')+k(b.v)+'k'}</text>`;
+    b.label.split('|').forEach((ln,j)=>s+=`<text x="${x+bw*.35}" y="${h-24+j*13}" text-anchor="middle">${ln}</text>`);
+  });
+  return s+'</svg>';
+}
+function gantt(){
+  const W=640,rowH=26,P={l:150,r:10,t:22};const h=P.t+S.tbh.length*rowH+8;const iw=W-P.l-P.r,mw=iw/12;
+  let s=`<svg viewBox="0 0 ${W} ${h}" width="100%" role="img" aria-label="Hiring timeline">`;
+  MONTHS.forEach((m,i)=>s+=`<text x="${P.l+i*mw+mw/2}" y="14" text-anchor="middle">${m}</text><line x1="${P.l+i*mw}" x2="${P.l+i*mw}" y1="18" y2="${h}" stroke="var(--grid)"/>`);
+  S.tbh.forEach((p,j)=>{const yy=P.t+j*rowH;const col=p.status==='Approved'?'var(--good)':p.status==='Open'?'var(--bar)':p.status==='Filled'?'var(--at-teal)':'var(--line-strong)';
+    s+=`<text x="0" y="${yy+16}">${p.id} ${p.title}</text><rect x="${P.l+(p.start-1)*mw+2}" y="${yy+5}" width="${(13-p.start)*mw-4}" height="15" rx="4" fill="${col}" opacity=".85"/>`;});
+  return s+'</svg>';
+}
+
+/* ---------- pages ---------- */
+const PAGES=[
+ {id:'overview',name:'Workforce overview',k:'Report'},
+ {id:'plan',name:'FTE plan',k:'accoPLANNING'},
+ {id:'positions',name:'Positions & hires',k:'accoMASTERDATA'},
+ {id:'rates',name:'Rates & drivers',k:'accoMASTERDATA'},
+ {id:'pl',name:'P&L hand-off',k:'Report'},
+ {id:'design',name:'Solution design',k:'Spec'}
+];
+let cur='overview', dept='All';
+const tabsEl=document.getElementById('tabs'), pageEl=document.getElementById('page');
+function drawTabs(){tabsEl.innerHTML=PAGES.map(p=>`<button class="tab" role="tab" id="tab-${p.id}" aria-selected="${p.id===cur}" data-p="${p.id}">${p.name}<span class="k">${p.k}</span></button>`).join('');}
+tabsEl.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;cur=b.dataset.p;try{location.hash=cur}catch(_){};drawTabs();render();});
+
+function slicers(withDept=true){
+  return `<div class="slicers">
+   <label class="slicer"><span class="lbl">Version <span class="pill w">write-scoping</span></span>
+     <select id="slVersion"><option>Budget 2027</option><option>Forecast 3+9 2027</option><option>Forecast 6+6 2027</option></select></label>
+   ${withDept?`<label class="slicer"><span class="lbl">Department <span class="pill v">view-scoping</span></span>
+     <select id="slDept">${['All',...DEPTS].map(d=>`<option ${d===dept?'selected':''}>${d}</option>`).join('')}</select></label>`:''}
+  </div>`;
+}
+function head(title,q,withDept=true){return `<div class="pagehead"><div><h2>${title}</h2><div class="question">${q}</div></div>${slicers(withDept)}</div>`;}
+function vis(role,title,body,note,input=false){
+  return `<section class="vis${input?' input':''}"><div class="vhead"><h3>${title}</h3><span class="role ${role}">${role}</span></div>${body}${note?`<div class="note">${note}</div>`:''}</section>`;
+}
+function kpi(l,v,d,cls='flat'){return `<div class="kpi"><div class="l">${l}</div><div class="v num">${v}</div><div class="d ${cls}">${d}</div></div>`;}
+
+function pOverview(){
+  const T=totals(dept), tot=sum(T.m), rr=sum(T.rr), avgF=sum(T.fte)/12, endF=T.fte[11];
+  const rrF=T.R.filter(r=>r.type==='EMP').reduce((a,r)=>a+r.base[0],0);
+  const open=S.tbh.filter(p=>p.status!=='Filled'&&(dept==='All'||p.dept===dept));
+  // bridge
+  let inc=0,leav=0,hires=0,recr=0;
+  T.R.forEach(r=>{
+    const c=cost(r),c0=cost(r,{runrate:true});
+    if(r.type==='TBH'){hires+=sum(c.tot)-sum(c.el['Recruitment']);recr+=sum(c.el['Recruitment']);}
+    else{ // split: FTE change at old salary vs increase
+      const noInc=S.rates[0].val; S.rates[0].val=0; const cNo=cost(r); S.rates[0].val=noInc;
+      leav+=sum(cNo.tot)-sum(c0.tot); inc+=sum(c.tot)-sum(cNo.tot);}
+  });
+  const bridge=[{label:'Run-rate|current staff',v:rr,total:true},{label:'Salary|increase',v:inc},{label:'Leavers &|FTE changes',v:leav},{label:'New hires|(TBH)',v:hires},{label:'Recruitment|one-offs',v:recr},{label:S.version,v:tot,total:true}];
+  const deptRows=DEPTS.filter(d=>dept==='All'||d===dept).map(d=>{const t=totals(d);const c=sum(t.m),f=sum(t.fte)/12;return `<tr><td>${d}</td><td class="num">${f1(f)}</td><td class="num">${f1(t.fte[11])}</td><td class="num">${k(c)}</td><td class="num">${k(c/f/12)}</td><td class="num ${c>sum(t.rr)?'up':'down'}">${c>=sum(t.rr)?'+':''}${k(c-sum(t.rr))}</td></tr>`;}).join('');
+  return head('Workforce overview','Can we afford the workforce plan? How does next year\'s personnel cost bridge from today\'s run-rate, and where does the growth come from?')+
+  `<div class="grid g-kpi">${kpi('Personnel cost FY','DKK '+k(tot)+'k',`${tot>=rr?'+':''}${((tot/rr-1)*100).toFixed(1)}% vs run-rate`,tot>rr?'up':'down')}
+   ${kpi('Average FTE',f1(avgF),`run-rate ${f1(rrF)} FTE`)}
+   ${kpi('FTE end of year',f1(endF),`${endF>=rrF?'+':''}${f1(endF-rrF)} vs today`,endF>rrF?'up':'down')}
+   ${kpi('Cost per FTE / month','DKK '+k(tot/avgF/12)+'k','fully loaded')}
+   ${kpi('Open positions',open.filter(p=>p.status!=='Draft').length,`${open.filter(p=>p.status==='Draft').length} draft (excluded)`)}</div>
+   <div class="grid g-2" style="margin-top:14px">
+    ${vis('answer','Cost bridge: run-rate → '+S.version+' (kDKK)',waterfall(bridge),'Run-rate = current employees at today\'s salary and FTE × 12. Bridge steps come from the same calc view (<code>vw_Fact_PersonnelCost</code>) by toggling drivers, so the bridge always reconciles to the plan total.')}
+    ${vis('answer','FTE by month',barChart(T.fte,MONTHS.map(()=>rrF),{fmt:v=>f1(v)})+`<div class="legend"><span><i style="background:var(--bar)"></i>${S.version} FTE</span><span><i style="background:var(--at-orange)"></i>Run-rate FTE</span></div>`,'Counts employees plus Approved/Open TBH positions. Draft positions are shown on the Positions page but excluded from cost and FTE until approved.')}
+   </div>
+   <div style="margin-top:14px">${vis('answer','By department',`<div class="tblwrap"><table><thead><tr><th>Department</th><th>Avg FTE</th><th>FTE Dec</th><th>Cost kDKK</th><th>Cost/FTE/mo kDKK</th><th>vs run-rate kDKK</th></tr></thead><tbody>${deptRows}</tbody></table></div>`,'Read-only page. Department is view-scoping; Version is write-scoping everywhere in the report and is synced across pages.')}</div>`;
+}
+
+function pPlan(){
+  const T=totals(dept);
+  const body=[];
+  DEPTS.filter(d=>dept==='All'||d===dept).forEach(d=>{
+    body.push(`<tr class="grp"><td colspan="15">${d}</td></tr>`);
+    T.R.filter(r=>r.dept===d).forEach(r=>{
+      const draft=r.type==='TBH'&&r.status==='Draft';
+      body.push(`<tr><td class="l">${r.name}<span class="tag${r.type==='TBH'?' tbh':''}">${r.type==='TBH'?'TBH '+r.id:r.id}</span>${draft?'<span class="tag">draft</span>':''}</td><td class="ro">${r.grade}</td>${r.fte.map((v,i)=>{const o=OVR[r.id]&&OVR[r.id][i]!=null;return `<td><input class="cell${o?' ovr':''}" id="c-${r.id}-${i}" data-r="${r.id}" data-m="${i}" type="number" step="0.1" min="0" max="1.5" value="${v}" ${draft?'disabled':''} aria-label="${r.name} ${MONTHS[i]} FTE"></td>`;}).join('')}<td class="num ro">${f1(sum(r.fte)/12)}</td></tr>`);
+    });
+  });
+  body.push(`<tr class="tot"><td>Total FTE</td><td></td>${T.fte.map(v=>`<td class="num">${f1(v)}</td>`).join('')}<td class="num">${f1(sum(T.fte)/12)}</td></tr>`);
+  const grid=`<div class="tblwrap"><table><thead><tr><th>Employee / position</th><th>Grade</th>${MONTHS.map(m=>`<th>${m}</th>`).join('')}<th>Avg</th></tr></thead><tbody>${body.join('')}</tbody></table></div>
+   <div class="legend"><span><i style="background:var(--input);border:1px solid var(--input-line)"></i>Derived from HR / position dates</span><span><i style="background:var(--override)"></i>Your override (written to RAW)</span></div>`;
+  const runrate=T.R.filter(r=>r.type==='EMP').map(r=>`<tr><td>${r.name}</td><td class="num">${f1(r.base[0])}</td><td class="num">${k(r.sal)}</td><td class="l">${r.end?'Leaves end '+MONTHS[r.end-1]:''}</td></tr>`).join('');
+  return head('FTE plan','Who do we need, when, and at what capacity? Adjust FTE per employee or position and month, and see the cost effect immediately.')+
+  `<div class="grid">
+    ${vis('act','Plan FTE per month — '+S.version,grid,
+     'accoPLANNING · Rows: <code>Department › Employee/Position</code> · Columns: <code>Month</code> · Measure: <code>FTE</code> (writeable). Transaction keys: <code>BK_Resource#ID</code>, <code>BK_Month#ID</code>, <code>BK_Version#ID</code> (from the single-select Version slicer). Writes go to <code>Fact_FTE_RAW#AP</code>; the trigger merges into <code>Fact_FTE_Current</code>. Only overrides are stored — the derived baseline comes from HR dates and position start dates, so the grid stays in sync when HR data refreshes. Draft positions are locked.',true)}
+    <div class="grid g-2">
+     ${vis('confirm','Personnel cost by month (kDKK)',barChart(T.m,T.rr)+`<div class="legend"><span><i style="background:var(--bar)"></i>${S.version}</span><span><i style="background:var(--at-orange)"></i>Run-rate</span></div><div class="num" style="font:600 18px var(--head-font)">DKK ${k(sum(T.m))}k <span class="sub" style="font:14px var(--body-font)">FY total</span></div>`,'Reads <code>vw_Fact_PersonnelCost</code> (DirectQuery). Positioned next to the grid so a stale value is noticed immediately. Verify on first build that it re-queries after a write (open item).')}
+     ${vis('answer','Current staff (HR snapshot)',`<div class="tblwrap"><table><thead><tr><th>Employee</th><th>FTE</th><th>Salary/mo k</th><th class="l">Note</th></tr></thead><tbody>${runrate}</tbody></table></div>`,'From the HR/payroll load (<code>Dim_Employee</code>, not writeback). Salaries are visible only to roles with salary access (RLS by org unit).')}
+    </div>
+   </div>`;
+}
+
+function pPositions(){
+  const rowsH=S.tbh.filter(p=>dept==='All'||p.dept===dept).map((p,i)=>{const idx=S.tbh.indexOf(p);return `<tr>
+   <td class="l mono">${p.id}</td>
+   <td class="l"><input class="cell txt" id="p-t-${idx}" data-i="${idx}" data-f="title" value="${p.title}" aria-label="Title"></td>
+   <td class="l"><select class="cell" id="p-d-${idx}" data-i="${idx}" data-f="dept">${DEPTS.map(d=>`<option ${d===p.dept?'selected':''}>${d}</option>`).join('')}</select></td>
+   <td><select class="cell" id="p-g-${idx}" data-i="${idx}" data-f="grade">${S.grades.map(g=>`<option ${g.g===p.grade?'selected':''}>${g.g}</option>`).join('')}</select></td>
+   <td><input class="cell" id="p-f-${idx}" data-i="${idx}" data-f="fte" type="number" step="0.1" min="0.1" max="1" value="${p.fte}" aria-label="FTE"></td>
+   <td><select class="cell" id="p-s-${idx}" data-i="${idx}" data-f="start">${MONTHS.map((m,j)=>`<option value="${j+1}" ${j+1===p.start?'selected':''}>${m} 2027</option>`).join('')}</select></td>
+   <td><select class="cell" id="p-st-${idx}" data-i="${idx}" data-f="status">${['Draft','Open','Approved','Filled'].map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}</select></td>
+   <td class="l ro">${p.replaces?p.replaces+' (backfill)':'New seat'}</td>
+   <td class="num">${k(gradeStd(p.grade))}</td>
+   <td class="num">${p.status==='Draft'||p.status==='Filled'?'—':k(sum(cost({id:p.id,dept:p.dept,type:'TBH',sal:gradeStd(p.grade),start:p.start,status:p.status,fte:MONTHS.map((_,j)=>j+1>=p.start?p.fte:0)}).tot))}</td></tr>`;}).join('');
+  const hires=S.tbh.filter(p=>p.status==='Approved'||p.status==='Open');
+  return head('Positions & hires','Which new seats are we asking for, when do they start, and what do they add to the year?')+
+  `<div class="grid g-main">
+   ${vis('act','Planned positions (TBH) — '+S.version,`<div class="tblwrap"><table><thead><tr><th class="l">Position</th><th class="l">Title</th><th class="l">Department</th><th>Grade</th><th>FTE</th><th>Start</th><th>Status</th><th class="l">Type</th><th>Std salary/mo k</th><th>FY cost k</th></tr></thead><tbody>${rowsH}</tbody></table></div>`,
+    'accoMASTERDATA on <code>Fact_Position#AM</code> — one row per position per version (fact-shaped master data). Key: <code>BK_Position#ID</code> + <code>BK_Version#ID</code>. Status drives inclusion: Draft = excluded, Open/Approved = costed at grade standard salary, Filled = the position is linked to an employee and drops out (prevents double counting). FY cost column is a non-writeable measure from the calc view.',true)}
+   <div class="grid" style="align-content:start">
+    ${vis('confirm','Hiring timeline',gantt()+`<div class="legend"><span><i style="background:var(--good)"></i>Approved</span><span><i style="background:var(--bar)"></i>Open</span><span><i style="background:var(--line-strong)"></i>Draft</span></div>`)}
+    ${vis('answer','Impact of new seats',`<div class="grid g-kpi">${kpi('Costed hires',hires.length,'Open + Approved')}${kpi('Added FTE Dec',f1(sum(hires.map(p=>p.fte))),'')}${kpi('FY cost of hires','DKK '+k(sum(hires.map(p=>sum(cost({id:p.id,dept:p.dept,type:'TBH',sal:gradeStd(p.grade),start:p.start,status:p.status,fte:MONTHS.map((_,j)=>j+1>=p.start?p.fte:0)}).tot))))+'k','incl. recruitment','up')}</div>`)}
+   </div></div>`;
+}
+
+function pRates(){
+  const r=S.rates.map((x,i)=>`<tr><td class="l">${x.el}</td><td class="l ro">${x.basis}</td><td class="l ro">${x.scope}</td>
+    <td><input class="cell w80" id="r-v-${i}" data-ri="${i}" data-f="val" type="number" step="${x.val>100?50:0.5}" value="${x.val}" aria-label="${x.el} value"></td>
+    <td>${x.el==='Salary increase'?`<select class="cell" id="r-f-${i}" data-ri="${i}" data-f="from">${MONTHS.map((m,j)=>`<option value="${j+1}" ${j+1===x.from?'selected':''}>${m}</option>`).join('')}</select>`:'<span class="ro">—</span>'}</td>
+    <td class="mono">${x.acct}</td></tr>`).join('');
+  const g=S.grades.map((x,i)=>`<tr><td class="l mono">${x.g}</td><td class="l">${x.title}</td><td><input class="cell w80" id="g-${i}" data-gi="${i}" type="number" step="500" value="${x.std}" aria-label="${x.g} standard salary"></td></tr>`).join('');
+  const T=totals('All');
+  const elRows=Object.entries(T.byEl).map(([e,a])=>`<tr><td class="l">${e}</td><td class="num">${k(sum(a))}</td><td class="num">${(sum(a)/sum(T.m)*100).toFixed(1)}%</td></tr>`).join('');
+  return head('Rates & drivers','Are the cost assumptions right for this version? One place to maintain every rate the calculation uses.',false)+
+  `<div class="grid g-main">
+   <div class="grid">
+   ${vis('act','Cost element rates — '+S.version,`<div class="tblwrap"><table><thead><tr><th class="l">Cost element</th><th class="l">Basis</th><th class="l">Applies to</th><th>Value</th><th>From month</th><th>GL account</th></tr></thead><tbody>${r}</tbody></table></div>`,
+    'accoMASTERDATA on <code>Fact_CostRate#AM</code> — one row per version × cost element × scope. Rates are versioned so a forecast can change assumptions without touching the budget. Example Danish setup: pension, ferietillæg, ATP/AES/AUB as a fixed amount per FTE. Values shown are sample figures.',true)}
+   ${vis('act','Grade standard salaries (used for TBH)',`<div class="tblwrap"><table><thead><tr><th class="l">Grade</th><th class="l">Title</th><th>DKK / month</th></tr></thead><tbody>${g}</tbody></table></div>`,'accoMASTERDATA on <code>Dim_Grade#AM</code> (+ version if standard salaries differ by version). Shared with Account Planning only if headcount KPIs are shown there.',true)}
+   </div>
+   ${vis('confirm','Cost by element, FY (kDKK)',`<div class="tblwrap"><table><thead><tr><th class="l">Element</th><th>kDKK</th><th>Share</th></tr></thead><tbody>${elRows}<tr class="tot"><td>Total</td><td class="num">${k(sum(T.m))}</td><td>100%</td></tr></tbody></table></div>`,'Changing a rate recalculates every employee and position — no re-entry in the FTE grid.')}
+  </div>`;
+}
+
+function pPL(){
+  const T=totals('All');const Q=[[0,1,2],[3,4,5],[6,7,8],[9,10,11]];
+  const r=ACCTS.map(a=>{const v=T.byEl[a.el]||MONTHS.map(()=>0);return `<tr><td class="l mono">${a.a}</td><td class="l">${a.n}</td>${Q.map(q=>`<td class="num">${k(sum(q.map(i=>v[i])))}</td>`).join('')}<td class="num">${k(sum(v))}</td></tr>`;}).join('');
+  return head('P&L hand-off','Does the personnel cost land correctly in the P&L plan, account by account, without anyone re-typing it?',false)+
+  `<div class="grid g-main">
+   ${vis('answer','Personnel cost by GL account — '+S.version+' (kDKK)',`<div class="tblwrap"><table><thead><tr><th class="l">Account</th><th class="l">Name</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>FY</th></tr></thead><tbody>${r}<tr class="tot"><td></td><td>Total personnel cost</td>${Q.map(q=>`<td class="num">${k(sum(q.map(i=>T.m[i])))}</td>`).join('')}<td class="num">${k(sum(T.m))}</td></tr></tbody></table></div>`,
+    'Cost elements map to accounts through <code>Dim_CostElement</code> (column <code>BK_Account#ID</code>). The Account Planning page shows these accounts as locked, non-writeable rows sourced from this module, so personnel cost is planned once.')}
+   ${vis('answer','How it reaches Account Planning',`<ol style="margin:0;padding-left:18px;display:grid;gap:6px">
+     <li>Employee Planning datamart exposes <span class="mono">vw_Fact_PersonnelCost_ByAccount</span> (version × month × account).</li>
+     <li>Both modules share <span class="mono">accoTOOL$Base.Dim_Version#AM</span> and the warehouse account dimension, so versions and accounts line up.</li>
+     <li>The semantic model relates both facts to the same Dim_Account / Dim_Version / Date; a P&amp;L measure adds them: <span class="mono">[P&amp;L Plan] = [Account Plan] + [Personnel Cost]</span>.</li>
+     <li>Personnel accounts (22xx) are cell-locked in the Account Planning grid.</li></ol>`,'Modules never reference each other\'s schemas, so the join happens in the semantic model (preferred) rather than in SQL. Copy Version copies both modules for a new forecast in one run.')}
+  </div>`;
+}
+
+function pDesign(){
+  return `<div class="doc">
+  <h2>Scope</h2>
+  <p>A reusable accoTOOL module for planning headcount, FTE and fully loaded personnel cost, using the hybrid approach: existing employees load from HR/payroll, new seats are planned as TBH positions, and every cost element is calculated from versioned rates. The output feeds the Account Planning module as locked P&amp;L lines.</p>
+  <div class="loop">
+   <div class="s"><b>Report</b><span>5 pages: overview, FTE plan, positions, rates, P&amp;L hand-off</span></div>
+   <div class="s"><b>Visuals</b><span>1 × accoPLANNING (FTE), 3 × accoMASTERDATA (positions, rates, grades)</span></div>
+   <div class="s"><b>Database</b><span>accoTOOL$EmployeePlanning + dmAccoTOOL_EmployeePlanning; calc view does all cost logic</span></div>
+   <div class="s"><b>Semantic model</b><span>Shared Version, Account, Date with Account Planning; RLS on salary</span></div>
+  </div>
+
+  <h2>Database objects</h2>
+  <div class="tblwrap"><table><thead><tr><th class="l">Object</th><th class="l">Pattern / visual</th><th class="l">Grain</th><th class="l">Purpose</th><th class="l">Status</th></tr></thead><tbody>
+   <tr><td class="l mono">accoTOOL$Base.Dim_Version#AM</td><td class="l">A · AM</td><td class="l">1 row / version</td><td class="l">Shared with Account Planning</td><td class="l conf">🟡 reuse if present</td></tr>
+   <tr><td class="l mono">accoTOOL$Base.Config_Connection / Config_Writeback / Log_Audit</td><td class="l">Base</td><td class="l">—</td><td class="l">Shared writeback identity, config, audit</td><td class="l conf">🟡 reuse if present</td></tr>
+   <tr><td class="l mono">Dim_Employee (warehouse)</td><td class="l">Source, read-only</td><td class="l">1 row / employee (SCD2)</td><td class="l">HR snapshot: org unit, grade, salary, FTE, start/end</td><td class="l conf">⚠️ confirm source</td></tr>
+   <tr><td class="l mono">accoTOOL$EmployeePlanning.Fact_Position#AM</td><td class="l">A · AM</td><td class="l">position × version</td><td class="l">TBH seats: title, org unit, grade, FTE, start, status, backfill of</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">…Fact_EmployeeAssumption#AM</td><td class="l">A · AM</td><td class="l">employee × version</td><td class="l">Salary override, planned end date, capitalisation % (optional)</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">…Fact_FTE_RAW#AP → Fact_FTE_Current</td><td class="l">B · AP (RAW→Current)</td><td class="l">resource × month × version</td><td class="l">FTE overrides only; trigger merges latest value</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">…Fact_CostRate#AM</td><td class="l">A · AM</td><td class="l">version × cost element × scope</td><td class="l">Rates: increase %, pension %, social charges, benefits, recruitment</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">…Dim_Grade#AM</td><td class="l">A · AM</td><td class="l">1 row / grade</td><td class="l">Standard monthly salary for TBH</td><td class="l conf">🟡 new (or reuse HR grades)</td></tr>
+   <tr><td class="l mono">…Dim_CostElement#AM</td><td class="l">A · AM</td><td class="l">1 row / element</td><td class="l">Element → GL account mapping</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">…vw_Dim_Resource</td><td class="l">Module view</td><td class="l">employee ∪ position</td><td class="l">One row axis for the FTE grid (<span class="mono">BK_Resource#ID</span>, type EMP/TBH)</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">…vw_Calc_PersonnelCost</td><td class="l">Module engine view</td><td class="l">resource × month × element × version</td><td class="l">All cost logic, live</td><td class="l conf">🟡 new</td></tr>
+   <tr><td class="l mono">dmAccoTOOL_EmployeePlanning.*</td><td class="l">Datamart views</td><td class="l">—</td><td class="l">vw_Dim_Resource, vw_Dim_Grade, vw_Dim_CostElement, vw_Fact_FTE, vw_Fact_Position, vw_Fact_CostRate, vw_Fact_PersonnelCost, vw_Fact_PersonnelCost_ByAccount, vw_Config_Writeback</td><td class="l conf">🟡 new</td></tr>
+  </tbody></table></div>
+
+  <h2>Calculation logic (vw_Calc_PersonnelCost)</h2>
+  <pre class="f">Baseline FTE(r,m)   = EMP: HR FTE if m within [start, end]  |  TBH: position FTE if m ≥ start and status ∈ {Open, Approved}
+FTE(r,m)            = COALESCE(Fact_FTE_Current.FTE, Baseline FTE)
+MonthlySalary(r,m)  = EMP: COALESCE(assumption override, HR salary)  |  TBH: Dim_Grade.StdSalary
+                      × (1 + increase%)  if m ≥ increase month
+Salary              = MonthlySalary × FTE
+Pension / Holiday / Bonus = Salary × rate% (bonus by scope: department, else "Other")
+Social charges / Benefits = rate × FTE
+Recruitment         = rate, once, in TBH start month
+Cost element        → GL account via Dim_CostElement</pre>
+  <p>Keep the logic in SQL, not DAX: it is auditable, testable against payroll, and the P&amp;L hand-off reads the same numbers. If the view gets slow in DirectQuery, materialise it with a stored procedure triggered after writes, and keep the view for the Confirm visuals.</p>
+
+  <h2>Page specifications</h2>
+  <div class="tblwrap"><table><thead><tr><th class="l">Page</th><th class="l">Business question</th><th class="l">Answer</th><th class="l">Act</th><th class="l">Confirm</th><th class="l">Slicers</th></tr></thead><tbody>
+   <tr><td class="l">Workforce overview</td><td class="l">Can we afford the plan?</td><td class="l">KPIs, bridge, FTE trend, departments</td><td class="l">— (read-only)</td><td class="l">—</td><td class="l">Version (W), Department (V)</td></tr>
+   <tr><td class="l">FTE plan</td><td class="l">Who do we need, when?</td><td class="l">HR snapshot</td><td class="l">accoPLANNING FTE grid</td><td class="l">Monthly cost vs run-rate</td><td class="l">Version (W), Department (V)</td></tr>
+   <tr><td class="l">Positions &amp; hires</td><td class="l">Which new seats, when?</td><td class="l">Impact tiles</td><td class="l">accoMASTERDATA positions</td><td class="l">Hiring timeline</td><td class="l">Version (W), Department (V)</td></tr>
+   <tr><td class="l">Rates &amp; drivers</td><td class="l">Are the assumptions right?</td><td class="l">—</td><td class="l">accoMASTERDATA rates + grades</td><td class="l">Cost by element</td><td class="l">Version (W)</td></tr>
+   <tr><td class="l">P&amp;L hand-off</td><td class="l">Does cost land in the P&amp;L?</td><td class="l">Cost by account × quarter</td><td class="l">—</td><td class="l">—</td><td class="l">Version (W)</td></tr>
+  </tbody></table></div>
+  <p><b>Write-scoping rules:</b> the Version slicer is single-select with a default and synced across pages. Cross-filtering from context visuals into the accoTOOL visuals is turned off. Department filters the view only.</p>
+
+  <h2>Semantic model</h2>
+  <ul>
+   <li>Shared dimensions with Account Planning: Version, Account, Date, Org unit.</li>
+   <li>Writeback facts (FTE, Position, CostRate) and the cost view in DirectQuery; HR and dimension views in Import or Dual.</li>
+   <li>RLS by org unit. Salary-level columns hidden from roles without salary access; those users see department totals only.</li>
+   <li>Measures in <span class="mono">_Measures</span>: FTE, Headcount, Personnel Cost, Run-rate Cost, Cost per FTE, bridge steps.</li>
+  </ul>
+
+  <h2>Build sequence</h2>
+  <ol>
+   <li>Pre-flight: inspect the target database (Base objects, Dim_Version#AM, HR source tables, writeback identity).</li>
+   <li>Module schema and tables, Config_Writeback rows, grants for the shared writeback role.</li>
+   <li>Calc view, reconciled to one month of actual payroll before any planning input.</li>
+   <li>Datamart views, then the semantic model, then pages.</li>
+   <li>Extend Copy Version to include this module's facts.</li>
+  </ol>
+
+  <h2>Open items</h2>
+  <ul>
+   <li>⚠️ Target database not inspected yet — object list above assumes standard accoTOOL conventions.</li>
+   <li>⚠️ RLS together with writeback on salary-sensitive rows is untested.</li>
+   <li>⚠️ Whether the Confirm visuals re-query automatically after a write; verify on first build.</li>
+   <li>⚠️ Behaviour in the Power BI Service (gateway, credentials) is untested; Desktop only so far.</li>
+   <li>⚠️ Converting a TBH to an employee: set status Filled and link the employee ID, or automate from the HR load.</li>
+  </ul>
+  </div>`;
+}
+
+const R={overview:pOverview,plan:pPlan,positions:pPositions,rates:pRates,pl:pPL,design:pDesign};
+function render(){
+  const y=window.scrollY;
+  pageEl.innerHTML=R[cur]();
+  const v=document.getElementById('slVersion'); if(v){v.value=S.version;}
+  window.scrollTo(0,y);
+}
+let tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1400);}
+pageEl.addEventListener('change',e=>{
+  const el=e.target;
+  if(el.id==='slDept'){dept=el.value;render();return;}
+  if(el.id==='slVersion'){S.version=el.value;render();toast('Version set: '+el.value);return;}
+  if(el.dataset.r){const v=parseFloat(el.value);const row=rows().find(r=>r.id===el.dataset.r);const m=+el.dataset.m;
+    OVR[row.id]=OVR[row.id]||{}; if(isNaN(v)||v===row.base[m]) delete OVR[row.id][m]; else OVR[row.id][m]=v;
+    render();toast('Written to Fact_FTE_RAW#AP');const n=document.getElementById(el.id);if(n)n.focus();return;}
+  if(el.dataset.i!=null){const p=S.tbh[+el.dataset.i];const f=el.dataset.f;p[f]=(f==='fte'||f==='start')?+el.value:el.value;
+    delete OVR[p.id];render();toast('Written to Fact_Position#AM');return;}
+  if(el.dataset.ri!=null){S.rates[+el.dataset.ri][el.dataset.f]=+el.value;render();toast('Written to Fact_CostRate#AM');return;}
+  if(el.dataset.gi!=null){S.grades[+el.dataset.gi].std=+el.value;render();toast('Written to Dim_Grade#AM');return;}
+});
+document.getElementById('btnNotes').addEventListener('click',e=>{const on=document.body.classList.toggle('notes');e.currentTarget.setAttribute('aria-pressed',on);});
+document.getElementById('btnReset').addEventListener('click',()=>{const v=S.version;reset();S.version=v;render();toast('Sample data reset');});
+document.body.classList.add('notes');
+try{const h=(location.hash||'').slice(1);if(R[h])cur=h;}catch(_){}
+drawTabs();render();
+</script>
+
+</body></html>
