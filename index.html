@@ -1,535 +1,979 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>accoTOOL Employee Planning</title>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>accoTOOL FP&amp;A App</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Carlito:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap">
 <style>
+/* Layout: Power BI App chrome — themed app header, action bar, collapsible left report/page navigation, grey canvas with a white report page, collapsible Filters pane on the right. */
 :root{
-  --at-blue:#1C4E80; --at-bright:#2E8BC0; --at-teal:#2098A9; --at-orange:#F7941D;
-  --bg:#EEF2F6; --canvas:#FFFFFF; --panel:#F6F8FB; --ink:#1A2230; --muted:#5B6B7F;
-  --line:#DCE4EC; --line-strong:#C3CFDB; --head:#1C4E80; --chip:#E6EEF6;
-  --input:#FFF8EC; --input-line:#F7C27A; --override:#FDE7C4;
-  --good:#1F8A5B; --warn:#B7791F; --bad:#C0392B;
-  --bar:#2E8BC0; --bar2:#9FC3DD; --grid:#E7EDF3;
-  --note-bg:#FFF6E8; --note-ink:#7A4B0B;
-  --head-font:"Poppins","Segoe UI",system-ui,sans-serif;
-  --body-font:"Carlito","Calibri","Segoe UI",system-ui,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --hdr:#1C4E80; --hdr-fg:#ffffff; --hdr-soft:rgba(255,255,255,.14);
+  --bg:#e7ebf0; --nav:#f7f8fa; --nav-hover:#eceff3; --nav-sel:#dde8f3;
+  --page:#ffffff; --ink:#1A2230; --muted:#5b6676; --line:#dce4ec; --line-2:#c6d1dc;
+  --accent:#2E8BC0; --brand:#1C4E80; --orange:#F7941D; --teal:#2098A9;
+  --ro:#f4f6f9; --sub:#eaf1f7; --pend:#fff0cc; --pend-ink:#7a4a00; --act-col:#eef1f4;
+  --good:#23824f; --bad:#c03a2f; --warn:#a96d07;
+  --good-bg:#e3f3ea; --bad-bg:#fbe7e5; --warn-bg:#fdf1d8; --info-bg:#e5f0f8;
+  --c1:#1C4E80; --c2:#2E8BC0; --c3:#2098A9; --c4:#F7941D; --c5:#8C6BB1; --cref:#a9b6c4;
+  --shadow:0 1px 2px rgba(20,40,60,.07),0 3px 10px rgba(20,40,60,.06);
+  --f-ui:"Segoe UI","Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-head:"Poppins","Segoe UI",system-ui,sans-serif;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme:dark;
-    --bg:#0E1622; --canvas:#152131; --panel:#1B293B; --ink:#E6EDF5; --muted:#93A4B8;
-    --line:#2A3B50; --line-strong:#3A4E66; --head:#8CC4EA; --chip:#1F3149;
-    --input:#2A2416; --input-line:#8A6326; --override:#4A3616;
-    --good:#4CC38A; --warn:#E0A94A; --bad:#EF6B5B;
-    --bar:#4EA6DA; --bar2:#2F5572; --grid:#22324A;
-    --note-bg:#2A2214; --note-ink:#F2C98A;
-  }
-}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --hdr:#14385d; --hdr-soft:rgba(255,255,255,.12);
+  --bg:#0e1319; --nav:#151b22; --nav-hover:#1d252f; --nav-sel:#20344a;
+  --page:#19202a; --ink:#e6ecf2; --muted:#9aa8b8; --line:#2a3440; --line-2:#3a4756;
+  --accent:#4fa6d8; --brand:#8bbbe6; --ro:#1e2630; --sub:#21303f; --pend:#4a3812; --pend-ink:#ffd58a; --act-col:#1c232c;
+  --good:#4cc07f; --bad:#ef6b5f; --warn:#e3aa3e;
+  --good-bg:#173226; --bad-bg:#3a1c1a; --warn-bg:#3a2e14; --info-bg:#18293a;
+  --c1:#5f97cf; --c2:#4fb0e0; --c3:#3bc0cf; --c4:#f7a33d; --c5:#b195d6; --cref:#566475;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 3px 10px rgba(0,0,0,.25); color-scheme:dark}}
 :root[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#0E1622; --canvas:#152131; --panel:#1B293B; --ink:#E6EDF5; --muted:#93A4B8;
-  --line:#2A3B50; --line-strong:#3A4E66; --head:#8CC4EA; --chip:#1F3149;
-  --input:#2A2416; --input-line:#8A6326; --override:#4A3616;
-  --good:#4CC38A; --warn:#E0A94A; --bad:#EF6B5B;
-  --bar:#4EA6DA; --bar2:#2F5572; --grid:#22324A;
-  --note-bg:#2A2214; --note-ink:#F2C98A;
-}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body-font);font-size:15px;line-height:1.45}
-.wrap{max-width:1320px;margin:0 auto;padding-inline:16px;padding-block:18px 40px}
-h1,h2,h3{font-family:var(--head-font);color:var(--head);margin:0;text-wrap:balance}
-h1{font-size:22px;font-weight:600;letter-spacing:-.3px}
-h2{font-size:17px;font-weight:600}
-h3{font-size:13px;font-weight:600;letter-spacing:.2px}
-.num{font-variant-numeric:tabular-nums}
-.topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.wm{font-family:var(--head-font);font-weight:700;font-size:20px;letter-spacing:-.5px}
-.wm .a{color:var(--head)} .wm .t{color:var(--at-orange)} .wm sup{font-size:9px;color:var(--muted)}
-.sub{color:var(--muted);font-size:14px}
-.toggles{display:flex;gap:8px;flex-wrap:wrap}
-.btn{font:600 13px var(--head-font);border:1px solid var(--line-strong);background:var(--canvas);color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer}
-.btn[aria-pressed="true"]{background:var(--at-blue);color:#fff;border-color:var(--at-blue)}
-.btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--at-orange);outline-offset:2px}
-.tabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line-strong);margin-bottom:0}
-.tab{font:600 13px var(--head-font);padding:9px 14px;border:1px solid transparent;border-bottom:none;background:transparent;color:var(--muted);cursor:pointer;border-radius:8px 8px 0 0;white-space:nowrap}
-.tab .k{font:600 10px var(--mono);margin-left:6px;padding:1px 5px;border-radius:4px;background:var(--chip);color:var(--muted)}
-.tab[aria-selected="true"]{background:var(--canvas);color:var(--head);border-color:var(--line-strong)}
-.tab[aria-selected="true"]::after{content:"";display:block;height:3px;background:var(--at-orange);border-radius:2px;margin-top:6px}
-.page{background:var(--canvas);border:1px solid var(--line-strong);border-top:none;border-radius:0 0 12px 12px;padding:18px}
-.pagehead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
-.question{color:var(--muted);font-size:14px;margin-top:4px;max-width:70ch}
-.slicers{display:flex;flex-wrap:wrap;gap:10px}
-.slicer{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
-.slicer select{font:14px var(--body-font);padding:5px 8px;border-radius:6px;border:1px solid var(--line-strong);background:var(--canvas);color:var(--ink);min-width:150px}
-.slicer .lbl{display:flex;gap:6px;align-items:center}
-.pill{font:600 10px var(--mono);padding:1px 6px;border-radius:999px;letter-spacing:.3px;text-transform:uppercase}
-.pill.w{background:var(--at-orange);color:#1A2230}
-.pill.v{background:var(--chip);color:var(--muted)}
-.grid{display:grid;gap:14px}
-.g-kpi{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-.g-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
-.g-main{grid-template-columns:minmax(0,2.2fr) minmax(0,1fr)}
-@media (max-width:980px){.g-main{grid-template-columns:1fr}}
-.vis{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--canvas);display:flex;flex-direction:column;gap:10px;min-width:0}
-.vis.input{border-color:var(--input-line);box-shadow:0 0 0 3px color-mix(in srgb,var(--at-orange) 12%,transparent)}
-.vhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.role{font:600 10px var(--mono);letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:4px}
-.role.answer{background:color-mix(in srgb,var(--at-bright) 18%,transparent);color:var(--head)}
-.role.act{background:var(--at-orange);color:#1A2230}
-.role.confirm{background:color-mix(in srgb,var(--at-teal) 22%,transparent);color:var(--at-teal)}
-.kpi{border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.kpi .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.kpi .v{font:600 24px var(--head-font);color:var(--ink);margin-top:2px}
-.kpi .d{font-size:13px;margin-top:2px}
-.up{color:var(--bad)} .down{color:var(--good)} .flat{color:var(--muted)}
-.note{display:none;background:var(--note-bg);color:var(--note-ink);border-radius:8px;padding:8px 10px;font-size:13px}
-.note code{font-family:var(--mono);font-size:12px}
-body.notes .note{display:block}
-.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
-table{border-collapse:collapse;width:100%;font-size:13.5px}
-th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
-th{background:var(--panel);color:var(--muted);font-weight:700;font-size:12px;position:sticky;top:0}
-th:first-child,td:first-child,th.l,td.l{text-align:left}
-tr.grp td{background:var(--panel);font-weight:700;color:var(--head)}
-tr.tot td{font-weight:700;border-top:2px solid var(--line-strong);border-bottom:none}
-td.ro{color:var(--muted)}
-.cell{width:52px;font:13px var(--body-font);text-align:right;padding:3px 5px;border:1px solid var(--input-line);background:var(--input);color:var(--ink);border-radius:4px;font-variant-numeric:tabular-nums}
-.cell.ovr{background:var(--override);font-weight:700}
-.cell.txt{width:auto;min-width:120px;text-align:left}
-.cell.w80{width:80px}
-select.cell{width:auto}
-.tag{display:inline-block;font:600 10px var(--mono);padding:1px 6px;border-radius:4px;background:var(--chip);color:var(--muted);margin-left:6px}
-.tag.tbh{background:color-mix(in srgb,var(--at-orange) 25%,transparent);color:var(--note-ink)}
-.status{font:600 11px var(--body-font);padding:2px 8px;border-radius:999px}
-.st-Approved{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
-.st-Open{background:color-mix(in srgb,var(--at-bright) 18%,transparent);color:var(--head)}
-.st-Draft{background:var(--chip);color:var(--muted)}
-.st-Filled{background:color-mix(in srgb,var(--at-teal) 20%,transparent);color:var(--at-teal)}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+  --hdr:#14385d; --hdr-soft:rgba(255,255,255,.12);
+  --bg:#0e1319; --nav:#151b22; --nav-hover:#1d252f; --nav-sel:#20344a;
+  --page:#19202a; --ink:#e6ecf2; --muted:#9aa8b8; --line:#2a3440; --line-2:#3a4756;
+  --accent:#4fa6d8; --brand:#8bbbe6; --ro:#1e2630; --sub:#21303f; --pend:#4a3812; --pend-ink:#ffd58a; --act-col:#1c232c;
+  --good:#4cc07f; --bad:#ef6b5f; --warn:#e3aa3e;
+  --good-bg:#173226; --bad-bg:#3a1c1a; --warn-bg:#3a2e14; --info-bg:#18293a;
+  --c1:#5f97cf; --c2:#4fb0e0; --c3:#3bc0cf; --c4:#f7a33d; --c5:#b195d6; --cref:#566475;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 3px 10px rgba(0,0,0,.25); color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:13px;line-height:1.4}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.app{height:100%;display:grid;grid-template-rows:48px 38px minmax(0,1fr)}
+/* header */
+.top{background:var(--hdr);color:var(--hdr-fg);display:flex;align-items:center;gap:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+.top .iconbtn{background:transparent;border:0;color:inherit;width:34px;height:34px;display:grid;place-items:center;border-radius:4px;flex:none}
+.top .iconbtn:hover{background:var(--hdr-soft)}
+.logo{display:flex;align-items:center;gap:8px;flex:none}
+.logo .mark{width:26px;height:26px;border-radius:5px;background:#fff;display:grid;place-items:center}
+.appname{font-family:var(--f-head);font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.appname small{font-family:var(--f-ui);font-weight:400;opacity:.75;font-size:12px;margin-left:8px}
+.top .spacer{flex:1}
+.viewas{display:flex;align-items:center;gap:8px;min-width:0}
+.viewas label{font-size:11px;opacity:.8;white-space:nowrap}
+.viewas select{background:var(--hdr-soft);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:4px;padding:4px 6px;max-width:230px}
+.viewas select option{color:#1A2230;background:#fff}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--orange);color:#1A2230;font-weight:700;display:grid;place-items:center;font-size:12px;flex:none}
+/* action bar */
+.actionbar{background:var(--page);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:2px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:auto;white-space:nowrap}
+.actionbar .crumb{font-weight:600;margin-right:12px;display:flex;gap:6px;align-items:center}
+.actionbar .crumb span{color:var(--muted);font-weight:400}
+.abtn{background:transparent;border:0;padding:6px 9px;border-radius:4px;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.abtn:hover{background:var(--nav-hover)}
+.abtn svg{opacity:.75}
+.actionbar .sep{width:1px;height:20px;background:var(--line);margin:0 6px}
+.actionbar .stamp{margin-left:auto;color:var(--muted);font-size:12px;padding-left:12px}
+/* main */
+.main{display:grid;grid-template-columns:auto minmax(0,1fr) auto;min-height:0}
+.nav{width:252px;background:var(--nav);border-right:1px solid var(--line);overflow-y:auto;transition:width .18s ease;display:flex;flex-direction:column}
+.app.nav-off .nav{width:0;border-right:0;overflow:hidden}
+.nav-inner{width:252px;padding:10px 0 16px}
+.nav-title{padding:6px 16px 10px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.nitem{width:100%;display:flex;align-items:center;gap:8px;border:0;background:transparent;text-align:left;padding:8px 12px 8px 14px;border-left:3px solid transparent;color:var(--ink)}
+.nitem:hover{background:var(--nav-hover)}
+.nitem.sel{background:var(--nav-sel);border-left-color:var(--brand);font-weight:600}
+.nitem .chev{margin-left:auto;transition:transform .15s;opacity:.7}
+.nitem.open .chev{transform:rotate(90deg)}
+.nitem .lock{margin-left:auto;opacity:.6}
+.nitem.report{font-weight:600}
+.nitem.page{padding-left:42px;font-weight:400;font-size:12.5px}
+.nitem.page.sel{font-weight:600}
+.nav .tag{font-size:10px;padding:1px 6px;border-radius:8px;background:var(--line);color:var(--muted);margin-left:auto;font-weight:600}
+.canvas{overflow:auto;padding-block:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+.rpage{background:var(--page);max-width:1320px;margin:0 auto;box-shadow:var(--shadow);border-radius:2px;min-height:calc(100% - 4px)}
+/* filters pane */
+.fpane{width:34px;background:var(--page);border-left:1px solid var(--line);transition:width .18s;overflow:hidden;display:flex}
+.fpane.open{width:240px}
+.fpane .ftoggle{width:34px;flex:none;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:12px;color:var(--muted)}
+.fpane .ftoggle span{writing-mode:vertical-rl;font-size:12px;letter-spacing:.04em}
+.fpane .fbody{width:206px;padding:12px 12px 12px 0;overflow-y:auto}
+.fpane h4{margin:6px 0 8px;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.fcard{border:1px solid var(--line);border-radius:3px;padding:7px 9px;margin-bottom:8px;background:var(--ro)}
+.fcard b{display:block;font-size:12px}
+.fcard span{color:var(--muted);font-size:12px}
+/* page header */
+.phead{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 20px;padding:18px 22px 14px;border-bottom:1px solid var(--line)}
+.phead .ttl{flex:1 1 260px;min-width:0}
+.phead h1{font-family:var(--f-head);font-weight:600;font-size:20px;margin:0;text-wrap:balance;color:var(--ink)}
+.phead p{margin:3px 0 0;color:var(--muted);max-width:70ch}
+.slicers{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.slicer{display:flex;flex-direction:column;gap:3px;min-width:150px}
+.slicer>span{font-size:11px;color:var(--muted);font-weight:600;display:flex;gap:6px;align-items:center}
+.slicer select,.slicer input{border:1px solid var(--line-2);background:var(--page);border-radius:3px;padding:5px 8px;min-width:0}
+.wtag{font-size:9.5px;font-weight:700;letter-spacing:.04em;color:var(--orange);border:1px solid currentColor;border-radius:3px;padding:0 4px}
+.pbody{padding:18px 22px 26px;display:flex;flex-direction:column;gap:18px}
+.row2{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px}
+.row2e{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:1000px){.row2,.row2e{grid-template-columns:minmax(0,1fr)}}
+/* tiles */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi{border:1px solid var(--line);border-radius:3px;padding:11px 13px;background:var(--page)}
+.kpi .l{font-size:11.5px;color:var(--muted)}
+.kpi .v{font-family:var(--f-head);font-size:22px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:12px;color:var(--muted);font-family:var(--f-ui);font-weight:400;margin-left:3px}
+.kpi .d{font-size:12px;margin-top:3px;font-variant-numeric:tabular-nums}
+.up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--muted)}
+/* generic visual container */
+.vis{border:1px solid var(--line);border-radius:3px;background:var(--page);min-width:0}
+.vis-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding:9px 12px;border-bottom:1px solid var(--line)}
+.vis-head h3{margin:0;font-size:13.5px;font-weight:600}
+.vis-head .sub{color:var(--muted);font-size:12px}
+.vis-tools{margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.vis-body{padding:12px}
+.badge{font-size:10px;font-weight:700;letter-spacing:.05em;padding:2px 7px;border-radius:3px;color:#fff;white-space:nowrap}
+.badge.ap{background:var(--brand)} .badge.am{background:var(--teal)}
+:root[data-theme="dark"] .badge.ap{color:#0e1319}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .badge.ap{color:#0e1319}}
+.vis-foot{padding:7px 12px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.vis-foot code{font-family:Consolas,"Cascadia Mono",Menlo,monospace;font-size:11px;color:var(--ink)}
+.btn{border:1px solid var(--line-2);background:var(--page);border-radius:3px;padding:5px 11px;display:inline-flex;gap:6px;align-items:center}
+.btn:hover:not(:disabled){background:var(--nav-hover)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0e1319}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0e1319}}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08);background:var(--brand)}
+.btn.warn{border-color:var(--orange);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{padding:3px 8px;font-size:12px}
+.cnt{font-size:12px;color:var(--pend-ink);background:var(--pend);padding:2px 8px;border-radius:10px;font-weight:600}
+.cnt[data-n="0"]{visibility:hidden}
+.ro-pill{font-size:11.5px;color:var(--muted);border:1px dashed var(--line-2);padding:2px 8px;border-radius:10px}
+.banner{margin:10px 12px 0;padding:8px 11px;border-radius:3px;background:var(--warn-bg);color:var(--ink);font-size:12.5px;display:flex;gap:8px;align-items:flex-start}
+.banner.info{background:var(--info-bg)}
+.banner b{font-weight:600}
+/* grids */
+.grid-wrap{overflow:auto;max-height:560px;margin-top:10px}
+table.grid{border-collapse:separate;border-spacing:0;width:100%;font-variant-numeric:tabular-nums;font-size:12.5px}
+.grid th,.grid td{border-bottom:1px solid var(--line);white-space:nowrap;padding:0}
+.grid thead th{position:sticky;top:0;background:var(--page);z-index:2;text-align:right;padding:7px 8px;font-weight:600;color:var(--muted);font-size:11.5px;border-bottom:2px solid var(--line-2)}
+.grid thead th small{display:block;font-weight:400;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase}
+.grid thead th.l,.grid td.l{text-align:left}
+.grid .rh{position:sticky;left:0;background:var(--page);z-index:1;text-align:left;padding:6px 10px;font-weight:400;min-width:230px;max-width:300px;white-space:normal}
+.grid thead .rh{z-index:3}
+.grid td.num{text-align:right;padding:6px 8px;min-width:64px}
+.grid td.ro{background:var(--ro)}
+.grid td.actc,.grid th.actc{background:var(--act-col)}
+.grid td.fy{font-weight:600;text-align:right;padding:6px 10px;border-left:1px solid var(--line-2);min-width:76px}
+.grid tr.sub td,.grid tr.sub th{background:var(--sub);font-weight:600}
+.grid tr.strong td,.grid tr.strong th{border-top:1px solid var(--line-2);border-bottom:2px solid var(--line-2)}
+.grid .code{color:var(--muted);font-size:11px;margin-right:4px;font-variant-numeric:tabular-nums}
+.grid td.in{background:var(--page);min-width:70px;box-shadow:inset 0 0 0 1px transparent}
+.grid td.in:hover{box-shadow:inset 0 0 0 1px var(--line-2)}
+.grid td.in.pend{background:var(--pend)}
+.grid td.in.pend input,.grid td.in.pend select{color:var(--pend-ink);font-weight:600}
+.cell{width:100%;border:0;background:transparent;text-align:right;padding:6px 8px;min-width:0;outline:none}
+.cell:focus{box-shadow:inset 0 0 0 2px var(--accent);background:var(--page)}
+.cell.t{text-align:left}
+select.cell{text-align:left;padding:5px 4px;appearance:auto;background:transparent}
+td.chk{text-align:center}
+td.chk input{width:16px;height:16px;accent-color:var(--brand)}
+.grid td.cm{min-width:200px}
+.grid td.txt{padding:6px 8px;text-align:left}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:1px 7px;border-radius:9px;border:1px solid var(--line-2);color:var(--muted);background:var(--page);margin-left:6px;cursor:pointer;white-space:nowrap;vertical-align:1px}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.drv{border-color:var(--orange);color:var(--warn)}
+.delbtn{border:0;background:transparent;color:var(--muted);width:26px;height:26px;border-radius:3px}
+.delbtn:hover{background:var(--bad-bg);color:var(--bad)}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.pill.ns{background:var(--line);color:var(--muted)}
+.pill.ip{background:var(--info-bg);color:var(--accent)}
+.pill.sb{background:var(--warn-bg);color:var(--warn)}
+.pill.ap{background:var(--good-bg);color:var(--good)}
+.pill.lk{background:var(--bad-bg);color:var(--bad)}
+.pill.op{background:var(--good-bg);color:var(--good)}
+/* simple table */
+table.tbl{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:12.5px}
+.tbl th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:600;padding:7px 8px;border-bottom:2px solid var(--line-2);white-space:nowrap}
+.tbl td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl .r{text-align:right}
+.tbl tr.sub td{background:var(--sub);font-weight:600}
+.tblwrap{overflow-x:auto}
+/* charts */
+.chart{min-width:0}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--muted);margin-bottom:6px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-svg text{fill:var(--muted);font-family:var(--body-font);font-size:11px}
-svg .val{fill:var(--ink);font-weight:700}
-.toast{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--at-blue);color:#fff;padding:9px 14px;border-radius:8px;font:600 13px var(--head-font);opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
-.toast.show{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.toast{transition:none}}
-/* design tab */
-.doc{max-width:1100px}
-.doc p,.doc li{max-width:78ch}
-.doc h2{margin-top:26px;margin-bottom:8px}
-.doc h2:first-child{margin-top:0}
-.loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:10px 0}
-.loop .s{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel)}
-.loop .s b{font-family:var(--head-font);color:var(--head);font-size:13px;display:block}
-.loop .s span{font-size:13px;color:var(--muted)}
-.mono{font-family:var(--mono);font-size:12.5px}
-.conf{font-size:12px;white-space:nowrap}
-pre.f{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;font:12.5px/1.55 var(--mono);color:var(--ink)}
-.cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+.legend i.ln{height:3px;border-radius:2px;vertical-align:2px;width:14px}
+svg.ch{width:100%;height:auto;display:block;overflow:visible}
+svg.ch text{fill:var(--muted);font-size:10.5px;font-family:var(--f-ui)}
+svg.ch .gl{stroke:var(--line);stroke-width:1}
+svg.ch .zl{stroke:var(--line-2);stroke-width:1}
+.hbar{display:grid;grid-template-columns:110px minmax(0,1fr) 92px;gap:6px 10px;align-items:center;font-size:12.5px}
+.hbar .track{height:20px;background:var(--ro);border-radius:2px;position:relative;overflow:hidden}
+.hbar .fill{position:absolute;inset:0 auto 0 0;background:var(--c2)}
+.hbar .fill.w{background:var(--c1)}
+.hbar .val{text-align:right;font-variant-numeric:tabular-nums}
+/* map */
+.map-wrap{overflow-x:auto}
+svg.map{width:100%;min-width:640px;height:auto;display:block}
+svg.map text{font-family:var(--f-ui);fill:var(--ink)}
+svg.map .mapbox{cursor:pointer}
+svg.map .mapbox rect{transition:stroke .15s}
+svg.map .mapbox:hover rect.b,svg.map .mapbox:focus rect.b{stroke:var(--accent);stroke-width:2}
+svg.map .t1{font-weight:600;font-size:13.5px}
+svg.map .t2{font-size:11.5px;fill:var(--muted)}
+svg.map .t3{font-size:12px;font-weight:600;fill:var(--brand)}
+svg.map .lbl{font-size:11px;fill:var(--muted)}
+/* forms */
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.form input[type=text],.form input[type=number],.form select{border:1px solid var(--line-2);border-radius:3px;padding:6px 8px;background:var(--page);font-weight:400;color:var(--ink)}
+.checks{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:4px}
+.checks label{flex-direction:row;align-items:center;gap:6px;font-weight:400;color:var(--ink)}
+.checks input{accent-color:var(--brand)}
+.prog{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--line)}
+.prog span{display:block;height:100%}
+.note{color:var(--muted);font-size:12px;max-width:80ch}
+.note a,.link{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px;background:none;border:0;padding:0}
+.restricted{padding:60px 22px;text-align:center;color:var(--muted)}
+.restricted h2{font-family:var(--f-head);color:var(--ink);font-size:18px;margin:10px 0 6px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--page);padding:9px 16px;border-radius:4px;opacity:0;transition:.2s;pointer-events:none;z-index:50;max-width:calc(100% - 32px);font-size:12.5px}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.scrim{display:none}
+@media (max-width:820px){
+  .nav{position:fixed;top:calc(86px + env(safe-area-inset-top,0px));bottom:0;left:0;z-index:30;box-shadow:var(--shadow);width:252px}
+  .app.nav-off .nav{width:0}
+  .app:not(.nav-off) .scrim{display:block;position:fixed;inset:0;background:rgba(10,20,30,.35);z-index:25}
+  .fpane{display:none}
+  .appname small,.viewas label{display:none}
+  .viewas select{max-width:150px}
+  .phead,.pbody{padding-left:14px;padding-right:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
-<div class="wrap">
-  <div class="topbar">
-    <div class="brand">
-      <span class="wm"><span class="a">acco</span><span class="t">TOOL</span><sup>™</sup></span>
-      <h1>Employee Planning</h1>
-      <span class="sub">Reference design · hybrid employee + position planning · feeds Account Planning</span>
+<div class="app" id="app">
+  <header class="top">
+    <button class="iconbtn" data-act="toggleNav" aria-label="Show or hide navigation">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+    </button>
+    <div class="logo">
+      <span class="mark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="8" width="3" height="7" fill="#2E8BC0"/><rect x="6" y="4" width="3" height="11" fill="#1C4E80"/><rect x="11" y="1" width="3" height="14" fill="#F7941D"/></svg></span>
     </div>
-    <div class="toggles">
-      <button class="btn" id="btnNotes" aria-pressed="true">Design notes</button>
-      <button class="btn" id="btnReset">Reset sample data</button>
+    <div class="appname">Nordlys Group FP&amp;A<small>App · built on accoTOOL</small></div>
+    <div class="spacer"></div>
+    <div class="viewas">
+      <label for="viewas">Viewing as</label>
+      <select id="viewas" aria-label="Viewing as user"></select>
+      <span class="avatar" id="avatar">K</span>
     </div>
+  </header>
+  <div class="actionbar" id="actionbar"></div>
+  <div class="main">
+    <nav class="nav" id="nav" aria-label="App navigation"></nav>
+    <div class="scrim" data-act="toggleNav"></div>
+    <main class="canvas" id="canvas"></main>
+    <aside class="fpane" id="fpane"></aside>
   </div>
-
-  <div class="tabs" role="tablist" id="tabs"></div>
-  <div class="page" id="page"></div>
 </div>
-<div class="toast" id="toast">Saved to database</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ---------- sample data (example figures, DKK) ---------- */
+/* ============================== constants ============================== */
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const DEPTS=['Sales','Customer Success','R&D','Finance & Admin'];
-const SEED={
-  version:'Budget 2027',
-  grades:[
-    {g:'G3',title:'Associate',std:42000},
-    {g:'G4',title:'Specialist',std:50000},
-    {g:'G5',title:'Senior',std:60000},
-    {g:'G6',title:'Lead',std:72000},
-    {g:'G7',title:'Manager',std:88000}
-  ],
-  emps:[
-    {id:'E1001',name:'Anna Holm',dept:'Sales',grade:'G7',sal:91000,fte:1,end:null},
-    {id:'E1002',name:'Jonas Berg',dept:'Sales',grade:'G5',sal:61000,fte:1,end:null},
-    {id:'E1003',name:'Sofie Lund',dept:'Sales',grade:'G4',sal:51500,fte:1,end:6},
-    {id:'E1004',name:'Mikkel Dahl',dept:'Customer Success',grade:'G5',sal:58000,fte:1,end:null},
-    {id:'E1005',name:'Ida Kjær',dept:'Customer Success',grade:'G3',sal:43000,fte:0.8,end:null},
-    {id:'E1006',name:'Lars Winther',dept:'R&D',grade:'G7',sal:95000,fte:1,end:null},
-    {id:'E1007',name:'Emma Friis',dept:'R&D',grade:'G6',sal:74000,fte:1,end:null},
-    {id:'E1008',name:'Noah Skov',dept:'R&D',grade:'G5',sal:62500,fte:1,end:null},
-    {id:'E1009',name:'Freja Bach',dept:'R&D',grade:'G4',sal:50500,fte:1,end:null},
-    {id:'E1010',name:'Oliver Krogh',dept:'Finance & Admin',grade:'G6',sal:70000,fte:1,end:null},
-    {id:'E1011',name:'Clara Juhl',dept:'Finance & Admin',grade:'G3',sal:41500,fte:0.6,end:null}
-  ],
-  tbh:[
-    {id:'P-27-01',title:'Account Executive',dept:'Sales',grade:'G4',fte:1,start:3,status:'Approved',replaces:''},
-    {id:'P-27-02',title:'Senior Developer',dept:'R&D',grade:'G6',fte:1,start:2,status:'Approved',replaces:''},
-    {id:'P-27-03',title:'Developer',dept:'R&D',grade:'G5',fte:1,start:6,status:'Open',replaces:''},
-    {id:'P-27-04',title:'Account Executive',dept:'Sales',grade:'G4',fte:1,start:8,status:'Open',replaces:'E1003'},
-    {id:'P-27-05',title:'CS Manager',dept:'Customer Success',grade:'G6',fte:1,start:9,status:'Draft',replaces:''}
-  ],
-  rates:[
-    {el:'Salary increase',basis:'% from month',val:3.0,from:4,scope:'All',acct:'—'},
-    {el:'Pension (employer)',basis:'% of salary',val:10.0,from:1,scope:'All',acct:'2220'},
-    {el:'Holiday allowance',basis:'% of salary',val:1.0,from:1,scope:'All',acct:'2230'},
-    {el:'Bonus',basis:'% of salary',val:10.0,from:1,scope:'Sales',acct:'2250'},
-    {el:'Bonus',basis:'% of salary',val:5.0,from:1,scope:'Other',acct:'2250'},
-    {el:'Social charges',basis:'DKK per FTE / month',val:850,from:1,scope:'All',acct:'2240'},
-    {el:'Benefits',basis:'DKK per FTE / month',val:1500,from:1,scope:'All',acct:'2260'},
-    {el:'Recruitment',basis:'DKK per hire (start month)',val:40000,from:1,scope:'All',acct:'2270'}
-  ]
-};
-const ACCTS=[
-  {a:'2210',n:'Salaries',el:'Salary'},
-  {a:'2220',n:'Pension',el:'Pension (employer)'},
-  {a:'2230',n:'Holiday allowance',el:'Holiday allowance'},
-  {a:'2240',n:'Social charges',el:'Social charges'},
-  {a:'2250',n:'Bonus',el:'Bonus'},
-  {a:'2260',n:'Staff benefits',el:'Benefits'},
-  {a:'2270',n:'Recruitment',el:'Recruitment'}
-];
-let S, OVR; // state, FTE overrides {rowId:{m:val}}
-function reset(){S=JSON.parse(JSON.stringify(SEED));OVR={};}
-reset();
+const DEPTS=[{id:'SAL',name:'Sales'},{id:'MKT',name:'Marketing'},{id:'RND',name:'R&D'},{id:'OPS',name:'Operations'},{id:'FIN',name:'Finance & Admin'}];
+const DEPT_COL={SAL:'--c1',MKT:'--c4',RND:'--c2',OPS:'--c3',FIN:'--c5'};
+const ACC=[
+ {id:'3000',name:'Product revenue',type:'rev',src:'pipeline'},
+ {id:'3100',name:'Service revenue',type:'rev',src:'manual'},
+ {id:'4000',name:'Cost of goods sold',type:'cost',src:'manual'},
+ {id:'5000',name:'Salaries',type:'cost',src:'employee'},
+ {id:'5100',name:'Pension',type:'cost',src:'employee'},
+ {id:'5200',name:'Social security & payroll tax',type:'cost',src:'employee'},
+ {id:'6000',name:'Rent & facilities',type:'cost',src:'manual'},
+ {id:'6100',name:'IT & software',type:'cost',src:'manual'},
+ {id:'6200',name:'Marketing & events',type:'cost',src:'manual'},
+ {id:'6300',name:'Travel',type:'cost',src:'manual'},
+ {id:'6400',name:'External consultants',type:'cost',src:'manual'},
+ {id:'7000',name:'Depreciation',type:'cost',src:'capex'},
+ {id:'8000',name:'Net financial items',type:'cost',src:'manual'}];
+const ACCM=Object.fromEntries(ACC.map(a=>[a.id,a]));
+const LAYOUT=[{acc:'3000'},{acc:'3100'},{sub:'rev',label:'Total revenue'},{acc:'4000'},{sub:'gp',label:'Gross profit'},
+ {acc:'5000'},{acc:'5100'},{acc:'5200'},{sub:'staff',label:'Total staff costs'},
+ {acc:'6000'},{acc:'6100'},{acc:'6200'},{acc:'6300'},{acc:'6400'},{sub:'opex',label:'Total other operating expenses'},
+ {sub:'ebitda',label:'EBITDA',strong:true},{acc:'7000'},{sub:'ebit',label:'EBIT'},{acc:'8000'},{sub:'pbt',label:'Profit before tax',strong:true}];
+const STAGES=['Lead','Qualified','Proposal','Negotiation','Won'];
+const METHODS=[['manual','Manual input'],['ly','Reference + %'],['fte','Amount per FTE'],['rev','% of revenue']];
+const TABLES={
+ ver:'[accoTOOL$Base].[Dim_Version#AM]', usr:'[accoTOOL$Base].[Dim_UserAccess#AM]', asm:'[accoTOOL$Base].[Dim_Assumption#AM]',
+ wf:'[accoTOOL$Base].[Fact_Workflow#AM]', pnl:'[accoTOOL$PNL].[Fact_PnL_RAW#AP]', drv:'[accoTOOL$PNL].[Dim_Driver#AM]',
+ emp:'[accoTOOL$EMP].[Dim_Employee#AM]', deal:'[accoTOOL$SALES].[Dim_Deal#AM]', rr:'[accoTOOL$SALES].[Fact_RunRate#AP]',
+ cap:'[accoTOOL$CAPEX].[Dim_Investment#AM]'};
 
-/* ---------- calculation engine (mirrors vw_Calc_PersonnelCost) ---------- */
-const gradeStd=g=>S.grades.find(x=>x.g===g)?.std||0;
-const rate=(el,dept)=>{
-  const r=S.rates.filter(x=>x.el===el);
-  if(el==='Bonus'){return (r.find(x=>x.scope===dept)||r.find(x=>x.scope==='Other')||{val:0}).val;}
-  return r[0]||{val:0,from:1};
-};
-function rows(){
-  const out=[];
-  S.emps.forEach(e=>out.push({id:e.id,name:e.name,dept:e.dept,grade:e.grade,type:'EMP',sal:e.sal,
-    base:MONTHS.map((_,i)=>(e.end&&i+1>e.end)?0:e.fte),start:null}));
-  S.tbh.forEach(p=>{if(p.status==='Filled')return;out.push({id:p.id,name:p.title,dept:p.dept,grade:p.grade,type:'TBH',sal:gradeStd(p.grade),
-    base:MONTHS.map((_,i)=>i+1>=p.start?p.fte:0),start:p.start,status:p.status});});
-  out.forEach(r=>{r.fte=r.base.map((v,i)=>OVR[r.id]&&OVR[r.id][i]!=null?OVR[r.id][i]:v);});
-  return out;
-}
-function cost(r,opt={}){
-  const inc=rate('Salary increase'), pen=rate('Pension (employer)').val/100, hol=rate('Holiday allowance').val/100;
-  const bon=rate('Bonus',r.dept)/100, soc=rate('Social charges').val, ben=rate('Benefits').val, rec=rate('Recruitment').val;
-  const el={'Salary':[],'Pension (employer)':[],'Holiday allowance':[],'Social charges':[],'Bonus':[],'Benefits':[],'Recruitment':[]};
-  for(let i=0;i<12;i++){
-    const f=opt.runrate?(r.type==='EMP'?r.base[0]:0):r.fte[i];
-    const s=r.sal*((!opt.runrate&&i+1>=inc.from)?1+inc.val/100:1)*f;
-    el['Salary'][i]=s; el['Pension (employer)'][i]=s*pen; el['Holiday allowance'][i]=s*hol; el['Bonus'][i]=s*bon;
-    el['Social charges'][i]=soc*f; el['Benefits'][i]=ben*f;
-    el['Recruitment'][i]=(!opt.runrate&&r.type==='TBH'&&r.status!=='Draft'&&i+1===r.start)?rec:0;
-    if(r.type==='TBH'&&r.status==='Draft'){Object.keys(el).forEach(k=>el[k][i]=0);}
-  }
-  const tot=MONTHS.map((_,i)=>Object.values(el).reduce((a,v)=>a+v[i],0));
-  return {el,tot};
-}
-function isCounted(r){return !(r.type==='TBH'&&r.status==='Draft');}
+/* ============================== helpers ============================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nf0=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+const nf2=new Intl.NumberFormat('en-US',{maximumFractionDigits:2});
+const nf1=new Intl.NumberFormat('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+const f0=v=>{if(v==null||isNaN(v))return '';const r=Math.round(v);return r===0?'0':nf0.format(r)};
+const f2=v=>v==null||isNaN(v)?'':nf2.format(v);
+const fm=v=>nf1.format((Math.abs(v)<.05?0:v)/1000)+'m';
+const parseNum=s=>{if(typeof s==='number')return s;let t=String(s??'').trim().replace(/[\s,]/g,'');if(/^\(.*\)$/.test(t))t='-'+t.slice(1,-1);t=t.replace(/%$/,'');if(t==='')return null;const n=Number(t);return isNaN(n)?null:n};
 const sum=a=>a.reduce((x,y)=>x+y,0);
-const k=v=>Math.round(v/1000).toLocaleString('en-US');
-const f1=v=>(Math.round(v*10)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
-function totals(filterDept){
-  const R=rows().filter(r=>!filterDept||filterDept==='All'||r.dept===filterDept);
-  const m=MONTHS.map(()=>0), rr=MONTHS.map(()=>0), fte=MONTHS.map(()=>0);
-  const byEl={};
-  R.forEach(r=>{const c=cost(r),c0=cost(r,{runrate:true});
-    c.tot.forEach((v,i)=>m[i]+=v); c0.tot.forEach((v,i)=>rr[i]+=v);
-    if(isCounted(r)) r.fte.forEach((v,i)=>fte[i]+=v);
-    Object.entries(c.el).forEach(([e,a])=>{byEl[e]=byEl[e]||MONTHS.map(()=>0);a.forEach((v,i)=>byEl[e][i]+=v);});
-  });
-  return {R,m,rr,fte,byEl};
+const z12=()=>Array(12).fill(0);
+const add=(...arrs)=>z12().map((_,i)=>arrs.reduce((s,a)=>s+(a?a[i]:0),0));
+const neg=a=>a.map(x=>-x);
+const clone=o=>JSON.parse(JSON.stringify(o));
+let seed=20261016;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const pct=(a,b)=>b?((a-b)/Math.abs(b))*100:0;
+
+/* ============================== state ============================== */
+const S={
+ versions:[
+  {id:'A25',name:'Actual 2025',type:'Actual',year:2025,actualsThrough:12,ref:'',status:'Locked'},
+  {id:'F26',name:'Forecast 2026 (9+3)',type:'Forecast',year:2026,actualsThrough:9,ref:'A25',status:'Locked'},
+  {id:'B27',name:'Budget 2027',type:'Budget',year:2027,actualsThrough:0,ref:'F26',status:'Open'}],
+ plans:{}, ACT:{}, audit:[],
+ users:[
+  {id:'u1',name:'Kim',title:'FP&A Lead',role:'Admin',depts:{SAL:true,MKT:true,RND:true,OPS:true,FIN:true}},
+  {id:'u2',name:'Mette Larsen',title:'Sales Director',role:'Planner',depts:{SAL:true,MKT:true,RND:false,OPS:false,FIN:false}},
+  {id:'u3',name:'Jonas Holm',title:'Head of R&D',role:'Planner',depts:{SAL:false,MKT:false,RND:true,OPS:false,FIN:false}},
+  {id:'u4',name:'Sara Nielsen',title:'COO',role:'Planner',depts:{SAL:false,MKT:false,RND:false,OPS:true,FIN:true}},
+  {id:'u5',name:'Peter Berg',title:'CEO',role:'Viewer',depts:{SAL:true,MKT:true,RND:true,OPS:true,FIN:true}}],
+ me:'u1',
+ sel:{version:'B27',dept:'SAL',cmpA:'B27',cmpB:'F26',auditMod:'All'},
+ ui:{page:'home',open:new Set(['acc']),filters:false},
+ seq:{emp:600,deal:20,cap:20,ver:1}
+};
+const PEND={};let SAVE={};let CACHE={};
+const bust=()=>{CACHE={}};
+
+/* ============================== seed data ============================== */
+const EMP_SEED=[
+ ['E101','Mette Larsen','SAL','Sales Director',72000,10,1,0,13],['E102','Anders Kjær','SAL','Account Executive',48000,10,1,0,13],
+ ['E103','Line Mortensen','SAL','Account Executive',46000,10,1,0,13],['E104','Rasmus Vinther','SAL','Sales Engineer',52000,10,1,0,13],
+ ['TBH-1','New hire (TBH)','SAL','Account Executive',47000,10,1,3,13],
+ ['E201','Camilla Juhl','MKT','Marketing Manager',55000,10,1,0,13],['E202','Oliver Brandt','MKT','Content Specialist',38000,8,1,0,13],
+ ['E203','Ida Fogh','MKT','Performance Marketer',41000,8,1,0,6],
+ ['E301','Jonas Holm','RND','Head of R&D',70000,12,1,0,13],['E302','Freja Dahl','RND','Senior Developer',58000,10,1,0,13],
+ ['E303','Mikkel Ravn','RND','Developer',49000,10,1,0,13],['E304','Nanna Skov','RND','Developer',47000,10,1,0,13],
+ ['E305','Emil Thorsen','RND','QA Engineer',42000,8,.8,0,13],['TBH-2','New hire (TBH)','RND','Developer',50000,10,1,5,13],
+ ['E401','Sara Nielsen','OPS','COO',75000,12,1,0,13],['E402','Thomas Bach','OPS','Consultant',50000,10,1,0,13],
+ ['E403','Signe Lund','OPS','Consultant',48000,10,1,0,13],['E404','Kasper Holt','OPS','Support Specialist',36000,8,1,0,13],
+ ['E405','Maja Krogh','OPS','Project Manager',51000,10,1,0,13],
+ ['E501','Peter Berg','FIN','CEO',95000,12,1,0,13],['E502','Louise Winther','FIN','Financial Controller',54000,10,1,0,13],
+ ['E503','Henrik Moos','FIN','HR & Office Coordinator',40000,8,.6,0,13]];
+const DEAL_SEED=[
+ ['D01','Fjordline Logistics','Fleet planning suite','Negotiation',960,'Subscription',3],
+ ['D02','Bryggen Retail','Store budgeting rollout','Proposal',640,'Subscription',5],
+ ['D03','Vestkyst Energi','Group consolidation','Qualified',1200,'Subscription',7],
+ ['D04','Ravnsborg Foods','Implementation project','Won',420,'One-off',2],
+ ['D05','Nordhavn Shipping','Enterprise planning','Lead',1500,'Subscription',9],
+ ['D06','Kildebakken Clinics','Reporting package','Proposal',380,'One-off',4],
+ ['D07','Lyngbo Engineering','Project planning module','Negotiation',720,'Subscription',2],
+ ['D08','Søholm Hotels','Revenue planning','Qualified',540,'Subscription',6],
+ ['D09','Marstal Marine','Data warehouse health check','Lead',300,'One-off',10],
+ ['D10','Aros Insurance','Workforce planning','Proposal',1100,'Subscription',8]];
+const CAP_SEED=[
+ ['C01','Existing asset base','FIN','Equipment',1800,0,5],['C02','Developer laptops','RND','IT equipment',180,2,3],
+ ['C03','Aarhus office fit-out','FIN','Leasehold improvements',650,4,5],['C04','Demo environment servers','RND','IT equipment',240,6,4],
+ ['C05','Sales demo vehicle','SAL','Vehicles',320,3,5],['C06','Meeting room AV','OPS','Equipment',90,9,3]];
+const BASE={SAL:{'6200':8,'6400':12},MKT:{'6200':125,'6300':6,'6400':18},RND:{'6300':4,'6400':55},OPS:{'3100':265,'6300':7,'6400':10},FIN:{'6000':170,'6300':3,'6400':28,'8000':32}};
+const SEAS=[1,1,1.05,1,1,.95,.7,.9,1.1,1.05,1.05,.95];
+
+function makePlan(k,vid){
+ const manual={},drivers={},comments={};
+ DEPTS.forEach(d=>{manual[d.id]={};drivers[d.id]={};comments[d.id]={};
+  ACC.forEach(a=>{if(a.src!=='manual')return;const b=(BASE[d.id]||{})[a.id]||0;
+   manual[d.id][a.id]=z12().map((_,i)=>b?Math.round(b*k*(a.id==='6000'?1:SEAS[i])*(.97+rnd()*.06)):0)});
+  drivers[d.id]['6100']={m:'fte',p:vid==='B27'?1.45:1.35}});
+ drivers.OPS['4000']={m:'rev',p:vid==='B27'?24:25};
+ drivers.SAL['6300']={m:'rev',p:.9};
+ if(vid==='B27')drivers.FIN['6000']={m:'ly',p:3};
+ comments.MKT={'6200':'Two trade fairs: Mar (Copenhagen) and Sep (Stockholm)'};
+ comments.FIN={'6000':'Rent index +3% plus Aarhus office from Apr'};
+ const employees=EMP_SEED.filter(e=>vid==='B27'||!e[0].startsWith('TBH')).map(e=>({id:e[0],name:e[1],dept:e[2],title:e[3],salary:Math.round(e[4]*(vid==='B27'?1:.965)/100)*100,pension:e[5],fte:e[6],start:e[7],end:vid==='B27'?e[8]:13}));
+ const deals=(vid==='B27'?DEAL_SEED:DEAL_SEED.slice(0,6)).map(d=>({id:d[0],customer:d[1],desc:d[2],stage:vid==='B27'?d[3]:'Won',amount:Math.round(d[4]*(vid==='B27'?1:.7)),type:d[5],close:vid==='B27'?d[6]:Math.min(12,d[6]+6)}));
+ const runrate=z12().map((_,i)=>Math.round((vid==='B27'?2250:2050)+i*(vid==='B27'?14:11)));
+ const capex=(vid==='B27'?CAP_SEED:CAP_SEED.slice(0,3)).map(c=>({id:c[0],asset:c[1],dept:c[2],cat:c[3],amount:c[4],month:c[5],life:c[6]}));
+ const assum={wageInc:vid==='B27'?3.5:4,wageMonth:4,social:2.5,pLead:10,pQualified:25,pProposal:50,pNegotiation:75,pWon:100};
+ const wf={};DEPTS.forEach(d=>wf[d.id]='Approved');
+ if(vid==='B27')Object.assign(wf,{SAL:'Submitted',MKT:'In progress',RND:'In progress',OPS:'Not started',FIN:'Approved'});
+ return {manual,drivers,comments,employees,deals,runrate,capex,assum,wf};
 }
 
-/* ---------- small SVG chart helpers ---------- */
-function barChart(vals,line,{h=190,fmt=k,lineLabel=''}={}){
-  const W=640,P={l:44,r:10,t:14,b:24},iw=W-P.l-P.r,ih=h-P.t-P.b;
-  const max=Math.max(...vals,...(line||[0]))*1.12||1; const bw=iw/vals.length;
-  const y=v=>P.t+ih-(v/max)*ih;
-  const ticks=[0,.25,.5,.75,1].map(t=>max*t);
-  let s=`<svg viewBox="0 0 ${W} ${h}" width="100%" role="img" aria-label="Monthly chart">`;
-  ticks.forEach(t=>s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${P.l-6}" y="${y(t)+4}" text-anchor="end">${fmt(t)}</text>`);
-  vals.forEach((v,i)=>{const x=P.l+i*bw+bw*.18;s+=`<rect x="${x}" y="${y(v)}" width="${bw*.64}" height="${Math.max(0,P.t+ih-y(v))}" rx="2" fill="var(--bar)"><title>${MONTHS[i]}: ${fmt(v)}</title></rect><text x="${x+bw*.32}" y="${h-7}" text-anchor="middle">${MONTHS[i]}</text>`;});
-  if(line){const pts=line.map((v,i)=>`${P.l+i*bw+bw/2},${y(v)}`).join(' ');
-    s+=`<polyline points="${pts}" fill="none" stroke="var(--at-orange)" stroke-width="2" stroke-dasharray="5 4"/>`;
-    line.forEach((v,i)=>s+=`<circle cx="${P.l+i*bw+bw/2}" cy="${y(v)}" r="2.5" fill="var(--at-orange)"/>`);}
-  return s+'</svg>';
-}
-function waterfall(steps){
-  const W=640,h=230,P={l:48,r:10,t:18,b:40},iw=W-P.l-P.r,ih=h-P.t-P.b;
-  let run=0; const bars=steps.map(s=>{if(s.total){const b={...s,y0:0,y1:s.v};run=s.v;return b;}const b={...s,y0:run,y1:run+s.v};run+=s.v;return b;});
-  const lo=Math.min(...bars.map(b=>Math.min(b.y0,b.y1)))*0.9, hi=Math.max(...bars.map(b=>Math.max(b.y0,b.y1)))*1.04;
-  const y=v=>P.t+ih-((v-lo)/(hi-lo))*ih; const bw=iw/bars.length;
-  let s=`<svg viewBox="0 0 ${W} ${h}" width="100%" role="img" aria-label="Cost bridge">`;
-  [0,.5,1].forEach(t=>{const v=lo+(hi-lo)*t;s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${P.l-6}" y="${y(v)+4}" text-anchor="end">${(v/1e6).toFixed(1)}m</text>`;});
-  bars.forEach((b,i)=>{const x=P.l+i*bw+bw*.15,top=y(Math.max(b.y0,b.y1)),hh=Math.max(1,Math.abs(y(b.y0)-y(b.y1)));
-    const col=b.total?'var(--at-blue)':(b.v>=0?'var(--bad)':'var(--good)');
-    const top0=b.total?y(b.y1):top, h0=b.total?(P.t+ih-y(b.y1)):hh;
-    s+=`<rect x="${x}" y="${top0}" width="${bw*.7}" height="${h0}" rx="2" fill="${col}" opacity="${b.total?1:.85}"/>`;
-    s+=`<text class="val" x="${x+bw*.35}" y="${top0-5}" text-anchor="middle">${b.total?(b.v/1e6).toFixed(2)+'m':(b.v>=0?'+':'')+k(b.v)+'k'}</text>`;
-    b.label.split('|').forEach((ln,j)=>s+=`<text x="${x+bw*.35}" y="${h-24+j*13}" text-anchor="middle">${ln}</text>`);
-  });
-  return s+'</svg>';
-}
-function gantt(){
-  const W=640,rowH=26,P={l:150,r:10,t:22};const h=P.t+S.tbh.length*rowH+8;const iw=W-P.l-P.r,mw=iw/12;
-  let s=`<svg viewBox="0 0 ${W} ${h}" width="100%" role="img" aria-label="Hiring timeline">`;
-  MONTHS.forEach((m,i)=>s+=`<text x="${P.l+i*mw+mw/2}" y="14" text-anchor="middle">${m}</text><line x1="${P.l+i*mw}" x2="${P.l+i*mw}" y1="18" y2="${h}" stroke="var(--grid)"/>`);
-  S.tbh.forEach((p,j)=>{const yy=P.t+j*rowH;const col=p.status==='Approved'?'var(--good)':p.status==='Open'?'var(--bar)':p.status==='Filled'?'var(--at-teal)':'var(--line-strong)';
-    s+=`<text x="0" y="${yy+16}">${p.id} ${p.title}</text><rect x="${P.l+(p.start-1)*mw+2}" y="${yy+5}" width="${(13-p.start)*mw-4}" height="15" rx="4" fill="${col}" opacity=".85"/>`;});
-  return s+'</svg>';
-}
+/* ============================== calc engine ============================== */
+const emptyPL=()=>{const o={};DEPTS.forEach(d=>{o[d.id]={};ACC.forEach(a=>o[d.id][a.id]=z12())});return o};
+const getV=id=>S.versions.find(v=>v.id===id);
+const fteM=(e,i)=>(e.start<=i+1&&e.end>=i+1)?e.fte:0;
+function empCost(e,i,a){const f=fteM(e,i);if(!f)return {sal:0,pen:0,soc:0};const sal=e.salary*f*((i+1)>=a.wageMonth?1+a.wageInc/100:1)/1000;return {sal,pen:sal*e.pension/100,soc:sal*a.social/100}}
+const prob=(st,a)=>a['p'+st]??0;
+function dealM(d,a){const p=prob(d.stage,a)/100,r=z12();if(d.type==='One-off'){if(d.close>=1&&d.close<=12)r[d.close-1]=d.amount*p}else{for(let m=d.close+1;m<=12;m++)r[m-1]=d.amount/12*p}return r}
+function depM(c){const r=z12();const md=c.life>0?c.amount/(c.life*12):0;for(let m=1;m<=12;m++)if(c.month===0||m>=c.month)r[m-1]=md;return r}
+function fteDept(P){const o={};DEPTS.forEach(d=>o[d.id]=z12());P.employees.forEach(e=>{if(o[e.dept])for(let i=0;i<12;i++)o[e.dept][i]+=fteM(e,i)});return o}
+function computeRaw(vid,stack=[]){
+ const P=S.plans[vid],v=getV(vid),a=P.assum,out=emptyPL();
+ P.employees.forEach(e=>{if(!out[e.dept])return;for(let i=0;i<12;i++){const c=empCost(e,i,a);out[e.dept]['5000'][i]+=c.sal;out[e.dept]['5100'][i]+=c.pen;out[e.dept]['5200'][i]+=c.soc}});
+ out.SAL['3000']=add(P.runrate,...P.deals.map(d=>dealM(d,a)));
+ P.capex.forEach(c=>{if(out[c.dept])out[c.dept]['7000']=add(out[c.dept]['7000'],depM(c))});
+ const fte=fteDept(P);let refPL=null;
+ const ref=()=>{if(!refPL)refPL=v.ref?computePL(v.ref,stack):emptyPL();return refPL};
+ const evalAcc=(d,acc,totRev)=>{const dr=(P.drivers[d]||{})[acc]||{m:'manual'};const man=(P.manual[d]||{})[acc]||z12();
+  if(dr.m==='ly')return ref()[d][acc].map(x=>x*(1+dr.p/100));
+  if(dr.m==='fte')return fte[d].map(x=>x*dr.p);
+  if(dr.m==='rev'&&totRev)return totRev.map(x=>x*dr.p/100);
+  return man.slice()};
+ DEPTS.forEach(d=>{out[d.id]['3100']=evalAcc(d.id,'3100')});
+ const totRev=add(...DEPTS.map(d=>add(out[d.id]['3000'],out[d.id]['3100'])));
+ DEPTS.forEach(d=>ACC.forEach(ac=>{if(ac.src==='manual'&&ac.id!=='3100')out[d.id][ac.id]=evalAcc(d.id,ac.id,totRev)}));
+ return out}
+function computePL(vid,stack=[]){
+ if(CACHE[vid])return CACHE[vid];const v=getV(vid);if(!v)return emptyPL();
+ if(v.type==='Actual'||!S.plans[vid])return CACHE[vid]=S.ACT[v.year]||emptyPL();
+ if(stack.includes(vid))return emptyPL();
+ const raw=computeRaw(vid,[...stack,vid]);const at=+v.actualsThrough||0,act=S.ACT[v.year];
+ if(at&&act)DEPTS.forEach(d=>ACC.forEach(a=>{for(let i=0;i<at&&i<12;i++)raw[d.id][a.id][i]=act[d.id][a.id][i]}));
+ return CACHE[vid]=raw}
+function plAgg(vid,depts){depts=depts||myDeptIds();const pl=computePL(vid),o={};ACC.forEach(a=>o[a.id]=add(...depts.map(d=>pl[d][a.id])));return o}
+function subs(pl){const g=id=>pl[id]||z12();const rev=add(g('3000'),g('3100')),cogs=neg(g('4000')),gp=add(rev,cogs),
+ staff=neg(add(g('5000'),g('5100'),g('5200'))),opex=neg(add(g('6000'),g('6100'),g('6200'),g('6300'),g('6400'))),
+ ebitda=add(gp,staff,opex),ebit=add(ebitda,neg(g('7000'))),pbt=add(ebit,neg(g('8000')));return {rev,cogs,gp,staff,opex,ebitda,ebit,pbt}}
+const signed=(acc,arr)=>ACCM[acc].type==='rev'?arr:neg(arr);
+function fteTotal(vid,depts){const P=S.plans[vid];if(!P)return z12();depts=depts||myDeptIds();const f=fteDept(P);return add(...depts.map(d=>f[d]))}
 
-/* ---------- pages ---------- */
-const PAGES=[
- {id:'overview',name:'Workforce overview',k:'Report'},
- {id:'plan',name:'FTE plan',k:'accoPLANNING'},
- {id:'positions',name:'Positions & hires',k:'accoMASTERDATA'},
- {id:'rates',name:'Rates & drivers',k:'accoMASTERDATA'},
- {id:'pl',name:'P&L hand-off',k:'Report'},
- {id:'design',name:'Solution design',k:'Spec'}
-];
-let cur='overview', dept='All';
-const tabsEl=document.getElementById('tabs'), pageEl=document.getElementById('page');
-function drawTabs(){tabsEl.innerHTML=PAGES.map(p=>`<button class="tab" role="tab" id="tab-${p.id}" aria-selected="${p.id===cur}" data-p="${p.id}">${p.name}<span class="k">${p.k}</span></button>`).join('');}
-tabsEl.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;cur=b.dataset.p;try{location.hash=cur}catch(_){};drawTabs();render();});
+/* ============================== init ============================== */
+S.plans.F26=makePlan(.94,'F26');S.plans.B27=makePlan(1,'B27');
+(function(){const rawF=computeRaw('F26');const map=(f)=>{const o=emptyPL();DEPTS.forEach(d=>ACC.forEach(a=>{o[d.id][a.id]=rawF[d.id][a.id].map(x=>Math.round(f(x)*10)/10)}));return o};
+ S.ACT[2025]=map(x=>x*.9*(.94+rnd()*.12));S.ACT[2026]=map(x=>x*(.95+rnd()*.1));
+ S.plans.F26.drivers.FIN['6000']={m:'ly',p:2};bust()})();
+(function seedAudit(){const t=(d,h,m)=>new Date(2026,9,d,h,m);
+ S.audit=[
+  {ts:t(15,16,42),user:'Mette Larsen',module:'Account Planning',object:'Sales · Budget 2027',change:'Status: In progress → Submitted'},
+  {ts:t(15,14,5),user:'Mette Larsen',module:'Sales Pipeline',object:'D07 Lyngbo Engineering',change:'Stage: Proposal → Negotiation'},
+  {ts:t(15,10,20),user:'Jonas Holm',module:'Employee Planning',object:'TBH-2 New hire (TBH)',change:'Start: Jun → May'},
+  {ts:t(14,15,11),user:'Kim',module:'Admin Center',object:'Finance & Admin · Budget 2027',change:'Status: Submitted → Approved'},
+  {ts:t(14,9,2),user:'Sara Nielsen',module:'CAPEX Planning',object:'C03 Aarhus office fit-out',change:'Amount: 580 → 650'},
+  {ts:t(13,13,30),user:'Kim',module:'Admin Center',object:'Assumptions · Budget 2027',change:'Wage increase %: 3.0 → 3.5'},
+  {ts:t(12,8,45),user:'Kim',module:'Admin Center',object:'Budget 2027',change:'Copied from Forecast 2026 (9+3), all modules'}]})();
 
-function slicers(withDept=true){
-  return `<div class="slicers">
-   <label class="slicer"><span class="lbl">Version <span class="pill w">write-scoping</span></span>
-     <select id="slVersion"><option>Budget 2027</option><option>Forecast 3+9 2027</option><option>Forecast 6+6 2027</option></select></label>
-   ${withDept?`<label class="slicer"><span class="lbl">Department <span class="pill v">view-scoping</span></span>
-     <select id="slDept">${['All',...DEPTS].map(d=>`<option ${d===dept?'selected':''}>${d}</option>`).join('')}</select></label>`:''}
-  </div>`;
-}
-function head(title,q,withDept=true){return `<div class="pagehead"><div><h2>${title}</h2><div class="question">${q}</div></div>${slicers(withDept)}</div>`;}
-function vis(role,title,body,note,input=false){
-  return `<section class="vis${input?' input':''}"><div class="vhead"><h3>${title}</h3><span class="role ${role}">${role}</span></div>${body}${note?`<div class="note">${note}</div>`:''}</section>`;
-}
-function kpi(l,v,d,cls='flat'){return `<div class="kpi"><div class="l">${l}</div><div class="v num">${v}</div><div class="d ${cls}">${d}</div></div>`;}
+/* ============================== access & rules ============================== */
+const me=()=>S.users.find(u=>u.id===S.me)||S.users[0];
+const myDepts=()=>DEPTS.filter(d=>me().depts[d.id]);
+const myDeptIds=()=>myDepts().map(d=>d.id);
+const has=d=>!!me().depts[d];
+const dname=id=>(DEPTS.find(d=>d.id===id)||{}).name||id;
+const ver=()=>getV(S.sel.version)||S.versions[S.versions.length-1];
+const isAdmin=()=>me().role==='Admin';
+function lockReason(vid,dept){
+ const v=getV(vid);if(!v)return 'Unknown version.';
+ if(v.type==='Actual'||!S.plans[vid])return `<b>${esc(v.name)}</b> holds actuals and can't be edited.`;
+ if(v.status!=='Open')return `<b>${esc(v.name)}</b> is locked. ${isAdmin()?'Reopen it in':'An admin can reopen it in'} <button class="link" data-nav="adm-ver">Admin Center › Versions</button>.`;
+ if(me().role==='Viewer')return `You are viewing as <b>${esc(me().name)}</b> with the Viewer role, so the plan is read-only.`;
+ if(dept&&!has(dept))return `You don't have access to ${esc(dname(dept))}.`;
+ if(dept){const st=S.plans[vid].wf[dept];if(st==='Submitted'||st==='Approved')return `${esc(dname(dept))} is <b>${st.toLowerCase()}</b> for ${esc(v.name)}. ${isAdmin()?'Reopen it in':'Ask the FP&A team to reopen it in'} <button class="link" data-nav="adm-wf">Workflow &amp; Approvals</button>.`}
+ return ''}
+const canEdit=(vid,dept)=>!lockReason(vid,dept);
+function touch(vid,dept){const P=S.plans[vid];if(P&&P.wf[dept]==='Not started')P.wf[dept]='In progress'}
+function log(module,object,change){S.audit.unshift({ts:new Date(),user:me().name,module,object,change})}
 
-function pOverview(){
-  const T=totals(dept), tot=sum(T.m), rr=sum(T.rr), avgF=sum(T.fte)/12, endF=T.fte[11];
-  const rrF=T.R.filter(r=>r.type==='EMP').reduce((a,r)=>a+r.base[0],0);
-  const open=S.tbh.filter(p=>p.status!=='Filled'&&(dept==='All'||p.dept===dept));
-  // bridge
-  let inc=0,leav=0,hires=0,recr=0;
-  T.R.forEach(r=>{
-    const c=cost(r),c0=cost(r,{runrate:true});
-    if(r.type==='TBH'){hires+=sum(c.tot)-sum(c.el['Recruitment']);recr+=sum(c.el['Recruitment']);}
-    else{ // split: FTE change at old salary vs increase
-      const noInc=S.rates[0].val; S.rates[0].val=0; const cNo=cost(r); S.rates[0].val=noInc;
-      leav+=sum(cNo.tot)-sum(c0.tot); inc+=sum(c.tot)-sum(cNo.tot);}
-  });
-  const bridge=[{label:'Run-rate|current staff',v:rr,total:true},{label:'Salary|increase',v:inc},{label:'Leavers &|FTE changes',v:leav},{label:'New hires|(TBH)',v:hires},{label:'Recruitment|one-offs',v:recr},{label:S.version,v:tot,total:true}];
-  const deptRows=DEPTS.filter(d=>dept==='All'||d===dept).map(d=>{const t=totals(d);const c=sum(t.m),f=sum(t.fte)/12;return `<tr><td>${d}</td><td class="num">${f1(f)}</td><td class="num">${f1(t.fte[11])}</td><td class="num">${k(c)}</td><td class="num">${k(c/f/12)}</td><td class="num ${c>sum(t.rr)?'up':'down'}">${c>=sum(t.rr)?'+':''}${k(c-sum(t.rr))}</td></tr>`;}).join('');
-  return head('Workforce overview','Can we afford the workforce plan? How does next year\'s personnel cost bridge from today\'s run-rate, and where does the growth come from?')+
-  `<div class="grid g-kpi">${kpi('Personnel cost FY','DKK '+k(tot)+'k',`${tot>=rr?'+':''}${((tot/rr-1)*100).toFixed(1)}% vs run-rate`,tot>rr?'up':'down')}
-   ${kpi('Average FTE',f1(avgF),`run-rate ${f1(rrF)} FTE`)}
-   ${kpi('FTE end of year',f1(endF),`${endF>=rrF?'+':''}${f1(endF-rrF)} vs today`,endF>rrF?'up':'down')}
-   ${kpi('Cost per FTE / month','DKK '+k(tot/avgF/12)+'k','fully loaded')}
-   ${kpi('Open positions',open.filter(p=>p.status!=='Draft').length,`${open.filter(p=>p.status==='Draft').length} draft (excluded)`)}</div>
-   <div class="grid g-2" style="margin-top:14px">
-    ${vis('answer','Cost bridge: run-rate → '+S.version+' (kDKK)',waterfall(bridge),'Run-rate = current employees at today\'s salary and FTE × 12. Bridge steps come from the same calc view (<code>vw_Fact_PersonnelCost</code>) by toggling drivers, so the bridge always reconciles to the plan total.')}
-    ${vis('answer','FTE by month',barChart(T.fte,MONTHS.map(()=>rrF),{fmt:v=>f1(v)})+`<div class="legend"><span><i style="background:var(--bar)"></i>${S.version} FTE</span><span><i style="background:var(--at-orange)"></i>Run-rate FTE</span></div>`,'Counts employees plus Approved/Open TBH positions. Draft positions are shown on the Positions page but excluded from cost and FTE until approved.')}
-   </div>
-   <div style="margin-top:14px">${vis('answer','By department',`<div class="tblwrap"><table><thead><tr><th>Department</th><th>Avg FTE</th><th>FTE Dec</th><th>Cost kDKK</th><th>Cost/FTE/mo kDKK</th><th>vs run-rate kDKK</th></tr></thead><tbody>${deptRows}</tbody></table></div>`,'Read-only page. Department is view-scoping; Version is write-scoping everywhere in the report and is synced across pages.')}</div>`;
-}
+/* ============================== UI components ============================== */
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('on'),2600)}
+const pendCount=id=>Object.keys(PEND).filter(k=>k.startsWith(id+'|')).length;
+const pk=(id,r,c)=>`${id}|${r}|${c}`;
+function toolbar(id,extra=''){const n=pendCount(id);
+ return `${extra}<span class="cnt" data-cnt="${id}" data-n="${n}">${n} unsaved</span>
+ <button class="btn sm" data-act="discard" data-vis="${id}" ${n?'':'disabled'}>Discard</button>
+ <button class="btn sm primary" data-act="save" data-vis="${id}" ${n?'':'disabled'}>Save</button>`}
+function visFoot(table,extra=''){return `<div class="vis-foot"><span>Writes to <code>${esc(table)}</code></span>${extra}</div>`}
+function kpi(label,val,refVal,{unit='m',good='up',refName='',fmt}={}){
+ const fv=fmt||(unit==='m'?fm:unit==='%'?(x=>nf1.format(x)+'%'):f0);
+ let d='';if(refVal!=null){const diff=val-refVal;const isUp=diff>0.0001,isDn=diff<-0.0001;const fav=good==='up'?isUp:good==='down'?isDn:false;const unfav=good==='up'?isDn:good==='down'?isUp:false;
+  const txt=unit==='%'?`${diff>=0?'+':''}${nf1.format(diff)} pp`:unit==='m'?`${diff>=0?'+':''}${fm(diff)} (${diff>=0?'+':''}${nf1.format(pct(val,refVal))}%)`:`${diff>=0?'+':''}${f2(diff)}`;
+  d=`<div class="d ${fav?'up':unfav?'down':'flat'}">${isUp?'▲':isDn?'▼':'■'} ${txt}${refName?` <span class="flat">vs ${esc(refName)}</span>`:''}</div>`}
+ return `<div class="kpi"><div class="l">${esc(label)}</div><div class="v">${fv(val)}${unit==='m'?'<small>DKK</small>':''}</div>${d}</div>`}
+function pill(st){const c={'Not started':'ns','In progress':'ip','Submitted':'sb','Approved':'ap','Locked':'lk','Open':'op'}[st]||'ns';return `<span class="pill ${c}">${esc(st)}</span>`}
+function legend(items){return `<div class="legend">${items.map(s=>`<span><i class="${s.type==='line'?'ln':''}" style="background:var(${s.color})"></i>${esc(s.name)}</span>`).join('')}</div>`}
+function niceTicks(mn,mx,n=5){if(mn===mx){mx=mn+1}const raw=(mx-mn)/n;const p=Math.pow(10,Math.floor(Math.log10(raw)));const st=[1,2,2.5,5,10].map(x=>x*p).find(x=>x>=raw)||raw;const a=Math.floor(mn/st)*st,b=Math.ceil(mx/st)*st;const t=[];for(let x=a;x<=b+st/2;x+=st)t.push(Math.round(x*1e6)/1e6);return t}
+const fShort=v=>Math.abs(v)>=1000?nf1.format(v/1000)+'m':f0(v)+'k';
+function chart({cats=MONTHS,series,h=230,stacked=false,fmt=fShort,label=''}){
+ const W=680,H=h,pl=50,pr=12,pt=10,pb=24;const bars=series.filter(s=>s.type!=='line'),lines=series.filter(s=>s.type==='line');
+ let vals=[0];if(stacked)cats.forEach((_,i)=>{let p=0,n=0;bars.forEach(s=>{const v=s.vals[i];v>=0?p+=v:n+=v});vals.push(p,n)});else bars.forEach(s=>vals.push(...s.vals));
+ lines.forEach(s=>vals.push(...s.vals));const tk=niceTicks(Math.min(...vals),Math.max(...vals));const mn=tk[0],mx=tk[tk.length-1];
+ const y=v=>pt+(mx-v)/(mx-mn||1)*(H-pt-pb);const bw=(W-pl-pr)/cats.length;let g='';
+ tk.forEach(t=>{g+=`<line class="${t===0?'zl':'gl'}" x1="${pl}" x2="${W-pr}" y1="${y(t)}" y2="${y(t)}"/><text x="${pl-6}" y="${y(t)+3.5}" text-anchor="end">${fmt(t)}</text>`});
+ cats.forEach((c,i)=>{g+=`<text x="${pl+bw*i+bw/2}" y="${H-6}" text-anchor="middle">${esc(c)}</text>`});
+ if(stacked){cats.forEach((c,i)=>{let p=0,n=0;const w=bw*.62,x=pl+bw*i+(bw-w)/2;bars.forEach(s=>{const v=s.vals[i];if(!v)return;let y0,y1;if(v>=0){y0=y(p+v);y1=y(p);p+=v}else{y0=y(n);y1=y(n+v);n+=v}
+  g+=`<rect x="${x}" y="${y0}" width="${w}" height="${Math.max(0,y1-y0)}" style="fill:var(${s.color})"><title>${esc(s.name)} · ${esc(c)}: ${fmt(v)}</title></rect>`})})}
+ else{const nb=bars.length||1,gw=bw*.72,w=gw/nb;bars.forEach((s,j)=>s.vals.forEach((v,i)=>{const x=pl+bw*i+(bw-gw)/2+w*j;const y0=Math.min(y(v),y(0)),hh=Math.abs(y(v)-y(0));
+  g+=`<rect x="${x+.5}" y="${y0}" width="${Math.max(1,w-1)}" height="${hh}" style="fill:var(${s.color})"><title>${esc(s.name)} · ${esc(cats[i])}: ${fmt(v)}</title></rect>`}))}
+ lines.forEach(s=>{const pts=s.vals.map((v,i)=>`${pl+bw*i+bw/2},${y(v)}`).join(' ');g+=`<polyline points="${pts}" fill="none" style="stroke:var(${s.color})" stroke-width="2.2" stroke-linejoin="round" ${s.dash?'stroke-dasharray="5 4"':''}/>`;
+  s.vals.forEach((v,i)=>{g+=`<circle cx="${pl+bw*i+bw/2}" cy="${y(v)}" r="${i===s.vals.length-1?4:2.6}" style="fill:var(${s.color});stroke:var(--page)" stroke-width="1.2"><title>${esc(s.name)} · ${esc(cats[i])}: ${fmt(v)}</title></circle>`})});
+ return `<div class="chart">${legend(series)}<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}</svg></div>`}
+function waterfall(steps,{h=300,fmt=fShort}={}){
+ const W=460,H=h,pl=50,pr=12,pt=14,pb=34;let run=0;const bars=steps.map(s=>{if(s.total){const b={...s,a:0,b:s.val};run=s.val;return b}const b={...s,a:run,b:run+s.val};run+=s.val;return b});
+ const vals=[0,...bars.flatMap(b=>[b.a,b.b])];const tk=niceTicks(Math.min(...vals),Math.max(...vals));const mn=tk[0],mx=tk[tk.length-1];
+ const y=v=>pt+(mx-v)/(mx-mn||1)*(H-pt-pb);const bw=(W-pl-pr)/bars.length;let g='';
+ tk.forEach(t=>{g+=`<line class="${t===0?'zl':'gl'}" x1="${pl}" x2="${W-pr}" y1="${y(t)}" y2="${y(t)}"/><text x="${pl-6}" y="${y(t)+3.5}" text-anchor="end">${fmt(t)}</text>`});
+ bars.forEach((b,i)=>{const x=pl+bw*i+bw*.18,w=bw*.64;const y0=y(Math.max(b.a,b.b)),hh=Math.max(1,Math.abs(y(b.a)-y(b.b)));const col=b.total?'--c1':b.val>=0?'--good':'--bad';
+  g+=`<rect x="${x}" y="${y0}" width="${w}" height="${hh}" style="fill:var(${col})"><title>${esc(b.label)}: ${fmt(b.val)}</title></rect>`;
+  g+=`<text x="${x+w/2}" y="${y0-4}" text-anchor="middle" style="fill:var(--ink);font-weight:600">${b.total?'':(b.val>=0?'+':'')}${fmt(b.val)}</text>`;
+  g+=`<text x="${x+w/2}" y="${H-18}" text-anchor="middle">${esc(b.label)}</text>`;if(b.sub)g+=`<text x="${x+w/2}" y="${H-5}" text-anchor="middle">${esc(b.sub)}</text>`;
+  if(i<bars.length-1)g+=`<line x1="${x+w}" x2="${x+bw}" y1="${y(b.b)}" y2="${y(b.b)}" class="zl" stroke-dasharray="2 2"/>`});
+ return `<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="EBITDA bridge">${g}</svg>`}
 
-function pPlan(){
-  const T=totals(dept);
-  const body=[];
-  DEPTS.filter(d=>dept==='All'||d===dept).forEach(d=>{
-    body.push(`<tr class="grp"><td colspan="15">${d}</td></tr>`);
-    T.R.filter(r=>r.dept===d).forEach(r=>{
-      const draft=r.type==='TBH'&&r.status==='Draft';
-      body.push(`<tr><td class="l">${r.name}<span class="tag${r.type==='TBH'?' tbh':''}">${r.type==='TBH'?'TBH '+r.id:r.id}</span>${draft?'<span class="tag">draft</span>':''}</td><td class="ro">${r.grade}</td>${r.fte.map((v,i)=>{const o=OVR[r.id]&&OVR[r.id][i]!=null;return `<td><input class="cell${o?' ovr':''}" id="c-${r.id}-${i}" data-r="${r.id}" data-m="${i}" type="number" step="0.1" min="0" max="1.5" value="${v}" ${draft?'disabled':''} aria-label="${r.name} ${MONTHS[i]} FTE"></td>`;}).join('')}<td class="num ro">${f1(sum(r.fte)/12)}</td></tr>`);
-    });
-  });
-  body.push(`<tr class="tot"><td>Total FTE</td><td></td>${T.fte.map(v=>`<td class="num">${f1(v)}</td>`).join('')}<td class="num">${f1(sum(T.fte)/12)}</td></tr>`);
-  const grid=`<div class="tblwrap"><table><thead><tr><th>Employee / position</th><th>Grade</th>${MONTHS.map(m=>`<th>${m}</th>`).join('')}<th>Avg</th></tr></thead><tbody>${body.join('')}</tbody></table></div>
-   <div class="legend"><span><i style="background:var(--input);border:1px solid var(--input-line)"></i>Derived from HR / position dates</span><span><i style="background:var(--override)"></i>Your override (written to RAW)</span></div>`;
-  const runrate=T.R.filter(r=>r.type==='EMP').map(r=>`<tr><td>${r.name}</td><td class="num">${f1(r.base[0])}</td><td class="num">${k(r.sal)}</td><td class="l">${r.end?'Leaves end '+MONTHS[r.end-1]:''}</td></tr>`).join('');
-  return head('FTE plan','Who do we need, when, and at what capacity? Adjust FTE per employee or position and month, and see the cost effect immediately.')+
-  `<div class="grid">
-    ${vis('act','Plan FTE per month — '+S.version,grid,
-     'accoPLANNING · Rows: <code>Department › Employee/Position</code> · Columns: <code>Month</code> · Measure: <code>FTE</code> (writeable). Transaction keys: <code>BK_Resource#ID</code>, <code>BK_Month#ID</code>, <code>BK_Version#ID</code> (from the single-select Version slicer). Writes go to <code>Fact_FTE_RAW#AP</code>; the trigger merges into <code>Fact_FTE_Current</code>. Only overrides are stored — the derived baseline comes from HR dates and position start dates, so the grid stays in sync when HR data refreshes. Draft positions are locked.',true)}
-    <div class="grid g-2">
-     ${vis('confirm','Personnel cost by month (kDKK)',barChart(T.m,T.rr)+`<div class="legend"><span><i style="background:var(--bar)"></i>${S.version}</span><span><i style="background:var(--at-orange)"></i>Run-rate</span></div><div class="num" style="font:600 18px var(--head-font)">DKK ${k(sum(T.m))}k <span class="sub" style="font:14px var(--body-font)">FY total</span></div>`,'Reads <code>vw_Fact_PersonnelCost</code> (DirectQuery). Positioned next to the grid so a stale value is noticed immediately. Verify on first build that it re-queries after a write (open item).')}
-     ${vis('answer','Current staff (HR snapshot)',`<div class="tblwrap"><table><thead><tr><th>Employee</th><th>FTE</th><th>Salary/mo k</th><th class="l">Note</th></tr></thead><tbody>${runrate}</tbody></table></div>`,'From the HR/payroll load (<code>Dim_Employee</code>, not writeback). Salaries are visible only to roles with salary access (RLS by org unit).')}
-    </div>
-   </div>`;
-}
+/* ---------- accoPLANNING grid (Row × period matrix) ---------- */
+function apGrid(o){
+ const {id,title,rows,actual=0,comment=false,editable=false}=o;
+ let h=`<section class="vis"><div class="vis-head"><span class="badge ap">accoPLANNING</span><h3>${esc(title)}</h3>${o.sub?`<span class="sub">${o.sub}</span>`:''}<div class="vis-tools">${editable?toolbar(id,o.tools||''):(o.tools||'')+'<span class="ro-pill">Read-only</span>'}</div></div>`;
+ if(o.banner)h+=`<div class="banner ${o.bannerInfo?'info':''}">${o.banner}</div>`;
+ h+=`<div class="grid-wrap"><table class="grid"><thead><tr><th class="rh">${esc(o.first||'Account')}</th>`+MONTHS.map((m,i)=>`<th class="${i<actual?'actc':''}">${m}<small>${i<actual?'Actual':(o.colTag||'Plan')}</small></th>`).join('')+`<th>FY</th>${comment?'<th class="l">Comment</th>':''}</tr></thead><tbody>`;
+ rows.forEach(r=>{
+  if(r.sub){h+=`<tr class="sub ${r.strong?'strong':''}"><th class="rh">${esc(r.label)}</th>${r.vals.map((v,i)=>`<td class="num ${i<actual?'actc':''}">${f0(v)}</td>`).join('')}<td class="fy">${f0(sum(r.vals))}</td>${comment?'<td></td>':''}</tr>`;return}
+  const ed=editable&&r.input;
+  h+=`<tr><th class="rh">${r.code?`<span class="code">${esc(r.code)}</span>`:''}${esc(r.label)}${r.chip||''}</th>`;
+  r.vals.forEach((v,i)=>{const k=pk(id,r.key,i);
+   if(ed&&i>=actual){const p=k in PEND;h+=`<td class="in ${p?'pend':''}"><input class="cell" data-vis="${id}" data-r="${esc(r.key)}" data-c="${i}" data-t="n" data-sign="${r.sign||1}" data-o="${f0(v)}" value="${p?esc(PEND[k]):f0(v)}" inputmode="decimal" aria-label="${esc(r.label)} ${MONTHS[i]}"></td>`}
+   else h+=`<td class="num ${i<actual?'actc':'ro'}" data-v="${v}">${f0(v)}</td>`});
+  h+=`<td class="fy">${f0(sum(r.vals))}</td>`;
+  if(comment){const k=pk(id,r.key,'cmt'),p=k in PEND,cv=r.comment||'';
+   h+=ed?`<td class="in cm ${p?'pend':''}"><input class="cell t" data-vis="${id}" data-r="${esc(r.key)}" data-c="cmt" data-t="s" data-o="${esc(cv)}" value="${esc(p?PEND[k]:cv)}" placeholder="Add comment" aria-label="Comment ${esc(r.label)}"></td>`:`<td class="txt ro cm">${esc(cv)}</td>`}
+  h+='</tr>'});
+ h+=`</tbody></table></div>${o.foot?visFoot(o.table,o.foot):visFoot(o.table)}</section>`;return h}
 
-function pPositions(){
-  const rowsH=S.tbh.filter(p=>dept==='All'||p.dept===dept).map((p,i)=>{const idx=S.tbh.indexOf(p);return `<tr>
-   <td class="l mono">${p.id}</td>
-   <td class="l"><input class="cell txt" id="p-t-${idx}" data-i="${idx}" data-f="title" value="${p.title}" aria-label="Title"></td>
-   <td class="l"><select class="cell" id="p-d-${idx}" data-i="${idx}" data-f="dept">${DEPTS.map(d=>`<option ${d===p.dept?'selected':''}>${d}</option>`).join('')}</select></td>
-   <td><select class="cell" id="p-g-${idx}" data-i="${idx}" data-f="grade">${S.grades.map(g=>`<option ${g.g===p.grade?'selected':''}>${g.g}</option>`).join('')}</select></td>
-   <td><input class="cell" id="p-f-${idx}" data-i="${idx}" data-f="fte" type="number" step="0.1" min="0.1" max="1" value="${p.fte}" aria-label="FTE"></td>
-   <td><select class="cell" id="p-s-${idx}" data-i="${idx}" data-f="start">${MONTHS.map((m,j)=>`<option value="${j+1}" ${j+1===p.start?'selected':''}>${m} 2027</option>`).join('')}</select></td>
-   <td><select class="cell" id="p-st-${idx}" data-i="${idx}" data-f="status">${['Draft','Open','Approved','Filled'].map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}</select></td>
-   <td class="l ro">${p.replaces?p.replaces+' (backfill)':'New seat'}</td>
-   <td class="num">${k(gradeStd(p.grade))}</td>
-   <td class="num">${p.status==='Draft'||p.status==='Filled'?'—':k(sum(cost({id:p.id,dept:p.dept,type:'TBH',sal:gradeStd(p.grade),start:p.start,status:p.status,fte:MONTHS.map((_,j)=>j+1>=p.start?p.fte:0)}).tot))}</td></tr>`;}).join('');
-  const hires=S.tbh.filter(p=>p.status==='Approved'||p.status==='Open');
-  return head('Positions & hires','Which new seats are we asking for, when do they start, and what do they add to the year?')+
-  `<div class="grid g-main">
-   ${vis('act','Planned positions (TBH) — '+S.version,`<div class="tblwrap"><table><thead><tr><th class="l">Position</th><th class="l">Title</th><th class="l">Department</th><th>Grade</th><th>FTE</th><th>Start</th><th>Status</th><th class="l">Type</th><th>Std salary/mo k</th><th>FY cost k</th></tr></thead><tbody>${rowsH}</tbody></table></div>`,
-    'accoMASTERDATA on <code>Fact_Position#AM</code> — one row per position per version (fact-shaped master data). Key: <code>BK_Position#ID</code> + <code>BK_Version#ID</code>. Status drives inclusion: Draft = excluded, Open/Approved = costed at grade standard salary, Filled = the position is linked to an employee and drops out (prevents double counting). FY cost column is a non-writeable measure from the calc view.',true)}
-   <div class="grid" style="align-content:start">
-    ${vis('confirm','Hiring timeline',gantt()+`<div class="legend"><span><i style="background:var(--good)"></i>Approved</span><span><i style="background:var(--bar)"></i>Open</span><span><i style="background:var(--line-strong)"></i>Draft</span></div>`)}
-    ${vis('answer','Impact of new seats',`<div class="grid g-kpi">${kpi('Costed hires',hires.length,'Open + Approved')}${kpi('Added FTE Dec',f1(sum(hires.map(p=>p.fte))),'')}${kpi('FY cost of hires','DKK '+k(sum(hires.map(p=>sum(cost({id:p.id,dept:p.dept,type:'TBH',sal:gradeStd(p.grade),start:p.start,status:p.status,fte:MONTHS.map((_,j)=>j+1>=p.start?p.fte:0)}).tot))))+'k','incl. recruitment','up')}</div>`)}
-   </div></div>`;
-}
+/* ---------- accoMASTERDATA grid (one row per key) ---------- */
+function amGrid(o){
+ const {id,title,cols,rows,key='id'}=o;const anyEdit=rows.some(r=>o.canEditRow(r));const showTools=o.editableVisual!==false&&(anyEdit||o.add);
+ let h=`<section class="vis"><div class="vis-head"><span class="badge am">accoMASTERDATA</span><h3>${esc(title)}</h3>${o.sub?`<span class="sub">${o.sub}</span>`:''}<div class="vis-tools">${o.add&&o.addOk?`<button class="btn sm" data-act="${o.add.act}">＋ ${esc(o.add.label)}</button>`:''}${showTools&&anyEdit?toolbar(id):'<span class="ro-pill">Read-only</span>'}</div></div>`;
+ if(o.banner)h+=`<div class="banner ${o.bannerInfo?'info':''}">${o.banner}</div>`;
+ h+=`<div class="grid-wrap"><table class="grid"><thead><tr>${cols.map(c=>`<th class="${c.align==='r'?'':'l'}">${esc(c.label)}</th>`).join('')}${o.del?'<th></th>':''}</tr></thead><tbody>`;
+ if(!rows.length)h+=`<tr><td colspan="${cols.length+1}" class="txt" style="padding:18px;color:var(--muted)">${o.empty||'No rows.'}</td></tr>`;
+ rows.forEach(r=>{const ed=o.canEditRow(r);const rk=String(r[key]);h+='<tr>';
+  cols.forEach(c=>{const k=pk(id,rk,c.k),p=k in PEND;const raw=r[c.k];
+   if(c.type==='calc'){h+=`<td class="${c.align==='r'?'num':'txt'} ro">${c.fmt(r)}</td>`;return}
+   if(!ed||c.ro){let disp=c.type==='select'?((c.opts(r).find(x=>String(x[0])===String(raw))||[0,raw])[1]):c.type==='bool'?(raw?'✓':'—'):c.type==='num'?(c.dec?f2(raw):f0(raw)):raw;
+    h+=`<td class="${c.type==='num'?'num':'txt'} ro ${c.type==='bool'?'chk':''}">${c.html?c.html(r):esc(disp)}</td>`;return}
+   if(c.type==='select'){const cur=p?PEND[k]:String(raw);h+=`<td class="in ${p?'pend':''}"><select class="cell" data-vis="${id}" data-r="${esc(rk)}" data-c="${c.k}" data-t="s" data-o="${esc(raw)}" aria-label="${esc(c.label)}">${c.opts(r).map(([v,l])=>`<option value="${esc(v)}" ${String(v)===String(cur)?'selected':''}>${esc(l)}</option>`).join('')}</select></td>`}
+   else if(c.type==='bool'){const cur=p?PEND[k]:raw;h+=`<td class="in chk ${p?'pend':''}"><input type="checkbox" data-vis="${id}" data-r="${esc(rk)}" data-c="${c.k}" data-t="b" data-o="${raw?'true':'false'}" ${cur?'checked':''} aria-label="${esc(c.label)}"></td>`}
+   else{const isN=c.type==='num';const ov=isN?(c.dec?f2(raw):f0(raw)):String(raw??'');h+=`<td class="in ${p?'pend':''}" style="${c.w?`min-width:${c.w}px`:''}"><input class="cell ${isN?'':'t'}" data-vis="${id}" data-r="${esc(rk)}" data-c="${c.k}" data-t="${isN?'n':'s'}" data-o="${esc(ov)}" value="${esc(p?PEND[k]:ov)}" ${isN?'inputmode="decimal"':''} aria-label="${esc(c.label)}"></td>`}});
+  if(o.del)h+=`<td class="num" style="min-width:34px;padding:0 4px">${ed&&(!o.delOk||o.delOk(r))?`<button class="delbtn" data-act="${o.del}" data-id="${esc(rk)}" aria-label="Delete row" title="Delete row">✕</button>`:''}</td>`;
+  h+='</tr>'});
+ h+=`</tbody></table></div>${visFoot(o.table,o.foot||'')}</section>`;return h}
+function applyAM(list,cols,entries,module,objF,key='id'){
+ const changed=new Set();
+ entries.forEach(({r,c,val})=>{const row=list.find(x=>String(x[key])===r);if(!row)return;const col=cols.find(x=>x.k===c);if(!col)return;let nv=val;
+  if(col.type==='num'){nv=parseNum(val);if(nv==null)return}else if(col.type==='bool')nv=(val===true||val==='true');else if(col.numeric)nv=+val;
+  const old=row[c];if(String(old)===String(nv))return;row[c]=nv;changed.add(row);
+  const show=x=>col.type==='select'?((col.opts(row).find(o=>String(o[0])===String(x))||[0,x])[1]):col.type==='bool'?(x?'Yes':'No'):col.type==='num'?(col.dec?f2(x):f0(x)):x;
+  log(module,objF(row),`${col.label}: ${show(old)} → ${show(nv)}`)});return [...changed]}
 
-function pRates(){
-  const r=S.rates.map((x,i)=>`<tr><td class="l">${x.el}</td><td class="l ro">${x.basis}</td><td class="l ro">${x.scope}</td>
-    <td><input class="cell w80" id="r-v-${i}" data-ri="${i}" data-f="val" type="number" step="${x.val>100?50:0.5}" value="${x.val}" aria-label="${x.el} value"></td>
-    <td>${x.el==='Salary increase'?`<select class="cell" id="r-f-${i}" data-ri="${i}" data-f="from">${MONTHS.map((m,j)=>`<option value="${j+1}" ${j+1===x.from?'selected':''}>${m}</option>`).join('')}</select>`:'<span class="ro">—</span>'}</td>
-    <td class="mono">${x.acct}</td></tr>`).join('');
-  const g=S.grades.map((x,i)=>`<tr><td class="l mono">${x.g}</td><td class="l">${x.title}</td><td><input class="cell w80" id="g-${i}" data-gi="${i}" type="number" step="500" value="${x.std}" aria-label="${x.g} standard salary"></td></tr>`).join('');
-  const T=totals('All');
-  const elRows=Object.entries(T.byEl).map(([e,a])=>`<tr><td class="l">${e}</td><td class="num">${k(sum(a))}</td><td class="num">${(sum(a)/sum(T.m)*100).toFixed(1)}%</td></tr>`).join('');
-  return head('Rates & drivers','Are the cost assumptions right for this version? One place to maintain every rate the calculation uses.',false)+
-  `<div class="grid g-main">
-   <div class="grid">
-   ${vis('act','Cost element rates — '+S.version,`<div class="tblwrap"><table><thead><tr><th class="l">Cost element</th><th class="l">Basis</th><th class="l">Applies to</th><th>Value</th><th>From month</th><th>GL account</th></tr></thead><tbody>${r}</tbody></table></div>`,
-    'accoMASTERDATA on <code>Fact_CostRate#AM</code> — one row per version × cost element × scope. Rates are versioned so a forecast can change assumptions without touching the budget. Example Danish setup: pension, ferietillæg, ATP/AES/AUB as a fixed amount per FTE. Values shown are sample figures.',true)}
-   ${vis('act','Grade standard salaries (used for TBH)',`<div class="tblwrap"><table><thead><tr><th class="l">Grade</th><th class="l">Title</th><th>DKK / month</th></tr></thead><tbody>${g}</tbody></table></div>`,'accoMASTERDATA on <code>Dim_Grade#AM</code> (+ version if standard salaries differ by version). Shared with Account Planning only if headcount KPIs are shown there.',true)}
-   </div>
-   ${vis('confirm','Cost by element, FY (kDKK)',`<div class="tblwrap"><table><thead><tr><th class="l">Element</th><th>kDKK</th><th>Share</th></tr></thead><tbody>${elRows}<tr class="tot"><td>Total</td><td class="num">${k(sum(T.m))}</td><td>100%</td></tr></tbody></table></div>`,'Changing a rate recalculates every employee and position — no re-entry in the FTE grid.')}
-  </div>`;
-}
+/* ---------- P&L rows ---------- */
+function plRows(pl,{vid,dept,inputs=false,chips=true}){
+ const sb=subs(pl);const P=S.plans[vid];
+ return LAYOUT.map(l=>{if(l.sub)return {sub:true,label:l.label,strong:l.strong,vals:sb[l.sub]};
+  const a=ACCM[l.acc];let chip='',input=false;
+  if(chips){if(a.src==='employee')chip=`<span class="chip" data-nav="emp-pay" title="Calculated in Employee Planning">Employee Planning ›</span>`;
+   else if(a.src==='pipeline')chip=`<span class="chip" data-nav="sal-phase" title="Run-rate plus weighted pipeline">Sales Pipeline ›</span>`;
+   else if(a.src==='capex')chip=`<span class="chip" data-nav="cap-dep" title="Straight-line depreciation">CAPEX Planning ›</span>`;
+   else if(P&&dept){const d=(P.drivers[dept]||{})[a.id];if(d&&d.m!=='manual')chip=`<span class="chip drv" data-nav="acc-drv" title="Driver-based">${esc(drvText(d,vid))} ›</span>`;else input=true}}
+  return {key:a.id,code:a.id,label:a.name,vals:signed(a.id,pl[a.id]),input:inputs&&input,sign:a.type==='rev'?1:-1,chip,comment:P&&dept?((P.comments[dept]||{})[a.id]||''):''}})}
+function drvText(d,vid){const v=getV(vid);const r=v&&v.ref?getV(v.ref):null;
+ return d.m==='ly'?`${d.p>=0?'+':''}${f2(d.p)}% vs ${r?r.name.replace(/ \(.*\)/,''):'ref'}`:d.m==='fte'?`${f2(d.p)}k per FTE`:d.m==='rev'?`${f2(d.p)}% of revenue`:'Manual'}
 
-function pPL(){
-  const T=totals('All');const Q=[[0,1,2],[3,4,5],[6,7,8],[9,10,11]];
-  const r=ACCTS.map(a=>{const v=T.byEl[a.el]||MONTHS.map(()=>0);return `<tr><td class="l mono">${a.a}</td><td class="l">${a.n}</td>${Q.map(q=>`<td class="num">${k(sum(q.map(i=>v[i])))}</td>`).join('')}<td class="num">${k(sum(v))}</td></tr>`;}).join('');
-  return head('P&L hand-off','Does the personnel cost land correctly in the P&L plan, account by account, without anyone re-typing it?',false)+
-  `<div class="grid g-main">
-   ${vis('answer','Personnel cost by GL account — '+S.version+' (kDKK)',`<div class="tblwrap"><table><thead><tr><th class="l">Account</th><th class="l">Name</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>FY</th></tr></thead><tbody>${r}<tr class="tot"><td></td><td>Total personnel cost</td>${Q.map(q=>`<td class="num">${k(sum(q.map(i=>T.m[i])))}</td>`).join('')}<td class="num">${k(sum(T.m))}</td></tr></tbody></table></div>`,
-    'Cost elements map to accounts through <code>Dim_CostElement</code> (column <code>BK_Account#ID</code>). The Account Planning page shows these accounts as locked, non-writeable rows sourced from this module, so personnel cost is planned once.')}
-   ${vis('answer','How it reaches Account Planning',`<ol style="margin:0;padding-left:18px;display:grid;gap:6px">
-     <li>Employee Planning datamart exposes <span class="mono">vw_Fact_PersonnelCost_ByAccount</span> (version × month × account).</li>
-     <li>Both modules share <span class="mono">accoTOOL$Base.Dim_Version#AM</span> and the warehouse account dimension, so versions and accounts line up.</li>
-     <li>The semantic model relates both facts to the same Dim_Account / Dim_Version / Date; a P&amp;L measure adds them: <span class="mono">[P&amp;L Plan] = [Account Plan] + [Personnel Cost]</span>.</li>
-     <li>Personnel accounts (22xx) are cell-locked in the Account Planning grid.</li></ol>`,'Modules never reference each other\'s schemas, so the join happens in the semantic model (preferred) rather than in SQL. Copy Version copies both modules for a new forecast in one run.')}
-  </div>`;
-}
+/* ============================== pages ============================== */
+const NAV=[
+ {id:'home',label:'Planning cockpit',icon:'home'},
+ {id:'adm',label:'Admin Center',admin:true,pages:[['adm-ver','Versions'],['adm-usr','Users & access (RLS)'],['adm-asm','Assumptions'],['adm-copy','Copy version'],['adm-wf','Workflow & approvals'],['adm-log','Audit log']]},
+ {id:'acc',label:'Account Planning',pages:[['acc-pnl','P&L planner'],['acc-drv','Driver planning'],['acc-rev','P&L review']]},
+ {id:'emp',label:'Employee Planning',pages:[['emp-reg','Employee register'],['emp-hc','Headcount & FTE'],['emp-pay','Payroll costs']]},
+ {id:'sal',label:'Sales Pipeline Planning',pages:[['sal-pipe','Pipeline'],['sal-phase','Revenue phasing'],['sal-fun','Funnel analysis']]},
+ {id:'cap',label:'CAPEX Planning',pages:[['cap-inv','Investment plan'],['cap-dep','Depreciation schedule']]},
+ {id:'mgt',label:'Management Reporting',pages:[['mgt-exec','Executive summary'],['mgt-cmp','Version comparison']]}];
+const PAGES={};
+function page(id,o){PAGES[id]=o}
+const reportOf=id=>NAV.find(n=>n.pages&&n.pages.some(p=>p[0]===id));
+const pageLabel=id=>{if(id==='home')return 'Planning cockpit';const r=reportOf(id);return r?r.pages.find(p=>p[0]===id)[1]:id};
 
-function pDesign(){
-  return `<div class="doc">
-  <h2>Scope</h2>
-  <p>A reusable accoTOOL module for planning headcount, FTE and fully loaded personnel cost, using the hybrid approach: existing employees load from HR/payroll, new seats are planned as TBH positions, and every cost element is calculated from versioned rates. The output feeds the Account Planning module as locked P&amp;L lines.</p>
-  <div class="loop">
-   <div class="s"><b>Report</b><span>5 pages: overview, FTE plan, positions, rates, P&amp;L hand-off</span></div>
-   <div class="s"><b>Visuals</b><span>1 × accoPLANNING (FTE), 3 × accoMASTERDATA (positions, rates, grades)</span></div>
-   <div class="s"><b>Database</b><span>accoTOOL$EmployeePlanning + dmAccoTOOL_EmployeePlanning; calc view does all cost logic</span></div>
-   <div class="s"><b>Semantic model</b><span>Shared Version, Account, Date with Account Planning; RLS on salary</span></div>
-  </div>
+/* ---------- Planning cockpit ---------- */
+page('home',{title:'Planning cockpit',desc:v=>`Where ${v.name} stands across every module. Click a module to open it.`,slicers:['version'],render(){
+ const v=ver(),P=S.plans[v.id],pl=plAgg(v.id),sb=subs(pl),ref=v.ref?getV(v.ref):null;const rs=ref?subs(plAgg(ref.id)):null;
+ const fte=fteTotal(v.id);const rf=ref?fteTotal(ref.id):null;
+ const wf=P?P.wf:{};const done=DEPTS.filter(d=>wf[d.id]==='Approved').length,subm=DEPTS.filter(d=>wf[d.id]==='Submitted').length;
+ let h=`<div class="kpis">${kpi('Revenue FY',sum(sb.rev),rs&&sum(rs.rev),{refName:ref&&ref.name})}${kpi('EBITDA FY',sum(sb.ebitda),rs&&sum(rs.ebitda),{refName:ref&&ref.name})}
+ ${kpi('FTE in December',fte[11],rf&&rf[11],{unit:'n',good:'none',fmt:f2})}
+ <div class="kpi"><div class="l">Departments approved</div><div class="v">${done}<small>of ${DEPTS.length}</small></div><div class="d flat">${subm} awaiting approval</div></div></div>`;
+ h+=`<section class="vis"><div class="vis-head"><h3>How the modules connect</h3><span class="sub">Live figures for ${esc(v.name)} · your departments only</span></div><div class="vis-body">${solutionMap(v,pl)}</div></section>`;
+ h+=`<div class="row2"><section class="vis"><div class="vis-head"><h3>Department status</h3><span class="sub">${esc(v.name)}</span><div class="vis-tools"><button class="btn sm" data-nav="adm-wf">Open approvals</button></div></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Department</th><th>Planners</th><th>Status</th><th class="r">EBITDA FY</th><th></th></tr></thead><tbody>`+
+ myDepts().map(d=>{const ds=subs(plAgg(v.id,[d.id]));const owners=S.users.filter(u=>u.role==='Planner'&&u.depts[d.id]).map(u=>u.name).join(', ')||'—';
+  return `<tr><td>${esc(d.name)}</td><td>${esc(owners)}</td><td>${P?pill(wf[d.id]):pill('Locked')}</td><td class="r">${fm(sum(ds.ebitda))}</td><td class="r"><button class="link" data-act="openDept" data-id="${d.id}">Open planner</button></td></tr>`}).join('')+`</tbody></table></div></section>
+ <section class="vis"><div class="vis-head"><h3>Recent changes</h3><div class="vis-tools"><button class="btn sm" data-nav="adm-log">Audit log</button></div></div><div class="vis-body tblwrap"><table class="tbl"><tbody>${S.audit.slice(0,6).map(a=>`<tr><td><b>${esc(a.user)}</b> · ${esc(a.module)}<br><span class="note">${esc(a.object)} — ${esc(a.change)}</span></td><td class="r note">${fmtTs(a.ts)}</td></tr>`).join('')}</tbody></table></div></section></div>`;
+ return h}});
+function fmtTs(d){return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}
+function solutionMap(v,pl){
+ const sb=subs(pl);const pay=sum(pl['5000'])+sum(pl['5100'])+sum(pl['5200']);const P=S.plans[v.id];
+ const hc=P?P.employees.filter(e=>has(e.dept)).length:0;const deals=P?P.deals.length:0;const cap=P?sum(P.capex.filter(c=>has(c.dept)&&c.month>0).map(c=>c.amount)):0;
+ const box=(x,y,w,h,t,l2,l3,nav,acc)=>`<g class="mapbox" data-nav="${nav}" tabindex="0" role="link" aria-label="Open ${esc(t)}"><rect class="b" x="${x}" y="${y}" width="${w}" height="${h}" rx="4" style="fill:var(--page);stroke:var(--line-2)"/><rect x="${x}" y="${y}" width="4" height="${h}" style="fill:var(${acc})"/><text class="t1" x="${x+16}" y="${y+22}">${esc(t)}</text><text class="t2" x="${x+16}" y="${y+40}">${esc(l2)}</text>${l3?`<text class="t3" x="${x+16}" y="${y+58}">${esc(l3)}</text>`:''}</g>`;
+ const arrow=(x1,y1,x2,y2,lbl,lx,ly)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke:var(--muted)" stroke-width="1.4" marker-end="url(#ah)"/>${lbl?`<text class="lbl" x="${lx}" y="${ly}">${esc(lbl)}</text>`:''}`;
+ return `<div class="map-wrap"><svg class="map" viewBox="0 0 920 352" aria-label="Solution map"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--muted)"/></marker></defs>
+ ${box(20,12,880,50,'Admin Center','Versions · Users & RLS · Assumptions · Copy version · Workflow · Audit log','','adm-ver','--c5')}
+ <line x1="130" y1="62" x2="130" y2="104" style="stroke:var(--line-2)" stroke-dasharray="4 3"/><line x1="510" y1="62" x2="510" y2="144" style="stroke:var(--line-2)" stroke-dasharray="4 3"/><line x1="795" y1="62" x2="795" y2="144" style="stroke:var(--line-2)" stroke-dasharray="4 3"/>
+ <text class="lbl" x="140" y="88">versions · assumptions · access</text><text class="lbl" x="520" y="108">locks · workflow</text>
+ ${box(20,106,220,68,'Employee Planning',`${hc} employees and new hires`,`${fm(pay)} staff costs`,'emp-reg','--c2')}
+ ${box(20,192,220,68,'Sales Pipeline',`${deals} deals plus run-rate`,`${fm(sum(pl['3000']))} product revenue`,'sal-pipe','--c4')}
+ ${box(20,278,220,68,'CAPEX Planning',`${fm(cap)} new investments`,`${fm(sum(pl['7000']))} depreciation`,'cap-inv','--c3')}
+ ${box(400,146,230,124,'Account Planning','P&L by department and month','',  'acc-pnl','--c1')}
+ <text class="t2" x="416" y="210">Manual input + driver scenarios</text><text class="t3" x="416" y="232">EBITDA ${fm(sum(sb.ebitda))}</text><text class="t2" x="416" y="252">Revenue ${fm(sum(sb.rev))}</text>
+ ${box(690,146,210,124,'Management Reporting','Executive summary','Version comparison','mgt-exec','--c1')}
+ ${arrow(240,140,398,180,'5000–5200 staff costs',252,150)}${arrow(240,226,398,212,'3000 product revenue',252,212)}${arrow(240,312,398,246,'7000 depreciation',252,302)}
+ ${arrow(630,208,688,208,'',0,0)}<text class="lbl" x="634" y="200">P&amp;L</text>
+ </svg></div>`}
 
-  <h2>Database objects</h2>
-  <div class="tblwrap"><table><thead><tr><th class="l">Object</th><th class="l">Pattern / visual</th><th class="l">Grain</th><th class="l">Purpose</th><th class="l">Status</th></tr></thead><tbody>
-   <tr><td class="l mono">accoTOOL$Base.Dim_Version#AM</td><td class="l">A · AM</td><td class="l">1 row / version</td><td class="l">Shared with Account Planning</td><td class="l conf">🟡 reuse if present</td></tr>
-   <tr><td class="l mono">accoTOOL$Base.Config_Connection / Config_Writeback / Log_Audit</td><td class="l">Base</td><td class="l">—</td><td class="l">Shared writeback identity, config, audit</td><td class="l conf">🟡 reuse if present</td></tr>
-   <tr><td class="l mono">Dim_Employee (warehouse)</td><td class="l">Source, read-only</td><td class="l">1 row / employee (SCD2)</td><td class="l">HR snapshot: org unit, grade, salary, FTE, start/end</td><td class="l conf">⚠️ confirm source</td></tr>
-   <tr><td class="l mono">accoTOOL$EmployeePlanning.Fact_Position#AM</td><td class="l">A · AM</td><td class="l">position × version</td><td class="l">TBH seats: title, org unit, grade, FTE, start, status, backfill of</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">…Fact_EmployeeAssumption#AM</td><td class="l">A · AM</td><td class="l">employee × version</td><td class="l">Salary override, planned end date, capitalisation % (optional)</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">…Fact_FTE_RAW#AP → Fact_FTE_Current</td><td class="l">B · AP (RAW→Current)</td><td class="l">resource × month × version</td><td class="l">FTE overrides only; trigger merges latest value</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">…Fact_CostRate#AM</td><td class="l">A · AM</td><td class="l">version × cost element × scope</td><td class="l">Rates: increase %, pension %, social charges, benefits, recruitment</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">…Dim_Grade#AM</td><td class="l">A · AM</td><td class="l">1 row / grade</td><td class="l">Standard monthly salary for TBH</td><td class="l conf">🟡 new (or reuse HR grades)</td></tr>
-   <tr><td class="l mono">…Dim_CostElement#AM</td><td class="l">A · AM</td><td class="l">1 row / element</td><td class="l">Element → GL account mapping</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">…vw_Dim_Resource</td><td class="l">Module view</td><td class="l">employee ∪ position</td><td class="l">One row axis for the FTE grid (<span class="mono">BK_Resource#ID</span>, type EMP/TBH)</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">…vw_Calc_PersonnelCost</td><td class="l">Module engine view</td><td class="l">resource × month × element × version</td><td class="l">All cost logic, live</td><td class="l conf">🟡 new</td></tr>
-   <tr><td class="l mono">dmAccoTOOL_EmployeePlanning.*</td><td class="l">Datamart views</td><td class="l">—</td><td class="l">vw_Dim_Resource, vw_Dim_Grade, vw_Dim_CostElement, vw_Fact_FTE, vw_Fact_Position, vw_Fact_CostRate, vw_Fact_PersonnelCost, vw_Fact_PersonnelCost_ByAccount, vw_Config_Writeback</td><td class="l conf">🟡 new</td></tr>
-  </tbody></table></div>
+/* ---------- Admin: Versions ---------- */
+const VER_COLS=()=>[
+ {k:'id',label:'ID',ro:true},{k:'name',label:'Version name',type:'text',w:180},
+ {k:'type',label:'Type',type:'select',opts:()=>['Budget','Forecast','Actual','Scenario'].map(x=>[x,x])},
+ {k:'year',label:'Year',type:'num'},
+ {k:'actualsThrough',label:'Actuals through',type:'select',numeric:true,opts:()=>[[0,'None'],...MONTHS.map((m,i)=>[i+1,m])]},
+ {k:'ref',label:'Reference version',type:'select',opts:r=>[['','—'],...S.versions.filter(x=>x.id!==r.id).map(x=>[x.id,x.name])]},
+ {k:'status',label:'Status',type:'select',opts:()=>[['Open','Open'],['Locked','Locked']]}];
+page('adm-ver',{title:'Versions',desc:()=>'The shared version list every module plans against. Lock a version to freeze all of its input surfaces at once.',slicers:[],admin:true,render(){
+ const cols=VER_COLS();
+ SAVE['ver']=e=>{applyAM(S.versions,cols,e,'Admin Center',r=>r.name);};
+ let h=`<div class="kpis">${S.versions.map(v=>`<div class="kpi"><div class="l">${esc(v.type)} · ${v.year}</div><div class="v" style="font-size:16px">${esc(v.name)}</div><div class="d">${pill(v.status)} ${v.actualsThrough?`<span class="flat">actuals through ${MONTHS[v.actualsThrough-1]}</span>`:''}</div></div>`).join('')}</div>`;
+ h+=amGrid({id:'ver',title:'Version list',sub:'Shared by every module',table:TABLES.ver,cols,rows:S.versions,canEditRow:()=>isAdmin(),
+  foot:'<span>Used by: Account Planning, Employee Planning, Sales Pipeline, CAPEX, Management Reporting</span>'});
+ h+=`<p class="note">Try it: set <b>Budget 2027</b> to <i>Locked</i>, save, and open the <button class="link" data-nav="acc-pnl">P&amp;L planner</button>. Every input grid for that version turns read-only. New versions are created with <button class="link" data-nav="adm-copy">Copy version</button>.</p>`;
+ return h}});
 
-  <h2>Calculation logic (vw_Calc_PersonnelCost)</h2>
-  <pre class="f">Baseline FTE(r,m)   = EMP: HR FTE if m within [start, end]  |  TBH: position FTE if m ≥ start and status ∈ {Open, Approved}
-FTE(r,m)            = COALESCE(Fact_FTE_Current.FTE, Baseline FTE)
-MonthlySalary(r,m)  = EMP: COALESCE(assumption override, HR salary)  |  TBH: Dim_Grade.StdSalary
-                      × (1 + increase%)  if m ≥ increase month
-Salary              = MonthlySalary × FTE
-Pension / Holiday / Bonus = Salary × rate% (bonus by scope: department, else "Other")
-Social charges / Benefits = rate × FTE
-Recruitment         = rate, once, in TBH start month
-Cost element        → GL account via Dim_CostElement</pre>
-  <p>Keep the logic in SQL, not DAX: it is auditable, testable against payroll, and the P&amp;L hand-off reads the same numbers. If the view gets slow in DirectQuery, materialise it with a stored procedure triggered after writes, and keep the view for the Confirm visuals.</p>
+/* ---------- Admin: Users & RLS ---------- */
+page('adm-usr',{title:'Users & access (RLS)',desc:()=>'Who can see and plan which departments. The same table drives row-level security in the semantic model.',slicers:[],admin:true,render(){
+ const cols=[{k:'name',label:'User',type:'text',w:140},{k:'title',label:'Title',type:'text',w:150},
+  {k:'role',label:'Role',type:'select',opts:()=>['Admin','Planner','Viewer'].map(x=>[x,x])},
+  ...DEPTS.map(d=>({k:'d_'+d.id,label:d.name,type:'bool'}))];
+ const rows=S.users.map(u=>{const r={id:u.id,name:u.name,title:u.title,role:u.role};DEPTS.forEach(d=>r['d_'+d.id]=!!u.depts[d.id]);return r});
+ SAVE['usr']=e=>{const ch=applyAM(rows,cols,e,'Admin Center',r=>'User '+r.name);ch.forEach(r=>{const u=S.users.find(x=>x.id===r.id);u.name=r.name;u.title=r.title;u.role=r.role;DEPTS.forEach(d=>u.depts[d.id]=r['d_'+d.id])});fixSel()};
+ let h=amGrid({id:'usr',title:'User access',sub:'One row per user',table:TABLES.usr,cols,rows,canEditRow:()=>isAdmin(),
+  foot:'<span>RLS role <code>Department planner</code> filters on <code>UserPrincipalName = USERPRINCIPALNAME()</code></span>'});
+ h+=`<div class="row2e"><section class="vis"><div class="vis-head"><h3>What each role can do</h3></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Role</th><th>Sees</th><th>Edits</th></tr></thead><tbody>
+ <tr><td>${pill('Approved').replace('Approved','Admin')}</td><td>Its departments + Admin Center</td><td>Plans, versions, assumptions, approvals</td></tr>
+ <tr><td><span class="pill ip">Planner</span></td><td>Its departments only</td><td>Open versions, until the department is submitted</td></tr>
+ <tr><td><span class="pill ns">Viewer</span></td><td>Its departments only</td><td>Nothing</td></tr></tbody></table></div></section>
+ <section class="vis"><div class="vis-head"><h3>Test the security</h3></div><div class="vis-body note">Switch <b>Viewing as</b> in the top bar to Mette Larsen. Navigation, slicers, employee rows, CAPEX rows and every total shrink to Sales and Marketing, and Admin Center closes. Switch to Peter Berg to see the read-only Viewer role.</div></section></div>`;
+ return h}});
 
-  <h2>Page specifications</h2>
-  <div class="tblwrap"><table><thead><tr><th class="l">Page</th><th class="l">Business question</th><th class="l">Answer</th><th class="l">Act</th><th class="l">Confirm</th><th class="l">Slicers</th></tr></thead><tbody>
-   <tr><td class="l">Workforce overview</td><td class="l">Can we afford the plan?</td><td class="l">KPIs, bridge, FTE trend, departments</td><td class="l">— (read-only)</td><td class="l">—</td><td class="l">Version (W), Department (V)</td></tr>
-   <tr><td class="l">FTE plan</td><td class="l">Who do we need, when?</td><td class="l">HR snapshot</td><td class="l">accoPLANNING FTE grid</td><td class="l">Monthly cost vs run-rate</td><td class="l">Version (W), Department (V)</td></tr>
-   <tr><td class="l">Positions &amp; hires</td><td class="l">Which new seats, when?</td><td class="l">Impact tiles</td><td class="l">accoMASTERDATA positions</td><td class="l">Hiring timeline</td><td class="l">Version (W), Department (V)</td></tr>
-   <tr><td class="l">Rates &amp; drivers</td><td class="l">Are the assumptions right?</td><td class="l">—</td><td class="l">accoMASTERDATA rates + grades</td><td class="l">Cost by element</td><td class="l">Version (W)</td></tr>
-   <tr><td class="l">P&amp;L hand-off</td><td class="l">Does cost land in the P&amp;L?</td><td class="l">Cost by account × quarter</td><td class="l">—</td><td class="l">—</td><td class="l">Version (W)</td></tr>
-  </tbody></table></div>
-  <p><b>Write-scoping rules:</b> the Version slicer is single-select with a default and synced across pages. Cross-filtering from context visuals into the accoTOOL visuals is turned off. Department filters the view only.</p>
+/* ---------- Admin: Assumptions ---------- */
+const ASM_DEF=[['wageInc','Annual wage increase','%','Employee Planning','emp-pay'],['wageMonth','Wage increase effective month','month','Employee Planning','emp-pay'],['social','Social security & payroll tax','% of salary','Employee Planning','emp-pay'],
+ ['pLead','Win probability · Lead','%','Sales Pipeline','sal-fun'],['pQualified','Win probability · Qualified','%','Sales Pipeline','sal-fun'],['pProposal','Win probability · Proposal','%','Sales Pipeline','sal-fun'],['pNegotiation','Win probability · Negotiation','%','Sales Pipeline','sal-fun'],['pWon','Win probability · Won','%','Sales Pipeline','sal-fun']];
+page('adm-asm',{title:'Assumptions',desc:v=>`Global assumptions for ${v.name}. Every module reads them from here, so one change flows through the whole plan.`,slicers:['version'],admin:true,render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);
+ const rows=ASM_DEF.map(([k,l,u,m,n])=>({id:k,label:l,value:P.assum[k],unit:u,mod:m,nav:n}));
+ const cols=[{k:'label',label:'Assumption',ro:true},{k:'value',label:'Value',type:'num',dec:true,w:90},{k:'unit',label:'Unit',ro:true},{k:'mod',label:'Used by',ro:true,html:r=>`<span class="chip" data-nav="${r.nav}" style="margin:0">${esc(r.mod)} ›</span>`}];
+ SAVE['asm-'+v.id]=e=>{applyAM(rows,cols,e,'Admin Center',r=>`${r.label} · ${v.name}`).forEach(r=>{P.assum[r.id]=r.id==='wageMonth'?Math.min(12,Math.max(1,Math.round(r.value))):r.value})};
+ const sb=subs(plAgg(v.id,DEPTS.map(d=>d.id)));
+ let h=`<div class="row2"><div>${amGrid({id:'asm-'+v.id,title:'Assumption set',sub:esc(v.name),table:TABLES.asm,cols,rows,canEditRow:()=>isAdmin()&&v.status==='Open',banner:v.status!=='Open'?lockReason(v.id):''})}</div>
+ <div class="kpis" style="grid-template-columns:1fr;align-content:start">${kpi('Staff costs FY (all departments)',-sum(sb.staff),null)}${kpi('Product revenue FY (all departments)',sum(sb.rev)-sum(plAgg(v.id,DEPTS.map(d=>d.id))['3100']),null)}${kpi('EBITDA FY (all departments)',sum(sb.ebitda),null)}
+ <p class="note">These tiles recalculate when you save. Raise the wage increase and watch staff costs and EBITDA move.</p></div></div>`;
+ return h}});
 
-  <h2>Semantic model</h2>
-  <ul>
-   <li>Shared dimensions with Account Planning: Version, Account, Date, Org unit.</li>
-   <li>Writeback facts (FTE, Position, CostRate) and the cost view in DirectQuery; HR and dimension views in Import or Dual.</li>
-   <li>RLS by org unit. Salary-level columns hidden from roles without salary access; those users see department totals only.</li>
-   <li>Measures in <span class="mono">_Measures</span>: FTE, Headcount, Personnel Cost, Run-rate Cost, Cost per FTE, bridge steps.</li>
-  </ul>
+/* ---------- Admin: Copy version ---------- */
+page('adm-copy',{title:'Copy version',desc:()=>'Start a new budget, forecast or scenario from an existing version, module by module.',slicers:[],admin:true,render(){
+ const src=S.versions.filter(v=>S.plans[v.id]);
+ return `<section class="vis"><div class="vis-head"><h3>New version</h3><span class="sub">Runs the Copy Version procedure in the data warehouse</span></div><div class="vis-body"><form id="copyform" class="form" autocomplete="off">
+ <label for="cv-src">Copy from<select id="cv-src">${src.map(v=>`<option value="${v.id}" ${v.id==='B27'?'selected':''}>${esc(v.name)}</option>`).join('')}</select></label>
+ <label for="cv-name">New version name<input type="text" id="cv-name" value="Budget 2027 – Downside"></label>
+ <label for="cv-type">Type<select id="cv-type">${['Scenario','Budget','Forecast'].map(x=>`<option>${x}</option>`).join('')}</select></label>
+ <label for="cv-ref">Reference version<select id="cv-ref">${S.versions.map(v=>`<option value="${v.id}" ${v.id==='F26'?'selected':''}>${esc(v.name)}</option>`).join('')}</select></label>
+ <div style="grid-column:1/-1"><span class="note" style="font-weight:600">Modules to copy</span><div class="checks">
+ ${[['acc','Account planning (manual input, drivers, comments)'],['emp','Employees'],['sal','Pipeline & run-rate'],['cap','CAPEX'],['asm','Assumptions']].map(([k,l])=>`<label for="cv-m-${k}"><input type="checkbox" id="cv-m-${k}" checked> ${l}</label>`).join('')}</div></div>
+ <div style="grid-column:1/-1;display:flex;gap:8px;align-items:center"><button class="btn primary" type="submit" ${isAdmin()?'':'disabled'}>Copy version</button><span class="note">The new version opens as <b>Open</b> with every department <i>Not started</i>.</span></div></form></div>${visFoot(TABLES.ver,'<span>Calls <code>[accoTOOL$Base].[sp_CopyVersion]</code></span>')}</section>
+ <section class="vis"><div class="vis-head"><h3>Versions</h3><div class="vis-tools"><button class="btn sm" data-nav="adm-ver">Manage versions</button></div></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Version</th><th>Type</th><th>Reference</th><th>Status</th><th class="r">EBITDA FY</th></tr></thead><tbody>${S.versions.map(v=>`<tr><td>${esc(v.name)}</td><td>${esc(v.type)}</td><td>${esc((getV(v.ref)||{}).name||'—')}</td><td>${pill(v.status)}</td><td class="r">${fm(sum(subs(plAgg(v.id)).ebitda))}</td></tr>`).join('')}</tbody></table></div></section>`}});
+function doCopy(){
+ const src=$('#cv-src').value,name=$('#cv-name').value.trim()||'New version',type=$('#cv-type').value,ref=$('#cv-ref').value;
+ const m=k=>$('#cv-m-'+k).checked;const sv=getV(src),P=S.plans[src],blank=makePlanEmpty();const np=clone(P);
+ if(!m('acc')){np.manual=blank.manual;np.drivers=blank.drivers;np.comments=blank.comments}
+ if(!m('emp'))np.employees=[];if(!m('sal')){np.deals=[];np.runrate=z12()}if(!m('cap'))np.capex=[];if(!m('asm'))np.assum=clone(blank.assum);
+ DEPTS.forEach(d=>np.wf[d.id]='Not started');
+ const id='V'+(S.seq.ver++);S.versions.push({id,name,type,year:sv.year,actualsThrough:type==='Forecast'?sv.actualsThrough:0,ref,status:'Open'});S.plans[id]=np;bust();
+ log('Admin Center',name,`Copied from ${sv.name}`);S.sel.version=id;toast(`Created “${name}”. It is now selected in every report.`);go('adm-ver')}
+function makePlanEmpty(){const p={manual:{},drivers:{},comments:{}};DEPTS.forEach(d=>{p.manual[d.id]={};p.drivers[d.id]={};p.comments[d.id]={};ACC.forEach(a=>{if(a.src==='manual')p.manual[d.id][a.id]=z12()})});p.assum={wageInc:0,wageMonth:1,social:0,pLead:10,pQualified:25,pProposal:50,pNegotiation:75,pWon:100};return p}
 
-  <h2>Build sequence</h2>
-  <ol>
-   <li>Pre-flight: inspect the target database (Base objects, Dim_Version#AM, HR source tables, writeback identity).</li>
-   <li>Module schema and tables, Config_Writeback rows, grants for the shared writeback role.</li>
-   <li>Calc view, reconciled to one month of actual payroll before any planning input.</li>
-   <li>Datamart views, then the semantic model, then pages.</li>
-   <li>Extend Copy Version to include this module's facts.</li>
-  </ol>
+/* ---------- Admin: Workflow ---------- */
+page('adm-wf',{title:'Workflow & approvals',desc:v=>`Submission and approval status per department for ${v.name}. Submitted and approved departments are locked for input.`,slicers:['version'],admin:true,render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);
+ const cnt=st=>DEPTS.filter(d=>P.wf[d.id]===st).length;const segs=[['Approved','--good'],['Submitted','--warn'],['In progress','--accent'],['Not started','--line-2']];
+ let h=`<section class="vis"><div class="vis-head"><h3>Progress</h3><span class="sub">${esc(v.name)}</span></div><div class="vis-body"><div class="prog">${segs.map(([s,c])=>`<span style="width:${cnt(s)/DEPTS.length*100}%;background:var(${c})" title="${s}: ${cnt(s)}"></span>`).join('')}</div>
+ <div class="legend" style="margin-top:8px">${segs.map(([s,c])=>`<span><i style="background:var(${c})"></i>${s} · ${cnt(s)}</span>`).join('')}</div></div></section>`;
+ h+=`<section class="vis"><div class="vis-head"><span class="badge am">accoMASTERDATA</span><h3>Department status</h3></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Department</th><th>Planners</th><th>Status</th><th class="r">Revenue FY</th><th class="r">EBITDA FY</th><th class="r">vs reference</th><th>Action</th></tr></thead><tbody>`+
+ DEPTS.map(d=>{const st=P.wf[d.id];const s=subs(plAgg(v.id,[d.id]));const r=v.ref?subs(plAgg(v.ref,[d.id])):null;const dv=r?sum(s.ebitda)-sum(r.ebitda):0;
+  const ok=isAdmin()&&v.status==='Open';
+  const btn=!ok?'':st==='Submitted'?`<button class="btn sm primary" data-act="wf" data-id="${d.id}" data-to="Approved">Approve</button> <button class="btn sm" data-act="wf" data-id="${d.id}" data-to="In progress">Send back</button>`:st==='Approved'?`<button class="btn sm" data-act="wf" data-id="${d.id}" data-to="In progress">Reopen</button>`:'<span class="note">Waiting for planner</span>';
+  return `<tr><td>${esc(d.name)}</td><td>${esc(S.users.filter(u=>u.role==='Planner'&&u.depts[d.id]).map(u=>u.name).join(', ')||'—')}</td><td>${pill(st)}</td><td class="r">${fm(sum(s.rev))}</td><td class="r">${fm(sum(s.ebitda))}</td><td class="r ${dv>=0?'up':'down'}">${r?(dv>=0?'+':'')+fm(dv):'—'}</td><td>${btn}</td></tr>`}).join('')+`</tbody></table></div>${visFoot(TABLES.wf)}</section>`;
+ if(v.status!=='Open')h=`<div class="banner" style="margin:0">${lockReason(v.id)}</div>`+h;
+ return h}});
 
-  <h2>Open items</h2>
-  <ul>
-   <li>⚠️ Target database not inspected yet — object list above assumes standard accoTOOL conventions.</li>
-   <li>⚠️ RLS together with writeback on salary-sensitive rows is untested.</li>
-   <li>⚠️ Whether the Confirm visuals re-query automatically after a write; verify on first build.</li>
-   <li>⚠️ Behaviour in the Power BI Service (gateway, credentials) is untested; Desktop only so far.</li>
-   <li>⚠️ Converting a TBH to an employee: set status Filled and link the employee ID, or automate from the HR load.</li>
-  </ul>
-  </div>`;
-}
+/* ---------- Admin: Audit log ---------- */
+page('adm-log',{title:'Audit log',desc:()=>'Every save from every accoTOOL visual in the app, newest first.',slicers:['auditMod'],admin:true,render(){
+ const f=S.sel.auditMod;const rows=S.audit.filter(a=>f==='All'||a.module===f);
+ return `<section class="vis"><div class="vis-head"><h3>Changes</h3><span class="sub">${rows.length} entries</span></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>When</th><th>User</th><th>Module</th><th>Object</th><th>Change</th></tr></thead><tbody>${rows.map(a=>`<tr><td style="white-space:nowrap">${fmtTs(a.ts)}</td><td>${esc(a.user)}</td><td>${esc(a.module)}</td><td>${esc(a.object)}</td><td>${esc(a.change)}</td></tr>`).join('')}</tbody></table></div>${visFoot('[accoTOOL$Base].[Log_Audit]').replace('Writes to','Reads from')}</section>`}});
 
-const R={overview:pOverview,plan:pPlan,positions:pPositions,rates:pRates,pl:pPL,design:pDesign};
-function render(){
-  const y=window.scrollY;
-  pageEl.innerHTML=R[cur]();
-  const v=document.getElementById('slVersion'); if(v){v.value=S.version;}
-  window.scrollTo(0,y);
-}
-let tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1400);}
-pageEl.addEventListener('change',e=>{
-  const el=e.target;
-  if(el.id==='slDept'){dept=el.value;render();return;}
-  if(el.id==='slVersion'){S.version=el.value;render();toast('Version set: '+el.value);return;}
-  if(el.dataset.r){const v=parseFloat(el.value);const row=rows().find(r=>r.id===el.dataset.r);const m=+el.dataset.m;
-    OVR[row.id]=OVR[row.id]||{}; if(isNaN(v)||v===row.base[m]) delete OVR[row.id][m]; else OVR[row.id][m]=v;
-    render();toast('Written to Fact_FTE_RAW#AP');const n=document.getElementById(el.id);if(n)n.focus();return;}
-  if(el.dataset.i!=null){const p=S.tbh[+el.dataset.i];const f=el.dataset.f;p[f]=(f==='fte'||f==='start')?+el.value:el.value;
-    delete OVR[p.id];render();toast('Written to Fact_Position#AM');return;}
-  if(el.dataset.ri!=null){S.rates[+el.dataset.ri][el.dataset.f]=+el.value;render();toast('Written to Fact_CostRate#AM');return;}
-  if(el.dataset.gi!=null){S.grades[+el.dataset.gi].std=+el.value;render();toast('Written to Dim_Grade#AM');return;}
-});
-document.getElementById('btnNotes').addEventListener('click',e=>{const on=document.body.classList.toggle('notes');e.currentTarget.setAttribute('aria-pressed',on);});
-document.getElementById('btnReset').addEventListener('click',()=>{const v=S.version;reset();S.version=v;render();toast('Sample data reset');});
-document.body.classList.add('notes');
-try{const h=(location.hash||'').slice(1);if(R[h])cur=h;}catch(_){}
-drawTabs();render();
+/* ---------- Account Planning: P&L planner ---------- */
+page('acc-pnl',{title:'P&L planner',desc:v=>`Plan the P&L for ${v.name} by department and month. Grey rows are calculated by other modules or by drivers.`,slicers:['version','dept'],render(){
+ const v=ver(),d=S.sel.dept,ref=v.ref?getV(v.ref):null;const single=d!=='ALL';const depts=single?[d]:myDeptIds();
+ const pl=plAgg(v.id,depts),sb=subs(pl),rs=ref?subs(plAgg(ref.id,depts)):null;
+ let h=`<div class="kpis">${kpi('Revenue FY',sum(sb.rev),rs&&sum(rs.rev),{refName:ref&&ref.name})}${kpi('Gross profit FY',sum(sb.gp),rs&&sum(rs.gp),{refName:ref&&ref.name})}${kpi('Operating costs FY',-sum(add(sb.staff,sb.opex)),rs&&-sum(add(rs.staff,rs.opex)),{good:'down',refName:ref&&ref.name})}${kpi('EBITDA FY',sum(sb.ebitda),rs&&sum(rs.ebitda),{refName:ref&&ref.name})}</div>`;
+ const P=S.plans[v.id];const id=`pnl-${v.id}-${d}`;
+ let banner='',edit=false,tools='';
+ if(!single)banner=`Select a single department in the <b>Department</b> slicer to enter plan values. The version and department slicers decide where your input is written.`;
+ else{banner=lockReason(v.id,d);edit=!banner}
+ if(single&&P){const st=P.wf[d];tools=`${pill(st)} `+(edit&&st==='In progress'?`<button class="btn sm warn" data-act="submit" data-id="${d}">Submit ${esc(dname(d))}</button>`:'')}
+ if(single&&P){SAVE[id]=e=>{e.forEach(({r,c,val})=>{if(c==='cmt'){P.comments[d][r]=val;log('Account Planning',`${dname(d)} · ${r} ${ACCM[r].name}`,`Comment: “${val}”`);return}
+   const n=parseNum(val);if(n==null)return;const i=+c;const old=P.manual[d][r][i];P.manual[d][r][i]=Math.abs(n);log('Account Planning',`${dname(d)} · ${r} ${ACCM[r].name} · ${MONTHS[i]} ${v.year}`,`${f0(old)} → ${f0(Math.abs(n))}`)});touch(v.id,d)}}
+ h+=apGrid({id,title:single?`P&L · ${dname(d)}`:'P&L · all my departments',sub:`${esc(v.name)} · DKK thousands`,rows:plRows(pl,{vid:v.id,dept:single?d:null,inputs:edit}),actual:+v.actualsThrough||0,comment:single&&!!P,editable:edit,banner,bannerInfo:!single,tools,table:TABLES.pnl,
+  foot:'<span>Row: Account · Column: Month · Scope: Version + Department slicers</span><span>Tip: Enter moves down, costs can be typed as positive numbers</span>'});
+ const r=ref?subs(plAgg(ref.id,depts)):null;
+ h+=`<div class="row2"><section class="vis"><div class="vis-head"><h3>EBITDA by month</h3><span class="sub">After saving, this chart reads your input back</span></div><div class="vis-body">${chart({series:[{name:v.name,vals:sb.ebitda,color:'--c2'},...(r?[{name:ref.name,vals:r.ebitda,color:'--cref',type:'line'}]:[])],label:'EBITDA by month'})}</div></section>
+ <section class="vis"><div class="vis-head"><h3>Where the numbers come from</h3></div><div class="vis-body tblwrap"><table class="tbl"><tbody>
+ <tr><td>Input in this grid</td><td class="r">${fm(sum(LAYOUT.filter(l=>l.acc&&ACCM[l.acc].src==='manual'&&!(single&&P&&((P.drivers[d]||{})[l.acc]||{m:'manual'}).m!=='manual')).map(l=>sum(signed(l.acc,pl[l.acc])))))}</td></tr>
+ <tr><td><button class="link" data-nav="acc-drv">Driver planning</button></td><td class="r">${single&&P?fm(sum(LAYOUT.filter(l=>l.acc&&ACCM[l.acc].src==='manual'&&((P.drivers[d]||{})[l.acc]||{m:'manual'}).m!=='manual').map(l=>sum(signed(l.acc,pl[l.acc]))))):'—'}</td></tr>
+ <tr><td><button class="link" data-nav="emp-pay">Employee Planning</button></td><td class="r">${fm(sum(sb.staff))}</td></tr>
+ <tr><td><button class="link" data-nav="sal-phase">Sales Pipeline</button></td><td class="r">${fm(sum(pl['3000']))}</td></tr>
+ <tr><td><button class="link" data-nav="cap-dep">CAPEX Planning</button></td><td class="r">${fm(-sum(pl['7000']))}</td></tr></tbody></table></div></section></div>`;
+ return h}});
+
+/* ---------- Account Planning: Drivers ---------- */
+page('acc-drv',{title:'Driver planning',desc:v=>`Replace manual input with a driver for any plannable account. Drivers recalculate when headcount, revenue or the reference version change.`,slicers:['version','dept'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);const d=S.sel.dept;const depts=d==='ALL'?myDeptIds():[d];
+ const pl=computePL(v.id),fte=fteDept(P),ref=v.ref?getV(v.ref):null;const totRev=add(...DEPTS.map(x=>add(pl[x.id]['3000'],pl[x.id]['3100'])));
+ const rows=[];depts.forEach(dd=>ACC.filter(a=>a.src==='manual').forEach(a=>{const dr=(P.drivers[dd]||{})[a.id]||{m:'manual',p:0};
+  if(dr.m==='manual'&&!sum(pl[dd][a.id])&&!(BASE[dd]||{})[a.id])return;rows.push({id:dd+'_'+a.id,dept:dd,acc:a.id,m:dr.m,p:dr.p||0})}));
+ const basis=r=>r.m==='ly'?`${ref?esc(ref.name):'—'}: ${fm(sum(ref?computePL(ref.id)[r.dept][r.acc]:z12()))}`:r.m==='fte'?`Avg FTE ${f2(sum(fte[r.dept])/12)}`:r.m==='rev'?`Revenue ${fm(sum(totRev))}`:'Typed in the P&L planner';
+ const cols=[{k:'dept',label:'Department',ro:true,html:r=>esc(dname(r.dept))},{k:'acc',label:'Account',ro:true,html:r=>`<span class="code">${r.acc}</span> ${esc(ACCM[r.acc].name)}`},
+  {k:'m',label:'Method',type:'select',opts:r=>METHODS.filter(m=>!(m[0]==='rev'&&r.acc==='3100'))},{k:'p',label:'Parameter',type:'num',dec:true,w:80},
+  {k:'unit',label:'Unit',type:'calc',fmt:r=>({ly:'% change',fte:'DKK k / FTE / month',rev:'% of total revenue',manual:'—'})[r.m]},
+  {k:'basis',label:'Basis',type:'calc',fmt:basis},{k:'fy',label:'FY result',type:'calc',align:'r',fmt:r=>f0(sum(signed(r.acc,pl[r.dept][r.acc])))}];
+ const id=`drv-${v.id}-${d}`;
+ SAVE[id]=e=>{applyAM(rows,cols,e,'Account Planning',r=>`Driver ${dname(r.dept)} · ${r.acc} ${ACCM[r.acc].name}`).forEach(r=>{
+  const was=(P.drivers[r.dept]||{})[r.acc]||{m:'manual'};if(r.m==='manual'&&was.m!=='manual')P.manual[r.dept][r.acc]=computePL(v.id)[r.dept][r.acc].map(x=>Math.round(x));
+  P.drivers[r.dept][r.acc]={m:r.m,p:r.p};touch(v.id,r.dept)})};
+ let h=amGrid({id,title:'Account drivers',sub:`${esc(v.name)}`,table:TABLES.drv,cols,rows,canEditRow:r=>canEdit(v.id,r.dept),key:'id',
+  banner:rows.some(r=>!canEdit(v.id,r.dept))?(lockReason(v.id,rows.find(r=>!canEdit(v.id,r.dept)).dept)+(d==='ALL'?' Rows for other departments stay editable where allowed.':'')):'',
+  foot:'<span>Switching a row back to Manual keeps the current driver values as a starting point</span>'});
+ h+=`<div class="row2e"><section class="vis"><div class="vis-head"><h3>Methods</h3></div><div class="vis-body tblwrap"><table class="tbl"><tbody>
+ <tr><td><b>Reference + %</b></td><td>Same month in the reference version (${ref?esc(ref.name):'none'}), adjusted by the parameter. Good for rent and contracts.</td></tr>
+ <tr><td><b>Amount per FTE</b></td><td>Parameter × FTE from <button class="link" data-nav="emp-hc">Employee Planning</button> per month. Good for IT and licences.</td></tr>
+ <tr><td><b>% of revenue</b></td><td>Parameter × total revenue per month. Good for COGS, commissions and travel.</td></tr></tbody></table></div></section>
+ <section class="vis"><div class="vis-head"><h3>Driver-based share of costs</h3></div><div class="vis-body">${(()=>{const dl=rows.filter(r=>r.m!=='manual'),ml=rows.filter(r=>r.m==='manual');const a=sum(dl.map(r=>sum(pl[r.dept][r.acc]))),b=sum(ml.map(r=>sum(pl[r.dept][r.acc])));const t=a+b||1;
+  return `<div class="hbar"><span>Driver-based</span><div class="track"><div class="fill w" style="width:${a/t*100}%"></div></div><span class="val">${fm(a)}</span><span>Manual</span><div class="track"><div class="fill" style="width:${b/t*100}%"></div></div><span class="val">${fm(b)}</span></div><p class="note">${dl.length} of ${rows.length} account lines use a driver.</p>`})()}</div></section></div>`;
+ return h}});
+
+/* ---------- Account Planning: Review ---------- */
+page('acc-rev',{title:'P&L review',desc:v=>`${v.name} by department, against ${v.ref?getV(v.ref).name:'no reference'}. Use it before submitting or approving.`,slicers:['version'],render(){
+ const v=ver(),ref=v.ref?getV(v.ref):null;const ds=myDepts();const per=ds.map(d=>plAgg(v.id,[d.id]));const tot=plAgg(v.id),rt=ref?plAgg(ref.id):null;
+ const line=(pl,l)=>l.sub?sum(subs(pl)[l.sub]):sum(signed(l.acc,pl[l.acc]));
+ let h=`<section class="vis"><div class="vis-head"><h3>P&amp;L by department</h3><span class="sub">FY, DKK thousands</span></div><div class="grid-wrap" style="margin:0"><table class="grid"><thead><tr><th class="rh">Account</th>${ds.map(d=>`<th>${esc(d.name)}</th>`).join('')}<th>Total</th>${ref?`<th>${esc(ref.name)}</th><th>Variance</th>`:''}</tr></thead><tbody>`+
+ LAYOUT.map(l=>{const t=line(tot,l),r=rt?line(rt,l):0;const isCost=l.acc&&ACCM[l.acc].type==='cost';const good=(t-r)>=0;
+  return `<tr class="${l.sub?'sub':''} ${l.strong?'strong':''}"><th class="rh">${l.acc?`<span class="code">${l.acc}</span>${esc(ACCM[l.acc].name)}`:esc(l.label)}</th>${per.map(p=>`<td class="num">${f0(line(p,l))}</td>`).join('')}<td class="fy">${f0(t)}</td>${ref?`<td class="num">${f0(r)}</td><td class="num ${Math.abs(t-r)<.5?'':good?'up':'down'}">${t-r>=0?'+':''}${f0(t-r)}</td>`:''}</tr>`}).join('')+`</tbody></table></div></section>`;
+ const eb=ds.map(d=>sum(subs(plAgg(v.id,[d.id])).ebitda)),er=ref?ds.map(d=>sum(subs(plAgg(ref.id,[d.id])).ebitda)):null;
+ h+=`<section class="vis"><div class="vis-head"><h3>EBITDA contribution by department</h3></div><div class="vis-body">${chart({cats:ds.map(d=>d.name),series:[{name:v.name,vals:eb,color:'--c2'},...(er?[{name:ref.name,vals:er,color:'--cref'}]:[])],h:220})}</div></section>`;
+ return h}});
+
+/* ---------- Employee Planning: Register ---------- */
+const monthOpts=(y,first)=>[[first[0],first[1]],...MONTHS.map((m,i)=>[i+1,`${m} ${y}`])];
+page('emp-reg',{title:'Employee register',desc:v=>`Employees, new hires and leavers for ${v.name}. Salary costs flow to accounts 5000–5200 in Account Planning.`,slicers:['version','dept'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);const d=S.sel.dept;
+ const rows=P.employees.filter(e=>has(e.dept)&&(d==='ALL'||e.dept===d));const a=P.assum;
+ const cost=e=>{let s=0;for(let i=0;i<12;i++){const c=empCost(e,i,a);s+=c.sal+c.pen+c.soc}return s};
+ const cols=[{k:'id',label:'ID',ro:true},{k:'name',label:'Name',type:'text',w:150},{k:'dept',label:'Department',type:'select',opts:()=>myDepts().map(x=>[x.id,x.name])},
+  {k:'title',label:'Title',type:'text',w:150},{k:'salary',label:'Monthly salary (DKK)',type:'num',w:90},{k:'pension',label:'Pension %',type:'num',dec:true,w:60},{k:'fte',label:'FTE',type:'num',dec:true,w:50},
+  {k:'start',label:'Start',type:'select',numeric:true,opts:()=>monthOpts(v.year,[0,'Before '+v.year])},{k:'end',label:'End',type:'select',numeric:true,opts:()=>monthOpts(v.year,[13,'—'])},
+  {k:'cost',label:'FY cost (DKK k)',type:'calc',align:'r',fmt:r=>f0(cost(r))}];
+ const id=`emp-${v.id}`;SAVE[id]=e=>{applyAM(P.employees,cols,e,'Employee Planning',r=>`${r.id} ${r.name}`).forEach(r=>touch(v.id,r.dept))};
+ const fte=fteTotal(v.id,d==='ALL'?myDeptIds():[d]);const tot=sum(rows.map(cost));
+ const hires=rows.filter(e=>e.start>0).length,leav=rows.filter(e=>e.end<13).length;
+ let h=`<div class="kpis">${kpi('Employees',rows.length,null,{unit:'n'})}${kpi('FTE in December',fte[11],null,{unit:'n',fmt:f2})}${kpi('New hires / leavers',0,null,{unit:'n',fmt:()=>`${hires} / ${leav}`})}${kpi('Staff costs FY',tot,null)}</div>`;
+ const lockAny=rows.find(r=>!canEdit(v.id,r.dept));
+ h+=amGrid({id,title:'Employees',sub:`${esc(v.name)}${d==='ALL'?' · all my departments':' · '+esc(dname(d))}`,table:TABLES.emp,cols,rows,canEditRow:r=>canEdit(v.id,r.dept),
+  add:{act:'addEmp',label:'New hire'},addOk:canEdit(v.id,d==='ALL'?(myDepts().find(x=>canEdit(v.id,x.id))||{}).id:d),del:'delEmp',delOk:r=>r.id.startsWith('TBH')||r.start>0,
+  banner:lockAny?lockReason(v.id,lockAny.dept):'',foot:'<span>Only planned hires can be deleted — set an end month for leavers</span>'});
+ return h}});
+
+/* ---------- Employee Planning: Headcount ---------- */
+page('emp-hc',{title:'Headcount & FTE',desc:v=>`FTE per month by department for ${v.name}, from the employee register.`,slicers:['version'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);const f=fteDept(P);const ds=myDepts();const ref=v.ref&&S.plans[v.ref]?getV(v.ref):null;
+ let h=`<section class="vis"><div class="vis-head"><h3>FTE by month</h3><span class="sub">${esc(v.name)}</span></div><div class="vis-body">${chart({series:[...ds.map(d=>({name:d.name,vals:f[d.id],color:DEPT_COL[d.id]})),...(ref?[{name:ref.name+' total',vals:fteTotal(ref.id),color:'--cref',type:'line'}]:[])],stacked:true,fmt:v=>f2(v),label:'FTE by month'})}</div></section>`;
+ h+=`<div class="row2"><section class="vis"><div class="vis-head"><h3>FTE matrix</h3></div><div class="grid-wrap" style="margin:0"><table class="grid"><thead><tr><th class="rh">Department</th>${MONTHS.map(m=>`<th>${m}</th>`).join('')}</tr></thead><tbody>${ds.map(d=>`<tr><th class="rh">${esc(d.name)}</th>${f[d.id].map(x=>`<td class="num">${f2(x)}</td>`).join('')}</tr>`).join('')}<tr class="sub"><th class="rh">Total</th>${fteTotal(v.id).map(x=>`<td class="num">${f2(x)}</td>`).join('')}</tr></tbody></table></div></section>
+ <section class="vis"><div class="vis-head"><h3>Movements</h3><div class="vis-tools"><button class="btn sm" data-nav="emp-reg">Edit register</button></div></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Employee</th><th>Department</th><th>Change</th></tr></thead><tbody>${P.employees.filter(e=>has(e.dept)&&(e.start>0||e.end<13)).map(e=>`<tr><td>${esc(e.name)}<br><span class="note">${esc(e.title)}</span></td><td>${esc(dname(e.dept))}</td><td>${e.start>0?`<span class="pill ap">Joins ${MONTHS[e.start-1]}</span>`:''} ${e.end<13?`<span class="pill lk">Leaves after ${MONTHS[e.end-1]}</span>`:''}</td></tr>`).join('')||'<tr><td colspan="3" class="note">No joiners or leavers.</td></tr>'}</tbody></table></div></section></div>`;
+ return h}});
+
+/* ---------- Employee Planning: Payroll ---------- */
+page('emp-pay',{title:'Payroll costs',desc:v=>`Salary, pension and social costs for ${v.name}. These rows are posted to Account Planning automatically.`,slicers:['version','dept'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);const d=S.sel.dept;const depts=d==='ALL'?myDeptIds():[d];const pl=plAgg(v.id,depts);const a=P.assum;
+ const rows=['5000','5100','5200'].map(k=>({key:k,code:k,label:ACCM[k].name,vals:pl[k],chip:`<span class="chip" data-nav="acc-pnl">Account Planning ›</span>`}));
+ rows.push({sub:true,label:'Total staff costs',vals:add(pl['5000'],pl['5100'],pl['5200'])});
+ const fte=fteTotal(v.id,depts);rows.push({key:'cpf',label:'Cost per FTE',vals:add(pl['5000'],pl['5100'],pl['5200']).map((x,i)=>fte[i]?x/fte[i]:0)});
+ let h=`<div class="banner info" style="margin:0">Wage increase <b>${f2(a.wageInc)}%</b> from <b>${MONTHS[a.wageMonth-1]}</b> · social costs <b>${f2(a.social)}%</b> of salary. ${isAdmin()?'Change them in':'Set by the FP&A team in'} <button class="link" data-nav="adm-asm">Admin Center › Assumptions</button>.</div>`;
+ h+=apGrid({id:'pay-'+v.id,title:'Payroll by account',sub:`${esc(v.name)} · ${d==='ALL'?'all my departments':esc(dname(d))} · DKK thousands`,rows,actual:+v.actualsThrough||0,table:'[accoTOOL$EMP].[vw_Fact_PayrollPosting]',foot:'<span>Calculated: salary × FTE × wage index, plus pension and social %</span>'}).replace('Writes to','Reads from');
+ h+=`<section class="vis"><div class="vis-head"><h3>Staff costs by month</h3></div><div class="vis-body">${chart({series:[{name:'Salaries',vals:pl['5000'],color:'--c1'},{name:'Pension',vals:pl['5100'],color:'--c2'},{name:'Social & payroll tax',vals:pl['5200'],color:'--c4'}],stacked:true,label:'Staff costs'})}</div></section>`;
+ return h}});
+
+/* ---------- Sales: Pipeline ---------- */
+const DEAL_COLS=(v,a)=>[{k:'id',label:'ID',ro:true},{k:'customer',label:'Customer',type:'text',w:150},{k:'desc',label:'Opportunity',type:'text',w:170},
+ {k:'stage',label:'Stage',type:'select',opts:()=>STAGES.map(s=>[s,s])},{k:'amount',label:'Contract value (DKK k)',type:'num',w:80},
+ {k:'type',label:'Revenue type',type:'select',opts:()=>[['Subscription','Subscription (ACV)'],['One-off','One-off']]},
+ {k:'close',label:'Expected close',type:'select',numeric:true,opts:()=>MONTHS.map((m,i)=>[i+1,`${m} ${v.year}`])},
+ {k:'prob',label:'Win %',type:'calc',align:'r',fmt:r=>f0(prob(r.stage,a))+'%'},{k:'w',label:'Weighted FY revenue',type:'calc',align:'r',fmt:r=>f0(sum(dealM(r,a)))}];
+page('sal-pipe',{title:'Pipeline',desc:v=>`Open opportunities for ${v.name}. Stage sets the win probability; weighted revenue lands on account 3000 Product revenue.`,slicers:['version'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);if(!has('SAL'))return rlsBlock('Sales');const a=P.assum;const cols=DEAL_COLS(v,a);
+ const id='deal-'+v.id;SAVE[id]=e=>{applyAM(P.deals,cols,e,'Sales Pipeline',r=>`${r.id} ${r.customer}`);touch(v.id,'SAL')};
+ const tot=sum(P.deals.map(d=>d.amount)),w=sum(P.deals.map(d=>sum(dealM(d,a)))),won=P.deals.filter(d=>d.stage==='Won');
+ let h=`<div class="kpis">${kpi('Pipeline value',tot,null)}${kpi('Weighted revenue FY',w,null)}${kpi('Open deals',P.deals.filter(d=>d.stage!=='Won').length,null,{unit:'n'})}${kpi('Won value',sum(won.map(d=>d.amount)),null)}</div>`;
+ h+=amGrid({id,title:'Opportunities',sub:esc(v.name),table:TABLES.deal,cols,rows:P.deals,canEditRow:()=>canEdit(v.id,'SAL'),add:{act:'addDeal',label:'Add deal'},addOk:canEdit(v.id,'SAL'),del:'delDeal',
+  banner:lockReason(v.id,'SAL'),foot:'<span>Subscription: ACV ÷ 12 from the month after close · One-off: full value in the close month</span>'});
+ return h}});
+
+/* ---------- Sales: Revenue phasing ---------- */
+page('sal-phase',{title:'Revenue phasing',desc:v=>`Product revenue for ${v.name}: existing contracts plus the weighted pipeline. The total is posted to account 3000.`,slicers:['version'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);if(!has('SAL'))return rlsBlock('Sales');const a=P.assum;const ed=canEdit(v.id,'SAL');
+ const deals=P.deals.map(d=>({key:d.id,code:d.id,label:`${d.customer} · ${d.stage} ${f0(prob(d.stage,a))}%`,vals:dealM(d,a),chip:`<span class="chip" data-nav="sal-pipe">Pipeline ›</span>`}));
+ const rows=[{key:'rr',label:'Existing contracts (run-rate)',vals:P.runrate,input:true},...deals,{sub:true,strong:true,label:'3000 Product revenue',vals:computePL(v.id).SAL['3000']}];
+ const id='rr-'+v.id;SAVE[id]=e=>{e.forEach(({c,val})=>{const n=parseNum(val);if(n==null)return;const old=P.runrate[+c];P.runrate[+c]=n;log('Sales Pipeline',`Run-rate · ${MONTHS[+c]} ${v.year}`,`${f0(old)} → ${f0(n)}`)});touch(v.id,'SAL')};
+ let h=apGrid({id,title:'Revenue phasing',sub:`${esc(v.name)} · DKK thousands`,first:'Revenue line',rows,actual:+v.actualsThrough||0,editable:ed,banner:lockReason(v.id,'SAL'),table:TABLES.rr,foot:'<span>Only the run-rate row is typed here; deal rows come from the pipeline</span>'});
+ const pipe=add(...deals.map(r=>r.vals));
+ h+=`<section class="vis"><div class="vis-head"><h3>Run-rate vs pipeline</h3></div><div class="vis-body">${chart({series:[{name:'Existing contracts',vals:P.runrate,color:'--c1'},{name:'Weighted pipeline',vals:pipe,color:'--c4'}],stacked:true,label:'Revenue phasing'})}</div></section>`;
+ return h}});
+
+/* ---------- Sales: Funnel ---------- */
+page('sal-fun',{title:'Funnel analysis',desc:v=>`Pipeline by stage for ${v.name}, unweighted against weighted.`,slicers:['version'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);if(!has('SAL'))return rlsBlock('Sales');const a=P.assum;
+ const by=STAGES.map(s=>{const ds=P.deals.filter(d=>d.stage===s);return {s,n:ds.length,v:sum(ds.map(d=>d.amount)),w:sum(ds.map(d=>d.amount*prob(s,a)/100))}});const mx=Math.max(1,...by.map(b=>b.v));
+ let h=`<div class="row2"><section class="vis"><div class="vis-head"><h3>Value by stage</h3><span class="sub">DKK thousands</span></div><div class="vis-body">${legend([{name:'Contract value',color:'--c2'},{name:'Weighted',color:'--c1'}])}<div class="hbar">${by.map(b=>`<span>${b.s} <span class="note">(${b.n})</span></span><div class="track"><div class="fill" style="width:${b.v/mx*100}%"></div><div class="fill w" style="width:${b.w/mx*100}%"></div></div><span class="val">${f0(b.v)} / ${f0(b.w)}</span>`).join('')}</div></div></section>
+ <section class="vis"><div class="vis-head"><h3>Win probabilities</h3><div class="vis-tools">${isAdmin()?'<button class="btn sm" data-nav="adm-asm">Edit in Admin Center</button>':''}</div></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Stage</th><th class="r">Probability</th></tr></thead><tbody>${STAGES.map(s=>`<tr><td>${s}</td><td class="r">${f0(prob(s,a))}%</td></tr>`).join('')}</tbody></table></div></section></div>`;
+ const q=[1,2,3,4].map(k=>sum(P.deals.filter(d=>Math.ceil(d.close/3)===k).map(d=>d.amount*prob(d.stage,a)/100)));
+ h+=`<section class="vis"><div class="vis-head"><h3>Weighted value by expected close quarter</h3></div><div class="vis-body">${chart({cats:['Q1','Q2','Q3','Q4'],series:[{name:'Weighted contract value',vals:q,color:'--c3'}],h:200})}</div></section>`;
+ return h}});
+
+/* ---------- CAPEX ---------- */
+const CAP_COLS=v=>[{k:'id',label:'ID',ro:true},{k:'asset',label:'Investment',type:'text',w:170},{k:'dept',label:'Department',type:'select',opts:()=>myDepts().map(x=>[x.id,x.name])},
+ {k:'cat',label:'Category',type:'select',opts:()=>['IT equipment','Equipment','Vehicles','Leasehold improvements','Software'].map(x=>[x,x])},
+ {k:'amount',label:'Amount (DKK k)',type:'num',w:80},{k:'month',label:'Purchase month',type:'select',numeric:true,opts:()=>monthOpts(v.year,[0,'Existing asset'])},
+ {k:'life',label:'Useful life (years)',type:'num',w:50},{k:'md',label:'Monthly depreciation',type:'calc',align:'r',fmt:r=>f0(r.life>0?r.amount/(r.life*12):0)},{k:'fy',label:'FY depreciation',type:'calc',align:'r',fmt:r=>f0(sum(depM(r)))}];
+page('cap-inv',{title:'Investment plan',desc:v=>`Planned investments for ${v.name}. Depreciation is posted to account 7000 in each department.`,slicers:['version','dept'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);const d=S.sel.dept;const rows=P.capex.filter(c=>has(c.dept)&&(d==='ALL'||c.dept===d));const cols=CAP_COLS(v);
+ const id='cap-'+v.id;SAVE[id]=e=>{applyAM(P.capex,cols,e,'CAPEX Planning',r=>`${r.id} ${r.asset}`).forEach(r=>touch(v.id,r.dept))};
+ const newc=rows.filter(c=>c.month>0);const lockAny=rows.find(r=>!canEdit(v.id,r.dept));
+ let h=`<div class="kpis">${kpi('New investments',sum(newc.map(c=>c.amount)),null)}${kpi('Depreciation FY',sum(rows.map(c=>sum(depM(c)))),null)}${kpi('Projects',newc.length,null,{unit:'n'})}</div>`;
+ h+=amGrid({id,title:'Investments',sub:esc(v.name),table:TABLES.cap,cols,rows,canEditRow:r=>canEdit(v.id,r.dept),add:{act:'addCap',label:'Add investment'},addOk:canEdit(v.id,d==='ALL'?(myDepts().find(x=>canEdit(v.id,x.id))||{}).id:d),del:'delCap',delOk:r=>r.month>0,
+  banner:lockAny?lockReason(v.id,lockAny.dept):'',foot:'<span>Straight-line from the purchase month</span>'});
+ return h}});
+page('cap-dep',{title:'Depreciation schedule',desc:v=>`Monthly depreciation per investment for ${v.name}, as posted to account 7000.`,slicers:['version','dept'],render(){
+ const v=ver(),P=S.plans[v.id];if(!P)return noPlan(v);const d=S.sel.dept;const rows=P.capex.filter(c=>has(c.dept)&&(d==='ALL'||c.dept===d));
+ const r=rows.map(c=>({key:c.id,code:c.id,label:`${c.asset} · ${dname(c.dept)}`,vals:depM(c),chip:`<span class="chip" data-nav="cap-inv">Investment plan ›</span>`}));r.push({sub:true,strong:true,label:'7000 Depreciation',vals:add(...r.map(x=>x.vals))});
+ let h=apGrid({id:'dep-'+v.id,title:'Depreciation by investment',sub:`${esc(v.name)} · DKK thousands`,first:'Investment',rows:r,table:'[accoTOOL$CAPEX].[vw_Fact_Depreciation]'}).replace('Writes to','Reads from');
+ const spend=z12();rows.forEach(c=>{if(c.month>0)spend[c.month-1]+=c.amount});
+ h+=`<section class="vis"><div class="vis-head"><h3>Cash out vs depreciation</h3></div><div class="vis-body">${chart({series:[{name:'Investment spend',vals:spend,color:'--c3'},{name:'Depreciation',vals:r[r.length-1].vals,color:'--c4',type:'line'}],label:'Capex'})}</div></section>`;
+ return h}});
+
+/* ---------- Management: Executive ---------- */
+page('mgt-exec',{title:'Executive summary',desc:v=>`${v.name} at a glance, against ${v.ref?getV(v.ref).name:'no reference'}.`,slicers:['version'],render(){
+ const v=ver(),ref=v.ref?getV(v.ref):null;const pl=plAgg(v.id),sb=subs(pl),rp=ref?plAgg(ref.id):null,rs=rp?subs(rp):null;
+ const gm=s=>sum(s.rev)?sum(s.gp)/sum(s.rev)*100:0,em=s=>sum(s.rev)?sum(s.ebitda)/sum(s.rev)*100:0;const P=S.plans[v.id];
+ let h=`<div class="kpis">${kpi('Revenue',sum(sb.rev),rs&&sum(rs.rev),{refName:ref&&ref.name})}${kpi('Gross margin',gm(sb),rs&&gm(rs),{unit:'%'})}${kpi('EBITDA',sum(sb.ebitda),rs&&sum(rs.ebitda))}${kpi('EBITDA margin',em(sb),rs&&em(rs),{unit:'%'})}${kpi('FTE in December',fteTotal(v.id)[11],ref&&S.plans[ref.id]?fteTotal(ref.id)[11]:null,{unit:'n',good:'none',fmt:f2})}${kpi('New CAPEX',P?sum(P.capex.filter(c=>has(c.dept)&&c.month>0).map(c=>c.amount)):0,null)}</div>`;
+ h+=`<div class="row2"><section class="vis"><div class="vis-head"><h3>Revenue and EBITDA by month</h3></div><div class="vis-body">${chart({series:[{name:'Revenue',vals:sb.rev,color:'--c2'},...(rs?[{name:'Revenue · '+ref.name,vals:rs.rev,color:'--cref'}]:[]),{name:'EBITDA',vals:sb.ebitda,color:'--c4',type:'line'}],label:'Revenue and EBITDA'})}</div></section>`;
+ if(rs){const st=[{label:ref.name.replace(/ \(.*\)/,''),sub:'EBITDA',val:sum(rs.ebitda),total:true},{label:'Revenue',val:sum(sb.rev)-sum(rs.rev)},{label:'COGS',val:sum(sb.cogs)-sum(rs.cogs)},{label:'Staff costs',val:sum(sb.staff)-sum(rs.staff)},{label:'Other opex',val:sum(sb.opex)-sum(rs.opex)},{label:v.name.replace(/ \(.*\)/,''),sub:'EBITDA',val:sum(sb.ebitda),total:true}];
+  h+=`<section class="vis"><div class="vis-head"><h3>EBITDA bridge</h3><span class="sub">${esc(ref.name)} → ${esc(v.name)}</span></div><div class="vis-body">${waterfall(st)}</div></section>`}
+ else h+='<div></div>';
+ h+='</div>';return h}});
+
+/* ---------- Management: Compare ---------- */
+page('mgt-cmp',{title:'Version comparison',desc:()=>'Any two versions side by side, account by account.',slicers:['cmpA','cmpB'],render(){
+ const A=getV(S.sel.cmpA),B=getV(S.sel.cmpB);const pa=plAgg(A.id),pb=plAgg(B.id);const line=(pl,l)=>l.sub?sum(subs(pl)[l.sub]):sum(signed(l.acc,pl[l.acc]));
+ let h=`<section class="vis"><div class="vis-head"><h3>${esc(A.name)} vs ${esc(B.name)}</h3><span class="sub">FY, DKK thousands</span></div><div class="vis-body tblwrap"><table class="tbl"><thead><tr><th>Account</th><th class="r">${esc(A.name)}</th><th class="r">${esc(B.name)}</th><th class="r">Variance</th><th class="r">Var %</th></tr></thead><tbody>`+
+ LAYOUT.map(l=>{const a=line(pa,l),b=line(pb,l),d=a-b;return `<tr class="${l.sub?'sub':''}"><td>${l.acc?`<span class="note">${l.acc}</span> ${esc(ACCM[l.acc].name)}`:esc(l.label)}</td><td class="r">${f0(a)}</td><td class="r">${f0(b)}</td><td class="r ${Math.abs(d)<.5?'':d>0?'up':'down'}">${d>=0?'+':''}${f0(d)}</td><td class="r">${b?nf1.format(pct(a,b))+'%':'—'}</td></tr>`}).join('')+`</tbody></table></div></section>`;
+ h+=`<section class="vis"><div class="vis-head"><h3>EBITDA by month</h3></div><div class="vis-body">${chart({series:[{name:A.name,vals:subs(pa).ebitda,color:'--c2',type:'line'},{name:B.name,vals:subs(pb).ebitda,color:'--c4',type:'line',dash:true}],label:'EBITDA comparison'})}</div></section>`;
+ return h}});
+
+function noPlan(v){return `<div class="banner" style="margin:0"><b>${esc(v.name)}</b> holds actuals only. Pick a budget, forecast or scenario in the Version slicer.</div>`}
+function rlsBlock(dn){return `<div class="restricted"><svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0110 0v3M5 10h14v11H5z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><h2>No rows for ${esc(me().name)}</h2><p>Row-level security hides ${esc(dn)} data for this user.</p></div>`}
+
+/* ============================== shell rendering ============================== */
+const ICON={home:'<path d="M3 9l7-6 7 6v8H3z" fill="none" stroke="currentColor" stroke-width="1.5"/>',report:'<rect x="3" y="2" width="14" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="6" y="10" width="2" height="5" fill="currentColor"/><rect x="9" y="7" width="2" height="8" fill="currentColor"/><rect x="12" y="11" width="2" height="4" fill="currentColor"/>',
+ chev:'<path d="M7 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/>',lock:'<path d="M6 9V6.5a4 4 0 018 0V9M4.5 9h11v8h-11z" fill="none" stroke="currentColor" stroke-width="1.4"/>'};
+const svgI=(k,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 20 20" aria-hidden="true">${ICON[k]}</svg>`;
+function renderNav(){
+ let h='<div class="nav-inner"><div class="nav-title">Reports</div>';
+ NAV.forEach(n=>{if(!n.pages){h+=`<button class="nitem ${S.ui.page===n.id?'sel':''}" data-nav="${n.id}">${svgI(n.icon)} ${esc(n.label)}</button>`;return}
+  const open=S.ui.open.has(n.id);const locked=n.admin&&!isAdmin();
+  h+=`<button class="nitem report ${open?'open':''}" data-act="toggleReport" data-id="${n.id}" aria-expanded="${open}">${svgI('report')} ${esc(n.label)}${locked?`<span class="lock" title="Admins only">${svgI('lock',14)}</span>`:`<span class="chev">${svgI('chev',12)}</span>`}</button>`;
+  if(open&&!locked)n.pages.forEach(([pid,pl])=>{h+=`<button class="nitem page ${S.ui.page===pid?'sel':''}" data-nav="${pid}">${esc(pl)}</button>`})});
+ h+='</div>';$('#nav').innerHTML=h}
+function renderActionbar(){const r=reportOf(S.ui.page);
+ $('#actionbar').innerHTML=`<span class="crumb">${r?esc(r.label)+' <span>›</span> ':''}${esc(pageLabel(S.ui.page))}</span>
+ <button class="abtn" data-act="na">File</button><button class="abtn" data-act="na">Export</button><button class="abtn" data-act="na">Share</button><span class="sep"></span>
+ <button class="abtn" data-act="resetFilters">${svgI('home',14).replace(ICON.home,'<path d="M4 10a6 6 0 1 0 2-4.5M4 3v3h3" fill="none" stroke="currentColor" stroke-width="1.5"/>')} Reset filters</button>
+ <button class="abtn" data-act="toggleFilters">Filters</button><span class="stamp">Data refreshed 16 Oct 2026, 07:00</span>`}
+function slicerHTML(k){
+ if(k==='version')return `<label class="slicer" for="sl-version"><span>Version <span class="wtag" title="Decides which version you write into">WRITE SCOPE</span></span><select id="sl-version" data-slicer="version">${S.versions.map(v=>`<option value="${v.id}" ${v.id===S.sel.version?'selected':''}>${esc(v.name)}${v.status==='Locked'?' 🔒':''}</option>`).join('')}</select></label>`;
+ if(k==='dept')return `<label class="slicer" for="sl-dept"><span>Department <span class="wtag" title="Decides which department you write into">WRITE SCOPE</span></span><select id="sl-dept" data-slicer="dept">${myDepts().length>1?`<option value="ALL" ${S.sel.dept==='ALL'?'selected':''}>All my departments</option>`:''}${myDepts().map(d=>`<option value="${d.id}" ${d.id===S.sel.dept?'selected':''}>${esc(d.name)}</option>`).join('')}</select></label>`;
+ if(k==='cmpA'||k==='cmpB')return `<label class="slicer" for="sl-${k}"><span>${k==='cmpA'?'Version A':'Version B'}</span><select id="sl-${k}" data-slicer="${k}">${S.versions.map(v=>`<option value="${v.id}" ${v.id===S.sel[k]?'selected':''}>${esc(v.name)}</option>`).join('')}</select></label>`;
+ if(k==='auditMod')return `<label class="slicer" for="sl-mod"><span>Module</span><select id="sl-mod" data-slicer="auditMod">${['All','Admin Center','Account Planning','Employee Planning','Sales Pipeline','CAPEX Planning'].map(m=>`<option ${m===S.sel.auditMod?'selected':''}>${m}</option>`).join('')}</select></label>`;
+ return ''}
+function renderPage(){
+ SAVE={};const P=PAGES[S.ui.page];const v=ver();let body;
+ if(P.admin&&!isAdmin())body=`<div class="restricted">${svgI('lock',36)}<h2>Admin Center is for FP&amp;A admins</h2><p>${esc(me().name)} has the ${esc(me().role)} role. Switch <b>Viewing as</b> to Kim to manage versions, users and assumptions.</p></div>`;
+ else body=`<div class="pbody">${P.render()}</div>`;
+ const head=`<div class="phead"><div class="ttl"><h1>${esc(P.title)}</h1><p>${esc(typeof P.desc==='function'?P.desc(v):P.desc||'')}</p></div><div class="slicers">${(P.admin&&!isAdmin())?'':(P.slicers||[]).map(slicerHTML).join('')}</div></div>`;
+ $('#canvas').innerHTML=`<div class="rpage">${head}${body}</div>`}
+function renderFilters(){const fp=$('#fpane');fp.classList.toggle('open',S.ui.filters);const v=ver();const P=PAGES[S.ui.page];const sl=P.slicers||[];
+ fp.innerHTML=`<button class="ftoggle" data-act="toggleFilters" aria-label="Toggle filters pane">${svgI('chev',12).replace('M7 4l6 6-6 6',S.ui.filters?'M7 4l6 6-6 6':'M13 4l-6 6 6 6')}<span>Filters</span></button>
+ <div class="fbody"><h4>On this page</h4>${sl.includes('version')?`<div class="fcard"><b>Version</b><span>is ${esc(v.name)}</span></div>`:''}${sl.includes('dept')?`<div class="fcard"><b>Department</b><span>is ${S.sel.dept==='ALL'?'(All my departments)':esc(dname(S.sel.dept))}</span></div>`:''}${sl.length?'':'<div class="fcard"><span>No page filters</span></div>'}
+ <h4>On all pages</h4><div class="fcard"><b>Legal entity</b><span>is Nordlys Group A/S</span></div><div class="fcard"><b>Currency</b><span>is DKK</span></div>
+ <h4>Row-level security</h4><div class="fcard"><b>${esc(me().name)}</b><span>${esc(myDepts().map(d=>d.name).join(', ')||'No departments')}</span></div></div>`}
+function renderHeader(){$('#viewas').innerHTML=S.users.map(u=>`<option value="${u.id}" ${u.id===S.me?'selected':''}>${esc(u.name)} · ${esc(u.role)}</option>`).join('');$('#avatar').textContent=me().name.split(' ').map(x=>x[0]).join('').slice(0,2)}
+function render(){fixSel();renderHeader();renderNav();renderActionbar();renderPage();renderFilters()}
+function fixSel(){const ds=myDeptIds();if(S.sel.dept!=='ALL'&&!ds.includes(S.sel.dept))S.sel.dept=ds[0]||'ALL';if(S.sel.dept==='ALL'&&ds.length===1)S.sel.dept=ds[0];if(!getV(S.sel.version))S.sel.version='B27'}
+function go(p){if(!PAGES[p])p='home';S.ui.page=p;const r=reportOf(p);if(r)S.ui.open.add(r.id);try{history.replaceState(null,'','#'+p)}catch(e){}
+ if(window.matchMedia('(max-width:820px)').matches)$('#app').classList.add('nav-off');render();$('#canvas').scrollTop=0}
+
+/* ============================== actions ============================== */
+const ACT={
+ toggleNav(){$('#app').classList.toggle('nav-off')},
+ toggleReport(el){const id=el.dataset.id;S.ui.open.has(id)?S.ui.open.delete(id):S.ui.open.add(id);const n=NAV.find(x=>x.id===id);if(S.ui.open.has(id)&&n&&!(n.admin&&!isAdmin())&&!n.pages.some(p=>p[0]===S.ui.page)){go(n.pages[0][0]);return}if(n&&n.admin&&!isAdmin()){go(n.pages[0][0]);return}renderNav()},
+ toggleFilters(){S.ui.filters=!S.ui.filters;renderFilters()},
+ resetFilters(){S.sel.version='B27';S.sel.dept=myDepts().length>1?'ALL':(myDeptIds()[0]||'ALL');S.sel.cmpA='B27';S.sel.cmpB='F26';S.sel.auditMod='All';render();toast('Filters reset to the app defaults')},
+ na(){toast('Not part of this simulation')},
+ save(el){const id=el.dataset.vis;const keys=Object.keys(PEND).filter(k=>k.startsWith(id+'|'));if(!SAVE[id]){toast('Nothing to save');return}
+  const entries=keys.map(k=>{const [,r,c]=k.split('|');return {r,c,val:PEND[k]}});const n=entries.length;SAVE[id](entries);keys.forEach(k=>delete PEND[k]);bust();render();toast(`Saved ${n} change${n>1?'s':''}. Every report now shows the new numbers.`)},
+ discard(el){const id=el.dataset.vis;Object.keys(PEND).filter(k=>k.startsWith(id+'|')).forEach(k=>delete PEND[k]);render();toast('Changes discarded')},
+ submit(el){const v=ver(),d=el.dataset.id;S.plans[v.id].wf[d]='Submitted';log('Account Planning',`${dname(d)} · ${v.name}`,'Status: In progress → Submitted');render();toast(`${dname(d)} submitted. The grid is now locked until it is approved or sent back.`)},
+ wf(el){const v=ver(),d=el.dataset.id,to=el.dataset.to;const P=S.plans[v.id];const from=P.wf[d];P.wf[d]=to;log('Admin Center',`${dname(d)} · ${v.name}`,`Status: ${from} → ${to}`);render();toast(`${dname(d)}: ${to}`)},
+ openDept(el){S.sel.dept=el.dataset.id;go('acc-pnl')},
+ addEmp(){const v=ver(),P=S.plans[v.id];const d=S.sel.dept!=='ALL'?S.sel.dept:(myDepts().find(x=>canEdit(v.id,x.id))||{}).id;if(!d)return;const id='TBH-'+(++S.seq.emp);
+  P.employees.push({id,name:'New hire (TBH)',dept:d,title:'To be defined',salary:45000,pension:10,fte:1,start:Math.min(12,(v.actualsThrough||0)+1),end:13});touch(v.id,d);bust();log('Employee Planning',`${id} New hire (TBH)`,`Added to ${dname(d)}`);render();toast('New hire added. Edit the row, then Save.')},
+ delEmp(el){const v=ver(),P=S.plans[v.id];const e=P.employees.find(x=>x.id===el.dataset.id);P.employees=P.employees.filter(x=>x.id!==el.dataset.id);bust();log('Employee Planning',`${e.id} ${e.name}`,'Deleted');render();toast(`${e.name} removed`)},
+ addDeal(){const v=ver(),P=S.plans[v.id];const id='D'+String(++S.seq.deal).padStart(2,'0');P.deals.push({id,customer:'New customer',desc:'New opportunity',stage:'Lead',amount:500,type:'Subscription',close:Math.min(12,(v.actualsThrough||0)+3)});touch(v.id,'SAL');bust();log('Sales Pipeline',id,'Added');render();toast('Deal added')},
+ delDeal(el){const v=ver(),P=S.plans[v.id];const dl=P.deals.find(x=>x.id===el.dataset.id);P.deals=P.deals.filter(x=>x.id!==el.dataset.id);bust();log('Sales Pipeline',`${dl.id} ${dl.customer}`,'Deleted');render();toast('Deal removed')},
+ addCap(){const v=ver(),P=S.plans[v.id];const d=S.sel.dept!=='ALL'?S.sel.dept:(myDepts().find(x=>canEdit(v.id,x.id))||{}).id;if(!d)return;const id='C'+String(++S.seq.cap).padStart(2,'0');P.capex.push({id,asset:'New investment',dept:d,cat:'Equipment',amount:100,month:Math.min(12,(v.actualsThrough||0)+1),life:3});touch(v.id,d);bust();log('CAPEX Planning',id,`Added to ${dname(d)}`);render();toast('Investment added')},
+ delCap(el){const v=ver(),P=S.plans[v.id];const c=P.capex.find(x=>x.id===el.dataset.id);P.capex=P.capex.filter(x=>x.id!==el.dataset.id);bust();log('CAPEX Planning',`${c.id} ${c.asset}`,'Deleted');render();toast('Investment removed')}};
+
+document.addEventListener('click',e=>{const n=e.target.closest('[data-nav]');if(n){e.preventDefault();go(n.dataset.nav);return}
+ const a=e.target.closest('[data-act]');if(a&&ACT[a.dataset.act]&&!a.disabled){e.preventDefault();ACT[a.dataset.act](a)}});
+document.addEventListener('keydown',e=>{const t=e.target;
+ if(t.classList&&t.classList.contains('mapbox')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();go(t.dataset.nav);return}
+ if(t.classList&&t.classList.contains('cell')&&t.tagName==='INPUT'&&['Enter','ArrowDown','ArrowUp'].includes(e.key)){
+  const td=t.closest('td'),tr=td.parentElement,idx=[...tr.children].indexOf(td);let r=e.key==='ArrowUp'?tr.previousElementSibling:tr.nextElementSibling;
+  while(r){const c=r.children[idx];const inp=c&&c.querySelector('input.cell');if(inp){e.preventDefault();t.dispatchEvent(new Event('change',{bubbles:true}));inp.focus();inp.select();return}r=e.key==='ArrowUp'?r.previousElementSibling:r.nextElementSibling}}});
+document.addEventListener('submit',e=>{if(e.target.id==='copyform'){e.preventDefault();doCopy()}});
+$('#viewas').addEventListener('change',e=>{S.me=e.target.value;fixSel();const P=PAGES[S.ui.page];render();toast(`Viewing as ${me().name}`)});
+$('#canvas').addEventListener('focusin',e=>{const t=e.target;if(t.classList&&t.classList.contains('cell')&&t.tagName==='INPUT')setTimeout(()=>{try{t.select()}catch(_){}},0)});
+$('#canvas').addEventListener('change',e=>{const t=e.target;
+ if(t.dataset.slicer){S.sel[t.dataset.slicer]=t.value;render();return}
+ if(!t.dataset.vis)return;const k=pk(t.dataset.vis,t.dataset.r,t.dataset.c);let val=t.type==='checkbox'?t.checked:t.value;const o=t.dataset.o;let same;
+ if(t.dataset.t==='n'){let n=parseNum(val);if(n==null){toast('Enter a number, for example 1,250');t.value=k in PEND?PEND[k]:o;return}
+  if(t.dataset.sign==='-1')n=-Math.abs(n);const fmtd=t.closest('table.grid')&&t.dataset.sign?f0(n):(Number.isInteger(n)?f0(n):f2(n));t.value=fmtd;val=fmtd;same=parseNum(o)===parseNum(fmtd)}
+ else if(t.dataset.t==='b')same=String(val)===o;else same=String(val)===o;
+ if(same)delete PEND[k];else PEND[k]=val;
+ t.closest('td').classList.toggle('pend',k in PEND);
+ const n=pendCount(t.dataset.vis);document.querySelectorAll(`[data-cnt="${t.dataset.vis}"]`).forEach(x=>{x.dataset.n=n;x.textContent=n+' unsaved'});
+ document.querySelectorAll(`[data-act="save"][data-vis="${t.dataset.vis}"],[data-act="discard"][data-vis="${t.dataset.vis}"]`).forEach(b=>b.disabled=!n);
+ const tr=t.closest('tr'),fy=tr&&tr.querySelector('td.fy');if(fy&&t.dataset.t==='n'&&t.dataset.sign){let s=0;tr.querySelectorAll('td[data-v]').forEach(x=>s+=+x.dataset.v);tr.querySelectorAll('input.cell[data-t="n"]').forEach(x=>s+=parseNum(x.value)||0);fy.textContent=f0(s)}});
+
+/* ============================== boot ============================== */
+(function(){let h='';try{h=(location.hash||'').slice(1)}catch(e){}if(window.matchMedia('(max-width:820px)').matches)$('#app').classList.add('nav-off');go(PAGES[h]?h:'home')})();
 </script>
 
 </body></html>
